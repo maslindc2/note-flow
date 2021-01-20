@@ -1,1 +1,1 @@
-# CS380NoteTaking
+# CS380 Note Taking App
