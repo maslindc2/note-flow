@@ -1,14 +1,20 @@
 import React from 'react'
 import './Toolbar.css'
 export default function Toolbar() {
+
+    //TODO: Populate these methods
     function format() { }
     function addLink() { }
-
     function setUrl() { }
-
     function setHeader() { }
+
+    //Vito's working on this method
     function addCodeBlock() { }
+
+    //Someone is researching this one I think
     function addEquation() { }
+
+    //Zach handling saving method
     function handleSave() { }
 
     /**
