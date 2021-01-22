@@ -8,12 +8,30 @@ export default function Toolbar() {
 
     function setHeader() { }
     function addCodeBlock() { }
-
-    function handleSubmit() { }
+    function addEquation() { }
+    function handleSave() { }
 
     /**
-     * return buttons that make up toolbar here
      * Use icons from react-icons-kit for the toolbar instead of win98 buttons for the toolbar
      * this will require npm add react-icons-kit
      */
+    return (
+        <div className='toolbar'>
+            <button onClick={e => format('bold')}>Bold</button>
+            <button onClick={e => format('italic')}>Italics</button>
+            <button onClick={e => format('insertUnorderedList')}>
+                List
+            </button>
+
+            <button onClick={e => addLink()}>Link</button>
+            <div id='url-input' className='hidden'>
+                <input id='txtFormatUrl' placeholder='url' />
+                <button onClick={e => setUrl()}>Header</button>
+            </div>
+            <button onClick={e => setHeader()}>Header</button>
+            <button onClick={e => addCodeBlock()}>CodeBlock</button>
+            <button onClick={e => addEquation()}>Equation</button>
+            <button onClick={e => handleSave()}>Save</button>
+        </div>
+    )
 }

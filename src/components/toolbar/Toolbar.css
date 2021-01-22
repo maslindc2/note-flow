@@ -1,8 +1,5 @@
 .toolbar {
-  border:solid 1px #ddd;
-  background:#f4f4f4;
   padding: 5px;
-  border-radius:3px;
   position: fixed;
   top: 50px;
   width: 100%;
