@@ -15,10 +15,37 @@ import { download } from 'react-icons-kit/iconic/download'
 export default function Toolbar() {
 
     //TODO: Populate these methods
-    function format() { }
-    function addLink() { }
-    function setUrl() { }
-    function setHeader() { }
+    function format(com,val) { 
+        document.execCommand(com, false, val);
+    }
+    function addLink() {
+        const show = document.getElementById('url-input');
+        if (show.classList.contains('hidden')){
+            show.classList.remove('hidden');
+        } else {
+            show.classList.add('hidden');
+        }
+     }
+
+
+    function setUrl(e) { 
+        e.preventDefault()
+        const url = document.getElementById('txtFormatUrl').value;
+        const show = document.getElementById('url-input');
+        const text = document.getSelection();
+        format (
+            'insterHTML',
+            `<a href='${url}' target='_blank'>${text}
+            </a>`
+            );
+        document.getElementById('txtFormatUrl').value = '';
+        show.classList.add('hidden');
+    }
+
+    function setHeader() {
+        const target = document.getSelection();
+        format('insterHTML', `<h2>${target}</h2>`);
+     }
 
     //Vito's working on this method
     function addCodeBlock() { }
