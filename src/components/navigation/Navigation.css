@@ -1,0 +1,34 @@
+body {
+    margin: 0;
+  }
+  
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 25%;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    font-family: 'Courier New';
+    font-size: 25px;
+  }
+  
+  li a {
+    display: block;
+    color: rgb(92, 51, 51);
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+  
+  li.active {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  li:hover:not(.active) {
+    background-color: rgb(148, 155, 137);
+    color: white;
+  }
+

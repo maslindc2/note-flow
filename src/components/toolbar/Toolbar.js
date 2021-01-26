@@ -15,37 +15,12 @@ import { download } from 'react-icons-kit/iconic/download'
 export default function Toolbar() {
 
     //TODO: Populate these methods
-    function format(com, val) {
-        document.execCommand(com, false, val);
+    function format() { 
+        
     }
-    function addLink() {
-        const show = document.getElementById('url-input');
-        if (show.classList.contains('hidden')) {
-            show.classList.remove('hidden');
-        } else {
-            show.classList.add('hidden');
-        }
-    }
-
-
-    function setUrl(e) {
-        e.preventDefault()
-        const url = document.getElementById('txtFormatUrl').value;
-        const show = document.getElementById('url-input');
-        const text = document.getSelection();
-        format(
-            'insertHTML',
-            `<a href='${url}' target='_blank'>${text}
-            </a>`
-        );
-        document.getElementById('txtFormatUrl').value = '';
-        show.classList.add('hidden');
-    }
-
-    function setHeader() {
-        const target = document.getSelection();
-        format('insertHTML', `<h2>${target}</h2>`);
-    }
+    function addLink() { }
+    function setUrl() { }
+    function setHeader() { }
 
     //Vito's working on this method
     function addCodeBlock() { }
@@ -55,6 +30,7 @@ export default function Toolbar() {
 
     //Zach handling saving method
     function handleSave() { }
+
     /**
      * Use icons from react-icons-kit for the toolbar instead of win98 buttons for the toolbar
      * this will require npm add react-icons-kit
@@ -74,12 +50,7 @@ export default function Toolbar() {
             <button onClick={e => addLink()}>
                 <Icon icon={link} />
             </button>
-            <div id='url-input' className='hidden'>
-                <input id='textFormatUrl' placeholder='url' />
-                <button onClick={e => setUrl()}>
-                    <Icon icon={link} />
-                </button>
-            </div>
+
             <button onClick={e => setHeader()}>
                 <Icon icon={header} />
             </button>

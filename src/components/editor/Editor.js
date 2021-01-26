@@ -2,6 +2,7 @@ import React from 'react';
 import Toolbar from '../toolbar/Toolbar'
 import './Editor.css';
 
+
 //Editor function
 export default function Editor() {
     

@@ -4,9 +4,18 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+/*
+  Gives components access to the database.
+  Use a FirebaseContext.Consumer component 
+  to access it.
+*/
+import Firebase, {FirebaseContext} from './components/Firebase';
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <FirebaseContext.Provider value = {new Firebase()} >
+      <App />
+    </FirebaseContext.Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
