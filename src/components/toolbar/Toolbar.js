@@ -30,17 +30,21 @@ export default function Toolbar() {
 
 
     function setUrl(e) {
-        e.preventDefault()
-        const url = document.getElementById('txtFormatUrl').value;
-        const show = document.getElementById('url-input');
-        const text = document.getSelection();
-        format(
-            'insertHTML',
-            `<a href='${url}' target='_blank'>${text}
+        if (e) {
+            e.preventDefault()
+        } else {
+            const url = document.getElementById('txtFormatUrl').value;
+            const show = document.getElementById('url-input');
+            const text = document.getSelection();
+            format(
+                'insertHTML',
+                `<a href='${url}' target='_blank'>${text}
             </a>`
-        );
-        document.getElementById('txtFormatUrl').value = '';
-        show.classList.add('hidden');
+            );
+            document.getElementById('txtFormatUrl').value = '';
+            show.classList.add('hidden');
+        }
+
     }
 
     function setHeader() {
@@ -88,12 +92,31 @@ export default function Toolbar() {
     //Someone is researching this one I think
     function addEquation() { }
 
-    //Zach handling saving method
-    function handleSave() { }
-    /**
-     * Use icons from react-icons-kit for the toolbar instead of win98 buttons for the toolbar
-     * this will require npm add react-icons-kit
-     */
+    //Temporary code for storing title and content into a txt file
+    function handleSave() {
+        const content = document.getElementById('editor').innerHTML;
+        const title = document.getElementById('title').textContent;
+
+        let data =
+            '\r' + title + ' \r\n' +
+            '\r\n' + content + ' \r\n';
+        const textToBLOB = new Blob([data], { type: 'text/plain' });
+        const sFileName = 'noteOutput.txt';
+
+        let newLink = document.createElement("a");
+        newLink.download = sFileName;
+        if (window.webkitURL != null) {
+            newLink.href = window.webkitURL.createObjectURL(textToBLOB);
+        }
+        else {
+            newLink.href = window.URL.createObjectURL(textToBLOB);
+            newLink.style.display = "none";
+            document.body.appendChild(newLink);
+        }
+
+        newLink.click();
+    }
+
     return (
         <div className='toolbar'>
             <button onClick={e => format('bold')}>
@@ -111,7 +134,7 @@ export default function Toolbar() {
             </button>
             <div id='url-input' className='hidden'>
                 <input id='textFormatUrl' placeholder='url' />
-                <button onClick="setUrl(e)">
+                <button onClick={e => setUrl(e)}>
                     <Icon icon={check} />
                 </button>
             </div>
