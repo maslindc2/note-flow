@@ -48,7 +48,41 @@ export default function Toolbar() {
     }
 
     //Vito's working on this method
-    function addCodeBlock() { }
+    function addCodeBlock() {
+        try{
+        const codeBlock = document.createElement('pre');
+        const target = document.getSelection();
+        if (
+            target.focusNode.nodeName.includes('#text') ||
+            target.focusNode.classList.contains('title') ||
+            target.focusNode.className.includes('codeBlock')
+        ) {
+            return
+        }
+        const id = `codeBlock-${document.getElementsByClassName('codeBlock').length + 1}`;
+        codeBlock.classList.add('codeBlock')
+    
+        format(
+            'insertHTML',
+            `<pre class='codeBlock' id='${id}'>${target}</pre>`
+        );
+        addLineAfterBlock(id)
+        }catch{
+            document.getElementById('editor').innerHTML="Please select the editor area before using this function!"
+        }
+    }
+    function addLineAfterBlock(id) {
+        const block = document.getElementById(`${id}`);
+        const div = document.createElement('div');
+        const br = document.createElement('br');
+    
+        div.appendChild(br);
+        if (!block) {
+            return;
+        } else {
+            block.after(div);
+        }
+    }
 
     //Someone is researching this one I think
     function addEquation() { }
