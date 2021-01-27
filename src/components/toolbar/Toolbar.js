@@ -6,6 +6,7 @@ import { bold } from 'react-icons-kit/iconic/bold'
 import { italic } from 'react-icons-kit/iconic/italic'
 import { list } from 'react-icons-kit/iconic/list'
 import { link } from 'react-icons-kit/iconic/link'
+import { check } from 'react-icons-kit/iconic/check'
 import { header } from 'react-icons-kit/iconic/header'
 import { code } from 'react-icons-kit/iconic/code'
 import { plus } from 'react-icons-kit/iconic/plus'
@@ -49,33 +50,33 @@ export default function Toolbar() {
 
     //Vito's working on this method
     function addCodeBlock() {
-        try{
-        const codeBlock = document.createElement('pre');
-        const target = document.getSelection();
-        if (
-            target.focusNode.nodeName.includes('#text') ||
-            target.focusNode.classList.contains('title') ||
-            target.focusNode.className.includes('codeBlock')
-        ) {
-            return
-        }
-        const id = `codeBlock-${document.getElementsByClassName('codeBlock').length + 1}`;
-        codeBlock.classList.add('codeBlock')
-    
-        format(
-            'insertHTML',
-            `<pre class='codeBlock' id='${id}'>${target}</pre>`
-        );
-        addLineAfterBlock(id)
-        }catch{
-            document.getElementById('editor').innerHTML="Please select the editor area before using this function!"
+        try {
+            const codeBlock = document.createElement('pre');
+            const target = document.getSelection();
+            if (
+                target.focusNode.nodeName.includes('#text') ||
+                target.focusNode.classList.contains('title') ||
+                target.focusNode.className.includes('codeBlock')
+            ) {
+                return
+            }
+            const id = `codeBlock-${document.getElementsByClassName('codeBlock').length + 1}`;
+            codeBlock.classList.add('codeBlock')
+
+            format(
+                'insertHTML',
+                `<pre class='codeBlock' id='${id}'>${target}</pre>`
+            );
+            addLineAfterBlock(id)
+        } catch {
+            document.getElementById('editor').innerHTML = "Please select the editor area before using this function!"
         }
     }
     function addLineAfterBlock(id) {
         const block = document.getElementById(`${id}`);
         const div = document.createElement('div');
         const br = document.createElement('br');
-    
+
         div.appendChild(br);
         if (!block) {
             return;
@@ -110,8 +111,8 @@ export default function Toolbar() {
             </button>
             <div id='url-input' className='hidden'>
                 <input id='textFormatUrl' placeholder='url' />
-                <button onClick={e => setUrl()}>
-                    <Icon icon={link} />
+                <button onClick="setUrl(e)">
+                    <Icon icon={check} />
                 </button>
             </div>
             <button onClick={e => setHeader()}>

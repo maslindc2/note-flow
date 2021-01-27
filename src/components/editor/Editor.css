@@ -34,7 +34,9 @@
   margin-bottom: 0;
   height: auto;
   min-height: 39px;
-  font-family: 'segoe';
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
   overflow: auto;
   color: white;
   padding: 8px;
