@@ -56,6 +56,11 @@ export default function Toolbar() {
     //Vito's working on this method
     function addCodeBlock() {
         try {
+            var next_line= document.getElementById('editor');
+            format(
+                'insertParagraph',
+                `<pre class='editor' id='${next_line}'</pre>`
+            );
             const codeBlock = document.createElement('pre');
             const target = document.getSelection();
             if (
@@ -65,18 +70,20 @@ export default function Toolbar() {
             ) {
                 return
             }
-            const id = `codeBlock-${document.getElementsByClassName('codeBlock').length + 1}`;
-            codeBlock.classList.add('codeBlock')
+            const id = `codeBlock-${document.getElementsByClassName('codeBlock').length + 1}`;           
+             codeBlock.classList.add('codeBlock')
 
             format(
                 'insertHTML',
                 `<pre class='codeBlock' id='${id}'>${target}</pre>`
-            );
-            addLineAfterBlock(id)
+            );           
         } catch {
             document.getElementById('editor').innerHTML = "Please select the editor area before using this function!"
         }
     }
+    
+    //this one is currently disable since it is not necessary
+    // eslint-disable-next-line 
     function addLineAfterBlock(id) {
         const block = document.getElementById(`${id}`);
         const div = document.createElement('div');
