@@ -76,14 +76,13 @@ export default function Toolbar() {
             format(
                 'insertHTML',
                 `<pre class='codeBlock' id='${id}'>${target}</pre>`
-            );           
+            );
+            addLineAfterBlock(id);     
         } catch {
             document.getElementById('editor').innerHTML = "Please select the editor area before using this function!"
         }
     }
     
-    //this one is currently disable since it is not necessary
-    // eslint-disable-next-line 
     function addLineAfterBlock(id) {
         const block = document.getElementById(`${id}`);
         const div = document.createElement('div');
