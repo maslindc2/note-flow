@@ -17,6 +17,7 @@ export default function Toolbar() {
 
     //TODO: Populate these methods
     function format(com, val) {
+        document.getElementById('editor').focus();
         document.execCommand(com, false, val);
     }
     function addLink() {
