@@ -5,9 +5,18 @@ import './Editor.css';
 
 //Editor function
 export default function Editor() {
-    
-    //This will be our own function for pasting default pasting keeps styling of what you are copying
-    function paste(e) { }
+
+    function paste(e) {
+        e.preventDefault();
+        const open = new RegExp('<', 'gi');
+        const close = new RegExp('>', 'gi');
+        const text = (e.originalEvent || e).clipboardData
+            .getData('text/plain')
+            .replace(open, '&lt')
+            .replace(close, '&gt');
+        document.execCommand('insertHTML', false, text)
+
+    }
 
     //Return the content from Toolbar and Editor this goes to App.js
     return (

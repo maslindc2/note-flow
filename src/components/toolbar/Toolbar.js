@@ -25,6 +25,7 @@ export default function Toolbar() {
         document.getElementById('editor').focus();
         document.execCommand(com, false, val);
     }
+
     function addLink() {
         const show = document.getElementById('url-input');
         if (show.classList.contains('hidden')) {
@@ -34,23 +35,24 @@ export default function Toolbar() {
         }
     }
 
+    function setUrl() {
 
-    function setUrl(e) {
-        if (e) {
-            e.preventDefault()
-        } else {
-            const url = document.getElementById('txtFormatUrl').value;
-            const show = document.getElementById('url-input');
-            const text = document.getSelection();
-            format(
-                'insertHTML',
-                `<a href='${url}' target='_blank'>${text}
-            </a>`
-            );
-            document.getElementById('txtFormatUrl').value = '';
-            show.classList.add('hidden');
-        }
+        var inputVal = document.getElementById('textFormatUrl').value;
+        const text = document.getSelection();
+        const show = document.getElementById('url-input');
+        
+        
+        //Creates hyperlink
+        format(
+            'insertHTML', `<a href='${inputVal}' target='_blank'>${text}</a>`
+        );
 
+        //This makes the url input tag blank again. I could use "" or '' but JS thinks strings are the same as null
+        inputVal = "";
+        document.getElementById('textFormatUrl').value = " ";
+
+        //hides the input tag again 
+        show.classList.add('hidden');
     }
 
     function setHeader() {
@@ -58,7 +60,6 @@ export default function Toolbar() {
         format('insertHTML', `<h2>${target}</h2>`);
     }
 
-    //Vito's working on this method
     function addCodeBlock() {
         try {
             var next_line= document.getElementById('editor');
@@ -101,9 +102,6 @@ export default function Toolbar() {
             block.after(div);
         }
     }
-
-    //Someone is researching this one I think
-    function addEquation() { }
 
     //Emily working on this. Uses the Mathlive library and API
     function addEquation() {
