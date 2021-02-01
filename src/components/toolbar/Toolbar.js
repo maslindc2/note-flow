@@ -15,6 +15,10 @@ import { download } from 'react-icons-kit/iconic/download'
 import { MathfieldComponent } from 'react-mathlive'
 import Mathlive from 'mathlive'
 import {Mathfield, MathfieldElement} from 'mathlive'
+//imports for CodeBlock
+import * as ace from 'ace-builds/src-noconflict/ace';
+import 'ace-builds/src-min-noconflict/theme-tomorrow_night_eighties';
+import 'ace-builds/src-min-noconflict/mode-javascript';
 
 
 
@@ -60,8 +64,9 @@ export default function Toolbar() {
         format('insertHTML', `<h2>${target}</h2>`);
     }
 
-    function addCodeBlock() {
-        try {
+    ////////////////////////////////////////
+    //Vito is working on this
+    function addCodeBlock() {   
             var next_line= document.getElementById('editor');
             format(
                 'insertParagraph',
@@ -79,17 +84,49 @@ export default function Toolbar() {
             const id = `codeBlock-${document.getElementsByClassName('codeBlock').length + 1}`;           
              codeBlock.classList.add('codeBlock')
 
-            format(
+            var new_block=format(
                 'insertHTML',
                 `<pre class='codeBlock' id='${id}'>${target}</pre>`
             );
-            addLineAfterBlock(id);     
-        } catch {
-            document.getElementById('editor').innerHTML = "Please select the editor area before using this function!"
-        }
+            var code_editor=ace.edit(id, {
+                theme: "ace/theme/tomorrow_night_eighties",
+                mode: "ace/mode/javascript",
+                maxLines: 30,
+                wrap: true,
+                autoScrollEditorIntoView: true,
+                enableBasicAutocompletion: true,
+                enableLiveAutocompletion: true,
+            });
+                   
+            addLineAfterBlock(id); 
     }
-    
 
+    //Experimenting with this
+    /* 
+    function addCodeBlock_2(){
+        var next_line= document.getElementById('editor');
+            format(
+                'insertParagraph',
+                `<pre class='editor' id='${next_line}'</pre>`
+            );
+        var element = document.createElement('new_div');
+        document.getElementById('editor').appendChild(element);
+        ace.edit(element);
+        
+        var code_editor=ace.edit(element, {
+            theme: "ace/theme/tomorrow_night_eighties",
+            mode: "ace/mode/javascript",
+            maxLines: 30,
+            wrap: true,
+            autoScrollEditorIntoView: true,
+            enableBasicAutocompletion: true,
+            enableLiveAutocompletion: true,
+        });
+        addLineAfterBlock(element);     
+        
+        
+    }*/
+    
     function addLineAfterBlock(id) {
         const block = document.getElementById(`${id}`);
         const div = document.createElement('div');
@@ -102,6 +139,7 @@ export default function Toolbar() {
             block.after(div);
         }
     }
+    ////////////////////////////////////////////////////////
 
     //Emily working on this. Uses the Mathlive library and API
     function addEquation() {
