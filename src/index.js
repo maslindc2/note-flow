@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import SignUpPage from './components/signuppage'
 import HomePage from './components/homepage';
@@ -10,18 +9,11 @@ import SignInPage from './components/signinpage'
 import { Route, NavLink, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
 import Notfound from './components/notfound';
 
-/*
-  Gives components access to the database.
-  Use a FirebaseContext.Consumer component 
-  to access it.
-*/
-import Firebase, {FirebaseContext} from './components/Firebase';
-import Editor from './components/editor/Editor';
-
 
 const routing = (
   <Router>
   <div>
+    
     <ul>
       <li>
           <NavLink exact activeClassName="active" to="/">
@@ -44,7 +36,7 @@ const routing = (
          </NavLink>
       </li>
     </ul>
-  
+   
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/signuppage" component={SignUpPage} />
