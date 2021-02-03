@@ -18,9 +18,17 @@ const config = {
 
   class Firebase{
       constructor(){
+        /*
+        I've been getting a weird error where the firebase instance 
+        is intitailizing twice and throwing errors on every login and
+        sign up, refreshing fixes it though
+        */
+      
           app.initializeApp(config);
           this.auth = app.auth();
-      }
+
+      }//constructor
+    
 
     // *** Auth API ***
      doCreateUserWithEmailAndPassword = (email, password) =>
@@ -35,6 +43,9 @@ const config = {
  
      doPasswordUpdate = password =>
        this.auth.currentUser.updatePassword(password);
-  }
+
+ 
+
+}//class
 
   export default Firebase;

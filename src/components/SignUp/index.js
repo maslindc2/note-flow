@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 
 import { FirebaseContext } from '../Firebase';
 
 const SignUp = () => (
   <div>
-    <h1>SignUp</h1>
     <FirebaseContext.Consumer>
       {firebase => <SignUpForm firebase={firebase} />}
     </FirebaseContext.Consumer>
@@ -104,7 +103,7 @@ class SignUpForm extends Component {
  
 const SignUpLink = () => (
   <p>
-    Don't have an account? <Link> Sign Up</Link>
+    Don't have an account? <NavLink  activeClassName="active" to="/signuppage">Sign Up</NavLink>
   </p>
 );
  
