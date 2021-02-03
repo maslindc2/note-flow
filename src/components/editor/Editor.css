@@ -11,6 +11,37 @@
   list-style: square;
   margin: initial
 }
+
+/*.toolbar >li{
+  list-style: square;
+  display: inline-block;
+  background-color: aliceblue;
+  padding:10px 15px;
+  transition: all 0.8s ease;
+  position: relative
+}*/
+#dropdown {
+  display: none;
+  position: absolute;
+  height:auto;
+  width: auto;
+  background-color: #f1f1f1;;
+  z-index: 1;
+  text-align: center;
+  
+  
+  
+}
+#dropdown li{
+  padding:10px 15px;
+  border: 1px solid black;
+  border-radius: 10px;
+  font-size: 100%;
+}
+
+#dropdown.active{
+  display:block;
+}
 #title {
   width: 95%;
   max-width: 700px;

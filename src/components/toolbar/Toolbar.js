@@ -19,6 +19,7 @@ import {Mathfield, MathfieldElement} from 'mathlive'
 import * as ace from 'ace-builds/src-noconflict/ace';
 import 'ace-builds/src-min-noconflict/theme-tomorrow_night_eighties';
 import 'ace-builds/src-min-noconflict/mode-javascript';
+import 'ace-builds/src-min-noconflict/mode-java';
 
 
 
@@ -66,8 +67,20 @@ export default function Toolbar() {
 
     ////////////////////////////////////////
     //Vito is working on this
-    function addCodeBlock() {   
+    var lang="";
+    function openMenu(){
+        document.getElementById("dropdown").classList.toggle("active");
+        document.getElementById("cb-jv").addEventListener("click", function() {
+            lang="cb-jv";
+            document.getElementById("cb-jv").innerHTML = lang;
+          });
+          return lang;
+    }
+    
+    function addCodeBlock(lang) {   
+            //creating new filled div
             var next_line= document.getElementById('editor');
+            //next_line.innerHTML=" chosed "+lang;
             format(
                 'insertParagraph',
                 `<pre class='editor' id='${next_line}'</pre>`
@@ -88,9 +101,24 @@ export default function Toolbar() {
                 'insertHTML',
                 `<pre class='codeBlock' id='${id}'>${target}</pre>`
             );
+            //Embbedding Ace code editor
+            var mode_name;
+            switch(lang){
+                case "cb-jv":
+                    mode_name="ace/mode/java";
+                    break;
+                case "cb-py":
+                    mode_name="ace/mode/python";
+                // code block
+                    break;
+                default:
+                    mode_name="ace/mode/javascript";
+                    
+
+            }
             var code_editor=ace.edit(id, {
                 theme: "ace/theme/tomorrow_night_eighties",
-                mode: "ace/mode/javascript",
+                mode: mode_name,
                 maxLines: 30,
                 wrap: true,
                 autoScrollEditorIntoView: true,
@@ -126,6 +154,7 @@ export default function Toolbar() {
         
         
     }*/
+    
     
     function addLineAfterBlock(id) {
         const block = document.getElementById(`${id}`);
@@ -436,7 +465,7 @@ export default function Toolbar() {
             <button onClick={e => setHeader()}>
                 <Icon icon={header} />
             </button>
-            <button onClick={e => addCodeBlock()}>
+            <button onClick={e => addCodeBlock(lang)}>
                 <Icon icon={code} />
             </button>
 
@@ -448,6 +477,16 @@ export default function Toolbar() {
 
             <button onClick={e => handleSave()}>
                 <Icon icon={download} />
+            </button>
+
+            <button onClick={e => openMenu()}>
+                Language for CodeBlock
+                <ul id="dropdown">
+                    <li id="cb-js">Javascript</li>
+                    <li id="cb-jv">Java</li>
+                    <li id="cb-py">Python</li>
+                    <li id="cb-C++">C++</li>
+                </ul>
             </button>
         </div>
     )
