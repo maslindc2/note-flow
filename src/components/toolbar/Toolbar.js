@@ -14,7 +14,7 @@ import { download } from 'react-icons-kit/iconic/download'
 
 import { MathfieldComponent } from 'react-mathlive'
 import Mathlive from 'mathlive'
-import {Mathfield, MathfieldElement} from 'mathlive'
+import { Mathfield, MathfieldElement } from 'mathlive'
 //imports for CodeBlock
 import * as ace from 'ace-builds/src-noconflict/ace';
 import 'ace-builds/src-min-noconflict/theme-tomorrow_night_eighties';
@@ -25,12 +25,13 @@ import 'ace-builds/src-min-noconflict/mode-java';
 
 export default function Toolbar() {
 
-    //TODO: Populate these methods
+    
     function format(com, val) {
         document.getElementById('editor').focus();
         document.execCommand(com, false, val);
     }
 
+    //Sets the url input box to shown or hidden
     function addLink() {
         const show = document.getElementById('url-input');
         if (show.classList.contains('hidden')) {
@@ -41,19 +42,38 @@ export default function Toolbar() {
     }
 
     function setUrl() {
-
+        //Stores the input from the url box into inputVal
         var inputVal = document.getElementById('textFormatUrl').value;
+        
+        //Text is used for creating a hyperlink
         const text = document.getSelection();
+        
+        //used for showing or hiding url input box
         const show = document.getElementById('url-input');
+
+        //Appends http:// to the url if the input did not have it to begin with
+        var prefix = 'http://';
+        if (inputVal.substr(0, prefix.length) !== prefix) {
+            inputVal = prefix + inputVal;
+        }
         
-        
-        //Creates hyperlink
-        format(
-            'insertHTML', `<a href='${inputVal}' target='_blank'>${text}</a>`
-        );
+        /**
+         * This block handles url insert. text.baseNode.data==undefined checks to see if the user
+         * is trying to insert only a url and NOT create a hyper link.  Else handles creating the hyperlink.
+         * A hyperlink is created by first clicking the url button, then paste your url in the input box,
+         * then highlight the text you want to turn into a hyperlink and then press the check mark button. 
+         */
+        if (text.baseNode.data == undefined) {
+            format(
+                'insertHTML', `<a href='${inputVal}' target='_blank'>${inputVal}</a>`
+            );
+        } else {
+            format(
+                'insertHTML', `<a href='${inputVal}' target='_blank'>${text}</a>`
+            );
+        }
 
         //This makes the url input tag blank again. I could use "" or '' but JS thinks strings are the same as null
-        inputVal = "";
         document.getElementById('textFormatUrl').value = " ";
 
         //hides the input tag again 
@@ -67,66 +87,66 @@ export default function Toolbar() {
 
     ////////////////////////////////////////
     //Vito is working on this
-    var lang="";
-    function openMenu(){
+    var lang = "";
+    function openMenu() {
         document.getElementById("dropdown").classList.toggle("active");
-        document.getElementById("cb-jv").addEventListener("click", function() {
-            lang="cb-jv";
+        document.getElementById("cb-jv").addEventListener("click", function () {
+            lang = "cb-jv";
             document.getElementById("cb-jv").innerHTML = lang;
-          });
-          return lang;
+        });
+        return lang;
     }
-    
-    function addCodeBlock(lang) {   
-            //creating new filled div
-            var next_line= document.getElementById('editor');
-            //next_line.innerHTML=" chosed "+lang;
-            format(
-                'insertParagraph',
-                `<pre class='editor' id='${next_line}'</pre>`
-            );
-            const codeBlock = document.createElement('pre');
-            const target = document.getSelection();
-            if (
-                target.focusNode.nodeName.includes('#text') ||
-                target.focusNode.classList.contains('title') ||
-                target.focusNode.className.includes('codeBlock')
-            ) {
-                return
-            }
-            const id = `codeBlock-${document.getElementsByClassName('codeBlock').length + 1}`;           
-             codeBlock.classList.add('codeBlock')
 
-            var new_block=format(
-                'insertHTML',
-                `<pre class='codeBlock' id='${id}'>${target}</pre>`
-            );
-            //Embbedding Ace code editor
-            var mode_name;
-            switch(lang){
-                case "cb-jv":
-                    mode_name="ace/mode/java";
-                    break;
-                case "cb-py":
-                    mode_name="ace/mode/python";
+    function addCodeBlock(lang) {
+        //creating new filled div
+        var next_line = document.getElementById('editor');
+        //next_line.innerHTML=" chosed "+lang;
+        format(
+            'insertParagraph',
+            `<pre class='editor' id='${next_line}'</pre>`
+        );
+        const codeBlock = document.createElement('pre');
+        const target = document.getSelection();
+        if (
+            target.focusNode.nodeName.includes('#text') ||
+            target.focusNode.classList.contains('title') ||
+            target.focusNode.className.includes('codeBlock')
+        ) {
+            return
+        }
+        const id = `codeBlock-${document.getElementsByClassName('codeBlock').length + 1}`;
+        codeBlock.classList.add('codeBlock')
+
+        var new_block = format(
+            'insertHTML',
+            `<pre class='codeBlock' id='${id}'>${target}</pre>`
+        );
+        //Embbedding Ace code editor
+        var mode_name;
+        switch (lang) {
+            case "cb-jv":
+                mode_name = "ace/mode/java";
+                break;
+            case "cb-py":
+                mode_name = "ace/mode/python";
                 // code block
-                    break;
-                default:
-                    mode_name="ace/mode/javascript";
-                    
+                break;
+            default:
+                mode_name = "ace/mode/javascript";
 
-            }
-            var code_editor=ace.edit(id, {
-                theme: "ace/theme/tomorrow_night_eighties",
-                mode: mode_name,
-                maxLines: 30,
-                wrap: true,
-                autoScrollEditorIntoView: true,
-                enableBasicAutocompletion: true,
-                enableLiveAutocompletion: true,
-            });
-                   
-            addLineAfterBlock(id); 
+
+        }
+        var code_editor = ace.edit(id, {
+            theme: "ace/theme/tomorrow_night_eighties",
+            mode: mode_name,
+            maxLines: 30,
+            wrap: true,
+            autoScrollEditorIntoView: true,
+            enableBasicAutocompletion: true,
+            enableLiveAutocompletion: true,
+        });
+
+        addLineAfterBlock(id);
     }
 
     //Experimenting with this
@@ -154,8 +174,8 @@ export default function Toolbar() {
         
         
     }*/
-    
-    
+
+
     function addLineAfterBlock(id) {
         const block = document.getElementById(`${id}`);
         const div = document.createElement('div');
@@ -175,7 +195,7 @@ export default function Toolbar() {
 
         //Focus on editor, insert line
         document.getElementById('editor').focus();
-        var next_line= document.getElementById('editor');
+        var next_line = document.getElementById('editor');
         format(
             'insert',
             `<pre class='editor' id='${next_line}'</pre>`
@@ -213,7 +233,7 @@ export default function Toolbar() {
             if (ev.detail.direction == "forward") {
 
                 document.getElementById('editor').focus();
-                var next_line= document.getElementById('editor');
+                var next_line = document.getElementById('editor');
                 format(
                     'insert',
                     `<pre class='editor' id='${next_line}'</pre>`
@@ -314,7 +334,7 @@ export default function Toolbar() {
             if (sel.getRangeAt && sel.rangeCount) {
                 range = sel.getRangeAt(0);
                 range.deleteContents();
-                range.insertNode( document.createTextNode(text) );
+                range.insertNode(document.createTextNode(text));
             }
         } else if (document.selection && document.selection.createRange) {
             document.selection.createRange().text = text;
@@ -365,7 +385,7 @@ export default function Toolbar() {
                 var el = document.createElement("div");
                 el.innerHTML = html;
                 var frag = document.createDocumentFragment(), node, lastNode;
-                while ( (node = el.firstChild) ) {
+                while ((node = el.firstChild)) {
                     lastNode = frag.appendChild(node);
                 }
                 var firstNode = frag.firstChild;
@@ -384,7 +404,7 @@ export default function Toolbar() {
                     sel.addRange(range);
                 }
             }
-        } else if ( (sel = document.selection) && sel.type != "Control") {
+        } else if ((sel = document.selection) && sel.type != "Control") {
             // IE < 9
             var originalRange = sel.createRange();
             originalRange.collapse(true);
@@ -434,13 +454,6 @@ export default function Toolbar() {
         newLink.click();
     }
 
-    //Zach handling saving method
-    function handleSave() { }
-    /**
-     * Use icons from react-icons-kit for the toolbar instead of win98 buttons for the toolbar
-     * this will require npm add react-icons-kit
-     */
-
     return (
         <div className='toolbar'>
             <div class="tooltip">
@@ -467,7 +480,7 @@ export default function Toolbar() {
                     <Icon icon={link} />
                 </button>
             </div>
-            
+
             <div id='url-input' className='hidden'>
                 <input id='textFormatUrl' placeholder='url' />
                 <button onClick={e => setUrl(e)}>
