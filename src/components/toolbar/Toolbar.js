@@ -457,7 +457,7 @@ export default function Toolbar() {
             </div>
             <div class="tooltip">
                 <span class="tooltiptext">List</span>
-                <button onClick={e => format('insertUnorderedList')}>
+                <button onClick={e => format('insertOrderedList')}>
                     <Icon icon={list} />
                 </button>
             </div>
