@@ -15,11 +15,15 @@ import { download } from 'react-icons-kit/iconic/download'
 import { MathfieldComponent } from 'react-mathlive'
 import Mathlive from 'mathlive'
 import { Mathfield, MathfieldElement } from 'mathlive'
+ 
 //imports for CodeBlock
 import * as ace from 'ace-builds/src-noconflict/ace';
 import 'ace-builds/src-min-noconflict/theme-tomorrow_night_eighties';
 import 'ace-builds/src-min-noconflict/mode-javascript';
 import 'ace-builds/src-min-noconflict/mode-java';
+import 'ace-builds/src-min-noconflict/mode-c_cpp';
+import 'ace-builds/src-min-noconflict/mode-python';
+import $ from "jquery";
 
 
 
@@ -87,55 +91,47 @@ export default function Toolbar() {
 
     ////////////////////////////////////////
     //Vito is working on this
-    var lang = "";
+    var lang="";
+
+    //openmenu for code block
     function openMenu() {
         document.getElementById("dropdown").classList.toggle("active");
-        document.getElementById("cb-jv").addEventListener("click", function () {
-            lang = "cb-jv";
-            document.getElementById("cb-jv").innerHTML = lang;
-        });
+    }
+
+    //update language for code block
+    function updateLang(id){
+        lang=id;
         return lang;
     }
 
-    function addCodeBlock(lang) {
+    //Main function to create new code block
+    function addCodeBlock() {
         //creating new filled div
         var next_line = document.getElementById('editor');
-        //next_line.innerHTML=" chosed "+lang;
+        alert(" Language chosed for codeblock is: "+lang);
         format(
             'insertParagraph',
             `<pre class='editor' id='${next_line}'</pre>`
         );
         const codeBlock = document.createElement('pre');
         const target = document.getSelection();
-        if (
+        /*if (
             target.focusNode.nodeName.includes('#text') ||
             target.focusNode.classList.contains('title') ||
             target.focusNode.className.includes('codeBlock')
         ) {
             return
-        }
+        }*/
         const id = `codeBlock-${document.getElementsByClassName('codeBlock').length + 1}`;
-        codeBlock.classList.add('codeBlock')
+        //codeBlock.classList.add('codeBlock')
 
         var new_block = format(
             'insertHTML',
             `<pre class='codeBlock' id='${id}'>${target}</pre>`
         );
-        //Embbedding Ace code editor
-        var mode_name;
-        switch (lang) {
-            case "cb-jv":
-                mode_name = "ace/mode/java";
-                break;
-            case "cb-py":
-                mode_name = "ace/mode/python";
-                // code block
-                break;
-            default:
-                mode_name = "ace/mode/javascript";
-
-
-        }
+        //Embbedding Ace editor
+        var mode_name = "ace/mode/"+lang;
+        
         var code_editor = ace.edit(id, {
             theme: "ace/theme/tomorrow_night_eighties",
             mode: mode_name,
@@ -149,33 +145,25 @@ export default function Toolbar() {
         addLineAfterBlock(id);
     }
 
-    //Experimenting with this
-    /* 
-    function addCodeBlock_2(){
-        var next_line= document.getElementById('editor');
-            format(
-                'insertParagraph',
-                `<pre class='editor' id='${next_line}'</pre>`
-            );
-        var element = document.createElement('new_div');
-        document.getElementById('editor').appendChild(element);
-        ace.edit(element);
+    
+    //experimenting to fix a dumb bug when trying to delete the code block
+    function deleteBlock(){
+        const codeBlock = document.getElementsByTagName("pre");
+        const target = document.getSelection();
         
-        var code_editor=ace.edit(element, {
-            theme: "ace/theme/tomorrow_night_eighties",
-            mode: "ace/mode/javascript",
-            maxLines: 30,
-            wrap: true,
-            autoScrollEditorIntoView: true,
-            enableBasicAutocompletion: true,
-            enableLiveAutocompletion: true,
+        
+        const id='';
+        $(document).ready(function(){
+            $(document).click(function(){
+            
+            });
         });
-        addLineAfterBlock(element);     
         
-        
-    }*/
-
-
+        const code_editor=ace.edit(id);
+        code_editor.destroy();
+        code_editor.container.remove();
+    }
+    
     function addLineAfterBlock(id) {
         const block = document.getElementById(`${id}`);
         const div = document.createElement('div');
@@ -417,7 +405,6 @@ export default function Toolbar() {
         }
     }
 
-
     //
     //
     //
@@ -514,12 +501,13 @@ export default function Toolbar() {
             <button onClick={e => openMenu()}>
                 Language for CodeBlock
                 <ul id="dropdown">
-                    <li id="cb-js">Javascript</li>
-                    <li id="cb-jv">Java</li>
-                    <li id="cb-py">Python</li>
-                    <li id="cb-C++">C++</li>
+                    <li onClick={e => updateLang("javascript")} >Javascript</li>
+                    <li onClick={e => updateLang("java")}>Java</li>
+                    <li onClick={e => updateLang("python")}>Python</li>
+                    <li onClick={e => updateLang("c_cpp")}>C++</li>
                 </ul>
             </button>
+            
         </div>
     )
 }
