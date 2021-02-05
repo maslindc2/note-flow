@@ -1,11 +1,13 @@
 .toolbar {
   padding: 5px;
   position: fixed;
-  top: 50px;
+  top:0px;
+  height: 10%;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: white;
 }
   
   /* Gets rid of the border for the buttons so its just icons only*/
