@@ -108,6 +108,9 @@ export default function Toolbar() {
     function addCodeBlock() {
         //creating new filled div
         var next_line = document.getElementById('editor');
+        if(lang==""){
+            lang="javascript";
+        }
         alert(" Language chosed for codeblock is: "+lang);
         format(
             'insertParagraph',
