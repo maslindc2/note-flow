@@ -54,11 +54,15 @@ export default function Toolbar() {
         
         //used for showing or hiding url input box
         const show = document.getElementById('url-input');
-
+        if(inputVal.substr(0,1) === " "){
+            inputVal = inputVal.substr(1);
+        }
         //Appends http:// to the url if the input did not have it to begin with
-        var prefix = 'http://';
-        if (inputVal.substr(0, prefix.length) !== prefix) {
-            inputVal = prefix + inputVal;
+        var prefix1 = 'http://';
+        var prefix2 = 'https://';
+        if ((inputVal.substr(0, prefix1.length) !== prefix1) && (inputVal.substr(0, prefix2.length) !== prefix2)){
+            
+            inputVal = prefix2 + inputVal;
         }
         
         /**
