@@ -6,6 +6,7 @@
   margin-right: auto;
   margin-top: 20px;
   font-size: 20px;
+  z-index: 1;
 }
 .editor > li {
   list-style: square;
@@ -61,12 +62,13 @@
   /*background-color: rgb(21, 34, 75);*/
   margin-left: auto;
   margin-right: auto;
-  margin-top: 0;
+  margin-top: 1em;
   margin-bottom: 0;
   height: auto;
   padding: 1em;
   border: 1px solid #635ba8;
-  padding: 8px;  
+  z-index: 1;
+   
 } 
 
 .mathBlock {
