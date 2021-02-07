@@ -8,7 +8,6 @@
   align-items: center;
   justify-content: center;
   background-color: white;
-  z-index: 2;
 }
   
   /* Gets rid of the border for the buttons so its just icons only*/
