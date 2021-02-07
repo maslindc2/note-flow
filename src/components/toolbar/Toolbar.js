@@ -111,7 +111,7 @@ export default function Toolbar() {
         if(lang==""){
             lang="javascript";
         }
-        alert(" Language chosed for codeblock is: "+lang);
+        alert(" Language chosen for codeblock is: "+lang);
         format(
             'insertParagraph',
             `<pre class='editor' id='${next_line}'</pre>`
@@ -443,6 +443,10 @@ export default function Toolbar() {
 
         newLink.click();
     }
+    function bulletPoint(){
+        format('insertHTML',`<ol><li></li></ol>`);
+        
+    }
 
     return (
         <div className='toolbar'>
@@ -460,7 +464,7 @@ export default function Toolbar() {
             </div>
             <div class="tooltip">
                 <span class="tooltiptext">List</span>
-                <button onClick={e => format('insertOrderedList')}>
+                <button onClick={e => bulletPoint()}>
                     <Icon icon={list} />
                 </button>
             </div>

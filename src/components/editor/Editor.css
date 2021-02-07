@@ -8,10 +8,12 @@
   font-size: 20px;
 }
 .editor > li {
-  list-style: square;
+  list-style: circle;
   margin: initial
 }
-
+ol, ul{
+  list-style:disc;
+}
 /*.toolbar >li{
   list-style: square;
   display: inline-block;
@@ -25,12 +27,9 @@
   position: absolute;
   height:auto;
   width: auto;
-  background-color: #f1f1f1;;
+  background-color: #f1f1f1;
   z-index: 1;
-  text-align: center;
-  
-  
-  
+  text-align: center;  
 }
 #dropdown li{
   padding:10px 15px;
