@@ -448,7 +448,7 @@ export default function Toolbar() {
         newLink.click();
     }
     function bulletPoint(){
-        format('insertHTML',`<ol><li></li></ol>`);
+        format('insertHTML',`<ol><li class="bullet"></li></ol>`);
         
     }
 
