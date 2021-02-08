@@ -6,6 +6,7 @@
   margin-right: auto;
   margin-top: 20px;
   font-size: 20px;
+  z-index: 1;
 }
 .editor > li {
   list-style: circle;
