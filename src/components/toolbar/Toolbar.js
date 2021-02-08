@@ -71,7 +71,7 @@ export default function Toolbar() {
          * A hyperlink is created by first clicking the url button, then paste your url in the input box,
          * then highlight the text you want to turn into a hyperlink and then press the check mark button. 
          */
-        if (text.baseNode.data == undefined) {
+        if (text.baseNode.data === undefined) {
             format(
                 'insertHTML', `<a href='${inputVal}' target='_blank'>${inputVal}</a>`
             );
@@ -112,7 +112,7 @@ export default function Toolbar() {
     function addCodeBlock() {
         //creating new filled div
         var next_line = document.getElementById('editor');
-        if(lang==""){
+        if(lang===""){
             lang="javascript";
         }
         alert(" Language chosen for codeblock is: "+lang);
@@ -225,7 +225,7 @@ export default function Toolbar() {
         //Added event listener for when you exit out of math block using arrow
         //key
         mathBlock.addEventListener('focus-out', (ev) => {
-            if (ev.detail.direction == "forward") {
+            if (ev.detail.direction === "forward") {
 
                 document.getElementById('editor').focus();
                 var next_line = document.getElementById('editor');
@@ -233,7 +233,7 @@ export default function Toolbar() {
                     'insert',
                     `<pre class='editor' id='${next_line}'</pre>`
                 );
-            } else if (ev.detail.direction == "backward") {
+            } else if (ev.detail.direction === "backward") {
                 document.getElementById('editor').focus();
             }
         });
@@ -399,7 +399,7 @@ export default function Toolbar() {
                     sel.addRange(range);
                 }
             }
-        } else if ((sel = document.selection) && sel.type != "Control") {
+        } else if ((sel = document.selection) && sel.type !== "Control") {
             // IE < 9
             var originalRange = sel.createRange();
             originalRange.collapse(true);
