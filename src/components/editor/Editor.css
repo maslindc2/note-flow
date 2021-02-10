@@ -6,10 +6,41 @@
   margin-right: auto;
   margin-top: 20px;
   font-size: 20px;
+  z-index: 1;
 }
 .editor > li {
-  list-style: square;
+  list-style: circle;
   margin: initial
+}
+ol, ul{
+  list-style:disc;
+}
+/*.toolbar >li{
+  list-style: square;
+  display: inline-block;
+  background-color: aliceblue;
+  padding:10px 15px;
+  transition: all 0.8s ease;
+  position: relative
+}*/
+#dropdown {
+  display: none;
+  position: absolute;
+  height:auto;
+  width: auto;
+  background-color: #f1f1f1;
+  z-index: 1;
+  text-align: center;  
+}
+#dropdown li{
+  padding:10px 15px;
+  border: 1px solid black;
+  border-radius: 10px;
+  font-size: 100%;
+}
+
+#dropdown.active{
+  display:block;
 }
 #title {
   width: 95%;
@@ -27,17 +58,28 @@
   color: gray;
 }
 .codeBlock {
-  background-color: rgb(21, 34, 75);
+  /*background-color: rgb(21, 34, 75);*/
   margin-left: auto;
   margin-right: auto;
   margin-top: 0;
   margin-bottom: 0;
   height: auto;
-  min-height: 39px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  overflow: auto;
-  color: white;
-  padding: 8px;
+  padding: 1em;
+  border: 1px solid #635ba8;
+  padding: 8px;  
+  z-index: 1;
+} 
+
+.mathBlock {
+  font-size: 16px;
+  display: inline-block;
+  width: fit-content;
+  padding-inline-end: 20px;
+  padding-inline-start: 8px;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 8px;
+  border: #61dafb;
 }
