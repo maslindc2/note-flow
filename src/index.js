@@ -8,7 +8,9 @@ import App from './App';
 
 
 
-
+//top level of our app
+//Firebase is provided at the top level and all components have access to it. 
+//This way we avoid it being provided more than once
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
    <App />

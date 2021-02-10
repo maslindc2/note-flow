@@ -2,9 +2,8 @@ import React from 'react'
 
 import SignUp from './SignUp';
 
-import Firebase, { FirebaseContext } from './Firebase';
-import { SignUpLink } from './SignUp';
 
+//Top level of sign up functionality 
 
 class SignUpPage extends React.Component {
     render() {
@@ -12,6 +11,7 @@ class SignUpPage extends React.Component {
         <div>
         
         <h1>Sign Up Page</h1>
+        
         <SignUp />
         
         </div>

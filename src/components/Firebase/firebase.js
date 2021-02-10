@@ -3,7 +3,8 @@ import firebase from 'firebase/app'
 import 'firebase/auth';
 
 /*
-We can define these in an .env file later so we can add it
+Implementation of Firebase connectivity. 
+We can define the config function in an .env file later so we can add it
 to our gitinore file so our credentials aren't exposed. 
 */
 
@@ -19,17 +20,12 @@ const config = {
 
   class Firebase{
       constructor(){
-        /*
-        I've been getting a weird error where the firebase instance 
-        is intitailizing twice and throwing errors on every login and
-        sign up, refreshing fixes it though
-        */
+    
 
-        if(!firebase.apps.length){
-      
+           
           app.initializeApp(config);
           this.auth = app.auth();
-        }
+        
       
       }//constructor
     

@@ -1,5 +1,6 @@
 /*Provides a Firebase provider instance at the
-  top-level of our component hierarchy
+  top-level of our component hierarchy to avoid
+  making duplicate instances
 */
 
 import React from 'react';

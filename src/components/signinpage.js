@@ -1,10 +1,10 @@
 import React from 'react'
 import SignIn from './SignIn';
 
-import Firebase, { FirebaseContext } from './Firebase';
+
 import { SignUpLink } from './SignUp';
 
-
+//Top level of sign in functionality 
 
 class SignInPage extends React.Component {
   render() {

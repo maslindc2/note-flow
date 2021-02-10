@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
-
+import { withRouter } from 'react-router-dom';
 import { FirebaseContext } from '../Firebase';
 
+import { SignUpLink } from '../SignUp';
+import { withFirebase } from '../Firebase';
 
+
+//implementation of sign in functionality
+//succesfull sign in will send you to the editor component
 
 const SignIn = () => (
   <div>
     
-    <FirebaseContext.Consumer>
-    {firebase => <SignInForm firebase={firebase} />}
+ 
+     <SignInForm  />
      
-    </FirebaseContext.Consumer>
+ 
   </div>
 );
  
@@ -20,7 +25,7 @@ const INITIAL_STATE = {
   error: null,
 };
  
-class SignInForm extends Component {
+class SignInFormBase extends Component {
   constructor(props) {
     super(props);
  
@@ -34,8 +39,8 @@ class SignInForm extends Component {
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
         this.setState({ ...INITIAL_STATE });
+
         //Successful sign in will send user to editor page for now
-        //Need to figure out how to send user after sign in
         this.props.history.push("/editor");
       })
       .catch(error => {
@@ -78,8 +83,10 @@ class SignInForm extends Component {
       </form>
     );
   }
-}
  
+}
+
+const SignInForm = withRouter(withFirebase(SignInFormBase));
 
 export default SignIn;
  

@@ -3,6 +3,8 @@ import { NavLink, withRouter } from 'react-router-dom';
 
 import { withFirebase } from '../Firebase';
 
+//implementation of sign up functionality
+//successfull sign up will take you to the homepage
 
 const SignUp = () => (
   <div>
@@ -34,7 +36,7 @@ class SignUpFormBase extends Component {
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });
-        //redirects user after sign-in
+        //redirects user after a successful sign-in back to the home page
         this.props.history.push("/");
       })
       .catch(error => {
