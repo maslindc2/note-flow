@@ -1,4 +1,5 @@
 import app from 'firebase/app';
+import firebase from 'firebase/app'
 import 'firebase/auth';
 
 /*
@@ -23,10 +24,13 @@ const config = {
         is intitailizing twice and throwing errors on every login and
         sign up, refreshing fixes it though
         */
+
+        if(!firebase.apps.length){
       
           app.initializeApp(config);
           this.auth = app.auth();
-
+        }
+      
       }//constructor
     
 

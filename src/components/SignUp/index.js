@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 
+import { withFirebase } from '../Firebase';
 
-import { FirebaseContext } from '../Firebase';
 
 const SignUp = () => (
   <div>
-    <FirebaseContext.Consumer>
-      {firebase => <SignUpForm firebase={firebase} />}
-    </FirebaseContext.Consumer>
+   
+     <SignUpForm />
+    
   </div>
 );
 
@@ -20,7 +20,7 @@ const INITIAL_STATE = {
     error: null,
   };
  
-class SignUpForm extends Component {
+class SignUpFormBase extends Component {
   constructor(props) {
     super(props);
 
@@ -34,6 +34,8 @@ class SignUpForm extends Component {
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });
+        //redirects user after sign-in
+        this.props.history.push("/");
       })
       .catch(error => {
         this.setState({ error });
@@ -106,6 +108,8 @@ const SignUpLink = () => (
     Don't have an account? <NavLink  activeClassName="active" to="/signuppage">Sign Up</NavLink>
   </p>
 );
+
+const SignUpForm = withRouter(withFirebase(SignUpFormBase));
  
 export default SignUp;
  

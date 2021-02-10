@@ -10,11 +10,11 @@ class SignInPage extends React.Component {
   render() {
     return (
       <div>
-        <FirebaseContext.Provider value={new Firebase()}> 
+       
         <h1>Sign In Page</h1>
         <SignIn/>
         <SignUpLink/>
-        </FirebaseContext.Provider>
+       
       </div>
     )
   }

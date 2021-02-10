@@ -9,12 +9,13 @@ import { SignUpLink } from './SignUp';
 class SignUpPage extends React.Component {
     render() {
       return (
+        <div>
         
-        <FirebaseContext.Provider value={new Firebase()}> 
         <h1>Sign Up Page</h1>
         <SignUp />
         
-        </FirebaseContext.Provider>
+        </div>
+       
       )
 
     }
