@@ -1,6 +1,6 @@
 .toolbar {
   padding: 5px;
-  position: fixed;
+  position: inherit;
   top:0px;
   height: 10%;
   width: 100%;
@@ -8,6 +8,7 @@
   align-items: center;
   justify-content: center;
   background-color: white;
+  z-index: 2;
 }
   
   /* Gets rid of the border for the buttons so its just icons only*/
@@ -55,3 +56,10 @@ button:hover{
 .hidden {
   display: none;
 }
+
+.bullet:hover:not(.active) {
+    background-color: rgba(255, 255, 255, 0);
+    color: black;
+
+  }
+

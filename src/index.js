@@ -1,23 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-/*
-  Gives components access to the database.
-  Use a FirebaseContext.Consumer component 
-  to access it.
-*/
-import Firebase, {FirebaseContext} from './components/Firebase';
+import Firebase, { FirebaseContext } from './components/Firebase';
+import App from './App';
 
+
+
+//top level of our app
+//Firebase is provided at the top level and all components have access to it. 
+//This way we avoid it being provided more than once
 ReactDOM.render(
-  <React.StrictMode>
-    <FirebaseContext.Provider value = {new Firebase()} >
-      <App />
-    </FirebaseContext.Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
+  <FirebaseContext.Provider value={new Firebase()}>
+   <App />
+  </FirebaseContext.Provider>,
+  document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function

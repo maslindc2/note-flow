@@ -54,11 +54,15 @@ export default function Toolbar() {
         
         //used for showing or hiding url input box
         const show = document.getElementById('url-input');
-
+        if(inputVal.substr(0,1) === " "){
+            inputVal = inputVal.substr(1);
+        }
         //Appends http:// to the url if the input did not have it to begin with
-        var prefix = 'http://';
-        if (inputVal.substr(0, prefix.length) !== prefix) {
-            inputVal = prefix + inputVal;
+        var prefix1 = 'http://';
+        var prefix2 = 'https://';
+        if ((inputVal.substr(0, prefix1.length) !== prefix1) && (inputVal.substr(0, prefix2.length) !== prefix2)){
+            
+            inputVal = prefix2 + inputVal;
         }
         
         /**
@@ -67,7 +71,7 @@ export default function Toolbar() {
          * A hyperlink is created by first clicking the url button, then paste your url in the input box,
          * then highlight the text you want to turn into a hyperlink and then press the check mark button. 
          */
-        if (text.baseNode.data == undefined) {
+        if (text.baseNode.data === undefined) {
             format(
                 'insertHTML', `<a href='${inputVal}' target='_blank'>${inputVal}</a>`
             );
@@ -108,10 +112,10 @@ export default function Toolbar() {
     function addCodeBlock() {
         //creating new filled div
         var next_line = document.getElementById('editor');
-        if(lang==""){
+        if(lang===""){
             lang="javascript";
         }
-        alert(" Language chosed for codeblock is: "+lang);
+        alert(" Language chosen for codeblock is: "+lang);
         format(
             'insertParagraph',
             `<pre class='editor' id='${next_line}'</pre>`
@@ -221,7 +225,7 @@ export default function Toolbar() {
         //Added event listener for when you exit out of math block using arrow
         //key
         mathBlock.addEventListener('focus-out', (ev) => {
-            if (ev.detail.direction == "forward") {
+            if (ev.detail.direction === "forward") {
 
                 document.getElementById('editor').focus();
                 var next_line = document.getElementById('editor');
@@ -229,7 +233,7 @@ export default function Toolbar() {
                     'insert',
                     `<pre class='editor' id='${next_line}'</pre>`
                 );
-            } else if (ev.detail.direction == "backward") {
+            } else if (ev.detail.direction === "backward") {
                 document.getElementById('editor').focus();
             }
         });
@@ -395,7 +399,7 @@ export default function Toolbar() {
                     sel.addRange(range);
                 }
             }
-        } else if ((sel = document.selection) && sel.type != "Control") {
+        } else if ((sel = document.selection) && sel.type !== "Control") {
             // IE < 9
             var originalRange = sel.createRange();
             originalRange.collapse(true);
@@ -443,6 +447,10 @@ export default function Toolbar() {
 
         newLink.click();
     }
+    function bulletPoint(){
+        format('insertHTML',`<ol><li class="bullet"></li></ol>`);
+        
+    }
 
     return (
         <div className='toolbar'>
@@ -460,7 +468,7 @@ export default function Toolbar() {
             </div>
             <div class="tooltip">
                 <span class="tooltiptext">List</span>
-                <button onClick={e => format('insertOrderedList')}>
+                <button onClick={e => bulletPoint()}>
                     <Icon icon={list} />
                 </button>
             </div>
