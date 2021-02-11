@@ -1,21 +1,21 @@
 .toolbar {
-    padding: 5px;
-    position: fixed;
-    top: 50px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  /* Gets rid of the border for the buttons so its just icons only*/
-  button {
-    background-color: Transparent;
-    border: none;    
-    margin-left: 35px;
-    margin-right: 35px;
-  }
-  
-  .hidden {
-    display: none;
-  }
+  padding: 5px;
+  position: fixed;
+  top: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Gets rid of the border for the buttons so its just icons only*/
+button {
+  background-color: Transparent;
+  border: none;    
+  margin-left: 35px;
+  margin-right: 35px;
+}
+
+.hidden {
+  display: none;
+}

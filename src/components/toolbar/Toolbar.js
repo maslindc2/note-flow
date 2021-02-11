@@ -12,13 +12,30 @@ import { code } from 'react-icons-kit/iconic/code'
 import { plus } from 'react-icons-kit/iconic/plus'
 import { download } from 'react-icons-kit/iconic/download'
 
+import { MathfieldComponent } from 'react-mathlive'
+import Mathlive from 'mathlive'
+import { Mathfield, MathfieldElement } from 'mathlive'
+ 
+//imports for CodeBlock
+import * as ace from 'ace-builds/src-noconflict/ace';
+import 'ace-builds/src-min-noconflict/theme-tomorrow_night_eighties';
+import 'ace-builds/src-min-noconflict/mode-javascript';
+import 'ace-builds/src-min-noconflict/mode-java';
+import 'ace-builds/src-min-noconflict/mode-c_cpp';
+import 'ace-builds/src-min-noconflict/mode-python';
+import $ from "jquery";
+
+
 
 export default function Toolbar() {
 
-    //TODO: Populate these methods
+    
     function format(com, val) {
+        document.getElementById('editor').focus();
         document.execCommand(com, false, val);
     }
+
+    //Sets the url input box to shown or hidden
     function addLink() {
         const show = document.getElementById('url-input');
         if (show.classList.contains('hidden')) {
@@ -28,23 +45,47 @@ export default function Toolbar() {
         }
     }
 
-
-    function setUrl(e) {
-        if (e) {
-            e.preventDefault()
-        } else {
-            const url = document.getElementById('txtFormatUrl').value;
-            const show = document.getElementById('url-input');
-            const text = document.getSelection();
+    function setUrl() {
+        //Stores the input from the url box into inputVal
+        var inputVal = document.getElementById('textFormatUrl').value;
+        
+        //Text is used for creating a hyperlink
+        const text = document.getSelection();
+        
+        //used for showing or hiding url input box
+        const show = document.getElementById('url-input');
+        if(inputVal.substr(0,1) === " "){
+            inputVal = inputVal.substr(1);
+        }
+        //Appends http:// to the url if the input did not have it to begin with
+        var prefix1 = 'http://';
+        var prefix2 = 'https://';
+        if ((inputVal.substr(0, prefix1.length) !== prefix1) && (inputVal.substr(0, prefix2.length) !== prefix2)){
+            
+            inputVal = prefix2 + inputVal;
+        }
+        
+        /**
+         * This block handles url insert. text.baseNode.data==undefined checks to see if the user
+         * is trying to insert only a url and NOT create a hyper link.  Else handles creating the hyperlink.
+         * A hyperlink is created by first clicking the url button, then paste your url in the input box,
+         * then highlight the text you want to turn into a hyperlink and then press the check mark button. 
+         */
+        if (text.baseNode.data === undefined) {
             format(
-                'insertHTML',
-                `<a href='${url}' target='_blank'>${text}
-            </a>`
+                'insertHTML', `<a href='${inputVal}' target='_blank'>${inputVal}</a>`
             );
-            document.getElementById('txtFormatUrl').value = '';
-            show.classList.add('hidden');
+        } else {
+            format(
+                'insertHTML', `<a href='${inputVal}' target='_blank'>${text}</a>`
+            );
         }
 
+        //This makes the url input tag blank again. I could use "" or '' but JS thinks strings are the same as null
+        document.getElementById('textFormatUrl').value = " ";
+
+        //hides the input tag again 
+        show.classList.add('hidden');
     }
 
     function setHeader() {
@@ -52,30 +93,84 @@ export default function Toolbar() {
         format('insertHTML', `<h2>${target}</h2>`);
     }
 
-    //Vito's working on this method
-    function addCodeBlock() {
-        try {
-            const codeBlock = document.createElement('pre');
-            const target = document.getSelection();
-            if (
-                target.focusNode.nodeName.includes('#text') ||
-                target.focusNode.classList.contains('title') ||
-                target.focusNode.className.includes('codeBlock')
-            ) {
-                return
-            }
-            const id = `codeBlock-${document.getElementsByClassName('codeBlock').length + 1}`;
-            codeBlock.classList.add('codeBlock')
+    ////////////////////////////////////////
+    //Vito is working on this
+    var lang="";
 
-            format(
-                'insertHTML',
-                `<pre class='codeBlock' id='${id}'>${target}</pre>`
-            );
-            addLineAfterBlock(id)
-        } catch {
-            document.getElementById('editor').innerHTML = "Please select the editor area before using this function!"
-        }
+    //openmenu for code block
+    function openMenu() {
+        document.getElementById("dropdown").classList.toggle("active");
     }
+
+    //update language for code block
+    function updateLang(id){
+        lang=id;
+        return lang;
+    }
+
+    //Main function to create new code block
+    function addCodeBlock() {
+        //creating new filled div
+        var next_line = document.getElementById('editor');
+        if(lang===""){
+            lang="javascript";
+        }
+        alert(" Language chosen for codeblock is: "+lang);
+        format(
+            'insertParagraph',
+            `<pre class='editor' id='${next_line}'</pre>`
+        );
+        const codeBlock = document.createElement('pre');
+        const target = document.getSelection();
+        /*if (
+            target.focusNode.nodeName.includes('#text') ||
+            target.focusNode.classList.contains('title') ||
+            target.focusNode.className.includes('codeBlock')
+        ) {
+            return
+        }*/
+        const id = `codeBlock-${document.getElementsByClassName('codeBlock').length + 1}`;
+        //codeBlock.classList.add('codeBlock')
+
+        var new_block = format(
+            'insertHTML',
+            `<pre class='codeBlock' id='${id}'>${target}</pre>`
+        );
+        //Embbedding Ace editor
+        var mode_name = "ace/mode/"+lang;
+        
+        var code_editor = ace.edit(id, {
+            theme: "ace/theme/tomorrow_night_eighties",
+            mode: mode_name,
+            maxLines: 30,
+            wrap: true,
+            autoScrollEditorIntoView: true,
+            enableBasicAutocompletion: true,
+            enableLiveAutocompletion: true,
+        });
+
+        addLineAfterBlock(id);
+    }
+
+    
+    //experimenting to fix a dumb bug when trying to delete the code block
+    function deleteBlock(){
+        const codeBlock = document.getElementsByTagName("pre");
+        const target = document.getSelection();
+        
+        
+        const id='';
+        $(document).ready(function(){
+            $(document).click(function(){
+            
+            });
+        });
+        
+        const code_editor=ace.edit(id);
+        code_editor.destroy();
+        code_editor.container.remove();
+    }
+    
     function addLineAfterBlock(id) {
         const block = document.getElementById(`${id}`);
         const div = document.createElement('div');
@@ -88,9 +183,245 @@ export default function Toolbar() {
             block.after(div);
         }
     }
+    ////////////////////////////////////////////////////////
 
-    //Someone is researching this one I think
-    function addEquation() { }
+    //Emily working on this. Uses the Mathlive library and API
+    function addEquation() {
+
+        //Focus on editor, insert line
+        document.getElementById('editor').focus();
+        var next_line = document.getElementById('editor');
+        format(
+            'insert',
+            `<pre class='editor' id='${next_line}'</pre>`
+        );
+
+        //Create new math block element
+        const mathBlock = new MathfieldElement();
+
+        //set initial value and options. Changing this will
+        //change what the initial math equation looks like upon adding
+        //Currently empty
+        mathBlock.setValue("");
+
+        //Chunk of code setting math block options and attributes
+        mathBlock.setOptions({
+            virtualKeyboardMode: "off",
+            //virtualKeyboards: "all",
+            //virtualKeyboardTheme: "",
+            //virtualKeyboardLayout: "auto",
+            //virtualKeyboardToolbarOptions: "default",
+            smartMode: true,
+            smartFence: true,
+            resetStyle: true,
+            selectionMode: "beforeendr",
+        });
+        mathBlock.setAttribute("resetStyle", "true");
+        mathBlock.setAttribute("id",
+            `mathBlock-${document.getElementsByClassName('mathBlock').length + 1}`);
+        const id = mathBlock.id;
+        mathBlock.setAttribute("class", 'mathBlock');
+
+        //Added event listener for when you exit out of math block using arrow
+        //key
+        mathBlock.addEventListener('focus-out', (ev) => {
+            if (ev.detail.direction === "forward") {
+
+                document.getElementById('editor').focus();
+                var next_line = document.getElementById('editor');
+                format(
+                    'insert',
+                    `<pre class='editor' id='${next_line}'</pre>`
+                );
+            } else if (ev.detail.direction === "backward") {
+                document.getElementById('editor').focus();
+            }
+        });
+
+        //Event Listener to change math block value when there is user input
+        mathBlock.addEventListener('input', (ev) => {
+            mathBlock.setValue(ev.target.value);
+        })
+
+        const target = document.getSelection();
+
+        //Checking if valid location to place a math block
+        if (
+            target.focusNode.nodeName.includes('#text') ||
+            target.focusNode.classList.contains('title') ||
+            target.focusNode.className.includes('mathBlock')
+        ) {
+            return
+        }
+
+        //Focuses back on editor, and then inserts a block at
+        //the cursor using added function insertBlockAtCursor
+        const ellie = document.getElementById('editor');
+        document.getElementById('editor').focus();
+        insertBlockAtCursor(mathBlock, target);
+
+        /*
+            //Block of comments to test out different methods of inserting
+            //blocks and text elements
+
+            //const texty = document.createTextNode("hello world!");
+            //const spanny = document.createElement('span');
+            //const t = document.createTextNode("This is a span element");
+            //spanny.appendChild(t);
+            //ellie.appendChild(spanny);
+            //document.body.appendChild(spanny);
+            //insertTextAtCaret(spanny);
+
+        */
+        document.getElementById(id).focus();
+        /* Original format/executeCommand function. Does not appear to
+            be functional in the context of a <math-field> element
+        format('insert',
+                    `<pre class="mathBlock" id="${id}">${target}</pre>`
+                );
+        */
+
+        //If you comment out this line suddenly allows text editing to
+        //the right of the math field. Will hold off on text to side of
+        //until inline equation is figured out
+        addLineAfterBlock(id);
+
+    }
+
+
+    //Method to handle Tab and Enter button press (Emily)
+    function keyHandle(evt) {
+        const key = evt.keyCode;
+        switch (key) {
+            case 9: //Tab
+                insertTextAtCursor('\t');
+                evt.preventDefault();
+                break;
+            case 13: //Enter
+                insertTextAtCursor('\n');
+                evt.preventDefault();
+                break;
+        }
+    }
+
+    //Inserts text block at current cursor position (Emily)
+    function insertTextAtCursor(text) {
+        var sel, range;
+        sel = window.getSelection();
+        range = sel.getRangeAt(0);
+        range.deleteContents();
+        range.insertNode(document.createTextNode(text));
+    }
+
+    //Inserts an inline-block element at current cursor position (Emily)
+    function insertBlockAtCursor(block, target) {
+        var range;
+        range = target.getRangeAt(0);
+        range.deleteContents();
+        range.insertNode(block);
+    }
+
+    //Experiment method to perform a different text insertion at cursor (Emily)
+    function insertTextAtCaret(text) {
+        var sel, range;
+        if (window.getSelection) {
+            sel = window.getSelection();
+            if (sel.getRangeAt && sel.rangeCount) {
+                range = sel.getRangeAt(0);
+                range.deleteContents();
+                range.insertNode(document.createTextNode(text));
+            }
+        } else if (document.selection && document.selection.createRange) {
+            document.selection.createRange().text = text;
+        }
+    }
+
+    //Save selection before you insert an element (Emily)
+    function saveSelection(sel) {
+        if (window.getSelection) {
+            sel = window.getSelection();
+            if (sel.getRangeAt && sel.rangeCount) {
+                return sel.getRangeAt(0);
+            }
+        } else if (document.selection && document.selection.createRange) {
+            return document.selection.createRange();
+        }
+        return null;
+    }
+
+    //Restore the previously saved selection (Emily)
+    function restoreSelection(range, sel) {
+        if (range) {
+            if (window.getSelection) {
+                sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+            } else if (document.selection && range.select) {
+                range.select();
+            }
+        }
+    }
+
+    //Insert HTML directly at caret position. Basically another
+    //experimental method to test out insertion of elements at
+    //cursor in doc (Emily)
+    function pasteHtmlAtCaret(html, selectPastedContent) {
+        var sel, range;
+        if (window.getSelection) {
+            // IE9 and non-IE
+            sel = window.getSelection();
+            if (sel.getRangeAt && sel.rangeCount) {
+                range = sel.getRangeAt(0);
+                range.deleteContents();
+
+                // Range.createContextualFragment() would be useful here but is
+                // only relatively recently standardized and is not supported in
+                // some browsers (IE9, for one)
+                var el = document.createElement("div");
+                el.innerHTML = html;
+                var frag = document.createDocumentFragment(), node, lastNode;
+                while ((node = el.firstChild)) {
+                    lastNode = frag.appendChild(node);
+                }
+                var firstNode = frag.firstChild;
+                range.insertNode(frag);
+
+                // Preserve the selection
+                if (lastNode) {
+                    range = range.cloneRange();
+                    range.setStartAfter(lastNode);
+                    if (selectPastedContent) {
+                        range.setStartBefore(firstNode);
+                    } else {
+                        range.collapse(true);
+                    }
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                }
+            }
+        } else if ((sel = document.selection) && sel.type !== "Control") {
+            // IE < 9
+            var originalRange = sel.createRange();
+            originalRange.collapse(true);
+            sel.createRange().pasteHTML(html);
+            if (selectPastedContent) {
+                range = sel.createRange();
+                range.setEndPoint("StartToStart", originalRange);
+                range.select();
+            }
+        }
+    }
+
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+
+
 
     //Temporary code for storing title and content into a txt file
     function handleSave() {
@@ -116,40 +447,78 @@ export default function Toolbar() {
 
         newLink.click();
     }
+    function bulletPoint(){
+        format('insertHTML',`<ol><li class="bullet"></li></ol>`);
+        
+    }
 
     return (
         <div className='toolbar'>
-            <button onClick={e => format('bold')}>
-                <Icon icon={bold} />
-            </button>
-            <button onClick={e => format('italic')}>
-                <Icon icon={italic} />
-            </button>
-            <button onClick={e => format('insertUnorderedList')}>
-                <Icon icon={list} />
-            </button>
+            <div class="tooltip">
+                <span class="tooltiptext">Bold</span>
+                <button onClick={e => format('bold')}>
+                    <Icon icon={bold} />
+                </button>
+            </div>
+            <div class="tooltip">
+                <span class="tooltiptext">Italicize</span>
+                <button onClick={e => format('italic')}>
+                    <Icon icon={italic} />
+                </button>
+            </div>
+            <div class="tooltip">
+                <span class="tooltiptext">List</span>
+                <button onClick={e => bulletPoint()}>
+                    <Icon icon={list} />
+                </button>
+            </div>
+            <div class="tooltip">
+                <span class="tooltiptext">Hyperlink</span>
+                <button onClick={e => addLink()}>
+                    <Icon icon={link} />
+                </button>
+            </div>
 
-            <button onClick={e => addLink()}>
-                <Icon icon={link} />
-            </button>
             <div id='url-input' className='hidden'>
                 <input id='textFormatUrl' placeholder='url' />
                 <button onClick={e => setUrl(e)}>
                     <Icon icon={check} />
                 </button>
             </div>
-            <button onClick={e => setHeader()}>
-                <Icon icon={header} />
+            <div class="tooltip">
+                <span class="tooltiptext">Header</span>
+                <button onClick={e => setHeader()}>
+                    <Icon icon={header} />
+                </button>
+            </div>
+            <div class="tooltip">
+                <span class="tooltiptext">Code Block</span>
+                <button onClick={e => addCodeBlock(lang)}>
+                    <Icon icon={code} />
+                </button>
+            </div>
+            <div class="tooltip">
+                <span class="tooltiptext">Equation</span>
+                <button onClick={e => addEquation()}>
+                    <Icon icon={plus} />
+                </button>
+            </div>
+            <div class="tooltip">
+                <span class="tooltiptext">Save</span>
+                <button onClick={e => handleSave()}>
+                    <Icon icon={download} />
+                </button>
+            </div>
+            <button onClick={e => openMenu()}>
+                Language for CodeBlock
+                <ul id="dropdown">
+                    <li onClick={e => updateLang("javascript")} >Javascript</li>
+                    <li onClick={e => updateLang("java")}>Java</li>
+                    <li onClick={e => updateLang("python")}>Python</li>
+                    <li onClick={e => updateLang("c_cpp")}>C++</li>
+                </ul>
             </button>
-            <button onClick={e => addCodeBlock()}>
-                <Icon icon={code} />
-            </button>
-            <button onClick={e => addEquation()}>
-                <Icon icon={plus} />
-            </button>
-            <button onClick={e => handleSave()}>
-                <Icon icon={download} />
-            </button>
+            
         </div>
     )
 }
