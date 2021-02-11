@@ -1,58 +1,30 @@
-import React, { Component } from 'react';
-
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
-
-import Navigation from './components/Navigation'
-import SignUpPage from './components/signuppage'
-import HomePage from './components/homepage';
-import EditorPage from './components/editorpage'
-import SignInPage from './components/signinpage'
-import Notfound from './components/notfound';
-import { withFirebase } from './components/Firebase';
+import React from 'react';
+import Editor from './components/editor/Editor'
+import './App.css'; 
 
 /*
-Implementation of our main App component
-The swith tags tell React what compoenets
-to render based on what the current URL path 
-is 
+For future app navigation and database connectivity. 
+Enables route to component mapping.
 */
-  class App extends Component {
-    constructor(props) {
-      super(props);
-   
-      this.state = {
-        authUser: null,
-      };
-    }
+import { BrowserRouter as Router } from 'react-router-dom'; 
 
-    componentDidMount() {
-        this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
-          authUser
-            ? this.setState({ authUser })
-            : this.setState({ authUser: null });
-        });
-      }
+/*
+For navigation to different components.
+Configured in ./components/navigation/routes.js 
+*/
+import Navigation from './components/navigation/Navigation';
 
-      componentWillUnmount() {
-        this.listener();
-      }
-   
-    render() {
-      return (
-        <Router>
-        <div>
-            <Navigation authUser={this.state.authUser} />
-                <Switch>
-                    <Route exact path="/" component={HomePage} />
-                    <Route path="/signuppage" component={SignUpPage} />
-                    <Route path="/signinpage" component={SignInPage} />
-                    <Route path="/editor" component={EditorPage} />
-                    <Route component={Notfound} />
-                </Switch>
-         </div>
-        </Router>
-      );
-    }
-  }
-   
-  export default withFirebase(App);
+
+//Main function for running the app
+function App() {
+  return (
+    <div className='app'>
+      <Router> 
+        <Navigation/>
+        <Editor/>
+      </Router>
+    </div>
+  );
+}
+
+export default App
