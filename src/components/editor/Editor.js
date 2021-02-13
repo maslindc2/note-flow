@@ -1,7 +1,7 @@
 import React from 'react';
-import Toolbar from '../toolbar/Toolbar'
+import ToolbarInner from '../toolbar/Toolbar'
 import './Editor.css';
-
+import AppBarDrawer from "../Navigation/AppBarDrawer";
 
 //Editor function
 export default function Editor() {
@@ -21,20 +21,24 @@ export default function Editor() {
     //Return the content from Toolbar and Editor this goes to App.js
     return (
         <React.Fragment>
-            <Toolbar />
-            <div
-                id='title'
-                contentEditable='true'
-                data-placeholder='Title...'
-                className='title'
-            ></div>
-            <div
-                className='editor'
-                id='editor'
-                contentEditable='true'
-                data-placeholder='Body...'
-                onPaste={(e) => paste(e)}
-            ></div>
+
+            <div class={"wrap"}>
+                <div
+                    id='title'
+                    contentEditable='true'
+                    data-placeholder='Title...'
+                    className='title'
+                ></div>
+                <div
+                    className='editor'
+                    id='editor'
+                    contentEditable='true'
+                    data-placeholder='Body...'
+                    onPaste={(e) => paste(e)}
+                ></div>
+
+            </div>
+
         </React.Fragment>
     )
 }

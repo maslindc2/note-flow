@@ -25,10 +25,33 @@ import 'ace-builds/src-min-noconflict/mode-c_cpp';
 import 'ace-builds/src-min-noconflict/mode-python';
 import $ from "jquery";
 
+//Material UI Imports
+import FormatBoldIcon from '@material-ui/icons/FormatBold';
+import FormatItalicIcon from '@material-ui/icons/FormatItalic';
+import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
+import CodeIcon from '@material-ui/icons/Code';
+import FunctionsIcon from '@material-ui/icons/Functions';
+import InsertLinkIcon from '@material-ui/icons/InsertLink';
+import TextFieldsIcon from '@material-ui/icons/TextFields';
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import CheckIcon from '@material-ui/icons/Check';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import { makeStyles } from '@material-ui/core/styles';
+import AppBarDrawer from "../Navigation/AppBarDrawer";
+import App from "../../App";
 
 
-export default function Toolbar() {
+const useStyles = makeStyles((theme) => ({
+    root: {
+        '& > svg': {
+            margin: theme.spacing(2),
+        },
+    },
+}));
 
+
+
+export default function ToolbarInner() {
     
     function format(com, val) {
         document.getElementById('editor').focus();
@@ -453,72 +476,72 @@ export default function Toolbar() {
     }
 
     return (
-        <div className='toolbar'>
-            <div class="tooltip">
-                <span class="tooltiptext">Bold</span>
-                <button onClick={e => format('bold')}>
-                    <Icon icon={bold} />
-                </button>
-            </div>
-            <div class="tooltip">
-                <span class="tooltiptext">Italicize</span>
-                <button onClick={e => format('italic')}>
-                    <Icon icon={italic} />
-                </button>
-            </div>
-            <div class="tooltip">
-                <span class="tooltiptext">List</span>
-                <button onClick={e => bulletPoint()}>
-                    <Icon icon={list} />
-                </button>
-            </div>
-            <div class="tooltip">
-                <span class="tooltiptext">Hyperlink</span>
-                <button onClick={e => addLink()}>
-                    <Icon icon={link} />
-                </button>
-            </div>
+            <div className='toolbar'>
+                <div class="tooltip">
+                    <span class="tooltiptext">Bold</span>
+                    <button class={"bar"} onClick={e => format('bold')}>
+                        <FormatBoldIcon/>
+                    </button>
+                </div>
+                <div class="tooltip">
+                    <span class="tooltiptext">Italicize</span>
+                    <button class={"bar"} onClick={e => format('italic')}>
+                        <FormatItalicIcon/>
+                    </button>
+                </div>
+                <div class="tooltip">
+                    <span class="tooltiptext">List</span>
+                    <button class={"bar"} onClick={e => bulletPoint()}>
+                        <FormatListBulletedIcon/>
+                    </button>
+                </div>
+                <div class="tooltip">
+                    <span class="tooltiptext">Hyperlink</span>
+                    <button class={"bar"} onClick={e => addLink()}>
+                        <InsertLinkIcon/>
+                    </button>
+                </div>
 
-            <div id='url-input' className='hidden'>
-                <input id='textFormatUrl' placeholder='url' />
-                <button onClick={e => setUrl(e)}>
-                    <Icon icon={check} />
+                <div id='url-input' className='hidden'>
+                    <input id='textFormatUrl' placeholder='url' />
+                    <button class={"bar"} onClick={e => setUrl(e)}>
+                        <CheckIcon/>
+                    </button>
+                </div>
+                <div class="tooltip">
+                    <span class="tooltiptext">Header</span>
+                    <button class={"bar"} onClick={e => setHeader()}>
+                        <TextFieldsIcon/>
+                    </button>
+                </div>
+                <div class="tooltip">
+                    <span class="tooltiptext">Code Block</span>
+                    <button class={"bar"} onClick={e => addCodeBlock(lang)}>
+                        <CodeIcon/>
+                    </button>
+                </div>
+                <div class="tooltip">
+                    <span class="tooltiptext">Equation</span>
+                    <button class={"bar"} onClick={e => addEquation()}>
+                        <FunctionsIcon/>
+                    </button>
+                </div>
+                <div class="tooltip">
+                    <span class="tooltiptext">Save</span>
+                    <button class={"bar"} onClick={e => handleSave()}>
+                        <SaveAltIcon/>
+                    </button>
+                </div>
+                <button class={"bar"} onClick={e => openMenu()}>
+                    Language for CodeBlock
+                    <ul id="dropdown">
+                        <li onClick={e => updateLang("javascript")} >Javascript</li>
+                        <li onClick={e => updateLang("java")}>Java</li>
+                        <li onClick={e => updateLang("python")}>Python</li>
+                        <li onClick={e => updateLang("c_cpp")}>C++</li>
+                    </ul>
                 </button>
+
             </div>
-            <div class="tooltip">
-                <span class="tooltiptext">Header</span>
-                <button onClick={e => setHeader()}>
-                    <Icon icon={header} />
-                </button>
-            </div>
-            <div class="tooltip">
-                <span class="tooltiptext">Code Block</span>
-                <button onClick={e => addCodeBlock(lang)}>
-                    <Icon icon={code} />
-                </button>
-            </div>
-            <div class="tooltip">
-                <span class="tooltiptext">Equation</span>
-                <button onClick={e => addEquation()}>
-                    <Icon icon={plus} />
-                </button>
-            </div>
-            <div class="tooltip">
-                <span class="tooltiptext">Save</span>
-                <button onClick={e => handleSave()}>
-                    <Icon icon={download} />
-                </button>
-            </div>
-            <button onClick={e => openMenu()}>
-                Language for CodeBlock
-                <ul id="dropdown">
-                    <li onClick={e => updateLang("javascript")} >Javascript</li>
-                    <li onClick={e => updateLang("java")}>Java</li>
-                    <li onClick={e => updateLang("python")}>Python</li>
-                    <li onClick={e => updateLang("c_cpp")}>C++</li>
-                </ul>
-            </button>
-            
-        </div>
     )
 }

@@ -1,32 +1,59 @@
 .toolbar {
   padding: 5px;
-  position: inherit;
+  position: relative;
+  margin-top: 64px;
   top:0px;
-  height: 10%;
+  height: 50px;
+  margin-left: fill;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: white;
-  z-index: 2;
+  background-color: #212121;
 }
-  
-  /* Gets rid of the border for the buttons so its just icons only*/
+
+
+.toolbarshift {
+  padding: 5px;
+  position: fixed;
+  margin-right: 240px;
+  margin-top: 64px;
+  top:0px;
+  height: 50px;
+  width: auto;
+  margin-left: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
+/* Gets rid of the border for the buttons so its just icons only*/
 button {
   background-color: Transparent;
-  border: none;    
+  border: none;
   margin-left: 35px;
   margin-right: 35px;
   margin-bottom:1px;
 }
+
 button:hover{
   transition:0.2;
   opacity: 50%;
 }
 
+#dropdown {
+  color: #212121;
+}
+
+.bar {
+  color: white;
+}
+
 .tooltip {
   position: relative;
   display: inline-block;
+
 }
 
 .tooltip .tooltiptext {
@@ -37,16 +64,16 @@ button:hover{
   text-align: center;
   border-radius: 6px;
   padding: 5px 0;
-  
+
   /* Position the tooltip */
   position: absolute;
   z-index: 1;
   bottom: 100%;
   left: 50%;
   margin-left: -60px;
-  opacity: 0; 
+  opacity: 0;
   transition: opacity 0.5s;
-  
+
 }
 .tooltip:hover .tooltiptext {
   visibility: visible;
@@ -56,10 +83,3 @@ button:hover{
 .hidden {
   display: none;
 }
-
-.bullet:hover:not(.active) {
-    background-color: rgba(255, 255, 255, 0);
-    color: black;
-
-  }
-
