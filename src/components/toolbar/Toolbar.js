@@ -1,17 +1,6 @@
 import React from 'react'
 import './Toolbar.css'
 
-import Icon from 'react-icons-kit'
-import { bold } from 'react-icons-kit/iconic/bold'
-import { italic } from 'react-icons-kit/iconic/italic'
-import { list } from 'react-icons-kit/iconic/list'
-import { link } from 'react-icons-kit/iconic/link'
-import { check } from 'react-icons-kit/iconic/check'
-import { header } from 'react-icons-kit/iconic/header'
-import { code } from 'react-icons-kit/iconic/code'
-import { plus } from 'react-icons-kit/iconic/plus'
-import { download } from 'react-icons-kit/iconic/download'
-
 import { MathfieldComponent } from 'react-mathlive'
 import Mathlive from 'mathlive'
 import { Mathfield, MathfieldElement } from 'mathlive'
@@ -56,6 +45,10 @@ export default function ToolbarInner() {
     function format(com, val) {
         document.getElementById('editor').focus();
         document.execCommand(com, false, val);
+    }
+
+    function bulletPoint() {
+        format('insertHTML', `<ul><li class="bulletList"></li></ul>`);
     }
 
     //Sets the url input box to shown or hidden
@@ -469,10 +462,6 @@ export default function ToolbarInner() {
         }
 
         newLink.click();
-    }
-    function bulletPoint(){
-        format('insertHTML',`<ol><li class="bullet"></li></ol>`);
-        
     }
 
     return (

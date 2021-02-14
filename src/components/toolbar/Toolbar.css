@@ -45,7 +45,11 @@ button:hover{
 #dropdown {
   color: #212121;
 }
-
+/* bulletList class is Used for the list function */ 
+.bulletList:hover:not(.active) {
+    background-color: rgba(0, 0, 0, 0);
+    color: black;
+}
 .bar {
   color: white;
 }
