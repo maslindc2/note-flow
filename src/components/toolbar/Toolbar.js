@@ -7,6 +7,7 @@ import { Mathfield, MathfieldElement } from 'mathlive'
  
 //imports for CodeBlock
 import * as ace from 'ace-builds/src-noconflict/ace';
+import 'ace-builds/src-min-noconflict/ext-language_tools';
 import 'ace-builds/src-min-noconflict/theme-tomorrow_night_eighties';
 import 'ace-builds/src-min-noconflict/mode-javascript';
 import 'ace-builds/src-min-noconflict/mode-java';
@@ -111,26 +112,19 @@ export default function ToolbarInner() {
 
     ////////////////////////////////////////
     //Vito is working on this
-    var lang="";
 
     //openmenu for code block
     function openMenu() {
         document.getElementById("dropdown").classList.toggle("active");
     }
 
-    //update language for code block
-    function updateLang(id){
-        lang=id;
-        return lang;
-    }
+    
 
     //Main function to create new code block
-    function addCodeBlock() {
+    function addCodeBlock(lang) {
         //creating new filled div
         var next_line = document.getElementById('editor');
-        if(lang===""){
-            lang="javascript";
-        }
+        
         alert(" Language chosen for codeblock is: "+lang);
         format(
             'insertParagraph',
@@ -138,31 +132,41 @@ export default function ToolbarInner() {
         );
         const codeBlock = document.createElement('pre');
         const target = document.getSelection();
-        /*if (
+        /*
+        if (
             target.focusNode.nodeName.includes('#text') ||
             target.focusNode.classList.contains('title') ||
             target.focusNode.className.includes('codeBlock')
         ) {
             return
-        }*/
+        }
+        */
         const id = `codeBlock-${document.getElementsByClassName('codeBlock').length + 1}`;
-        //codeBlock.classList.add('codeBlock')
+        codeBlock.classList.add('codeBlock');
+        
 
         var new_block = format(
             'insertHTML',
             `<pre class='codeBlock' id='${id}'>${target}</pre>`
         );
+        
         //Embbedding Ace editor
         var mode_name = "ace/mode/"+lang;
-        
+        ace.require("ace/ext/language_tools");
         var code_editor = ace.edit(id, {
             theme: "ace/theme/tomorrow_night_eighties",
             mode: mode_name,
+            minLines: 2,
             maxLines: 30,
             wrap: true,
-            autoScrollEditorIntoView: true,
+            autoScrollEditorIntoView: true,    
+        });
+
+        code_editor.setOptions({
+            fontSize: '12pt',
             enableBasicAutocompletion: true,
-            enableLiveAutocompletion: true,
+            enableSnippets: true,
+            enableLiveAutocompletion: true
         });
 
         addLineAfterBlock(id);
@@ -198,6 +202,16 @@ export default function ToolbarInner() {
         } else {
             block.after(div);
         }
+    }
+    //experiementing saving stuffs  to firebase
+    var content;
+    var title;
+    function handleSave_2() {
+        content = document.getElementById('editor').innerHTML;
+        title = document.getElementById('title').textContent;        
+    }
+    function pasteSave(){
+        document.getElementById('editor').innerHTML= content;
     }
     ////////////////////////////////////////////////////////
 
@@ -504,11 +518,17 @@ export default function ToolbarInner() {
                     </button>
                 </div>
                 <div class="tooltip">
-                    <span class="tooltiptext">Code Block</span>
-                    <button class={"bar"} onClick={e => addCodeBlock(lang)}>
-                        <CodeIcon/>
-                    </button>
-                </div>
+                <span class="tooltiptext">Code Block</span>
+                <button class={"bar"} onClick={e => openMenu()}>
+                    <CodeIcon />
+                    <ul id="dropdown">
+                    <li onClick={e => addCodeBlock("javascript")} >Javascript</li>
+                    <li onClick={e => addCodeBlock("java")}>Java</li>
+                    <li onClick={e => addCodeBlock("python")}>Python</li>
+                    <li onClick={e => addCodeBlock("c_cpp")}>C++</li>
+                </ul>
+                </button>
+            </div>
                 <div class="tooltip">
                     <span class="tooltiptext">Equation</span>
                     <button class={"bar"} onClick={e => addEquation()}>
@@ -521,15 +541,7 @@ export default function ToolbarInner() {
                         <SaveAltIcon/>
                     </button>
                 </div>
-                <button class={"bar"} onClick={e => openMenu()}>
-                    Language for CodeBlock
-                    <ul id="dropdown">
-                        <li onClick={e => updateLang("javascript")} >Javascript</li>
-                        <li onClick={e => updateLang("java")}>Java</li>
-                        <li onClick={e => updateLang("python")}>Python</li>
-                        <li onClick={e => updateLang("c_cpp")}>C++</li>
-                    </ul>
-                </button>
+                
 
             </div>
     )

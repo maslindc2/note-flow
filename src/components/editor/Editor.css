@@ -33,7 +33,7 @@
   position: absolute;
   height:auto;
   width: auto;
-  background-color: #f1f1f1;;
+  
   z-index: 1;
   text-align: center;
 }
@@ -53,6 +53,10 @@
   border: 1px solid black;
   border-radius: 10px;
   font-size: 100%;
+}
+
+#dropdown li:hover{
+  background-color: #f1f1f1;
 }
 
 #dropdown.active{
