@@ -25,7 +25,7 @@ const config = {
            
           app.initializeApp(config);
           this.auth = app.auth();
-        
+          this.database =app.database();
       
       }//constructor
     

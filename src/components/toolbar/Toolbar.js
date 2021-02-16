@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{ Component } from 'react'
 import './Toolbar.css'
 
 import { MathfieldComponent } from 'react-mathlive'
@@ -29,6 +29,13 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBarDrawer from "../Navigation/AppBarDrawer";
 import App from "../../App";
+//saving
+import { withFirebase } from '../Firebase';
+import Firebase from '../Firebase/firebase.js';
+import firebase from 'firebase';
+import user from '../UserInfo/userInfo';
+
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -174,7 +181,7 @@ export default function ToolbarInner() {
 
     
     //experimenting to fix a dumb bug when trying to delete the code block
-    function deleteBlock(){
+   /* function deleteBlock(){
         const codeBlock = document.getElementsByTagName("pre");
         const target = document.getSelection();
         
@@ -189,7 +196,7 @@ export default function ToolbarInner() {
         const code_editor=ace.edit(id);
         code_editor.destroy();
         code_editor.container.remove();
-    }
+    }*/
     
     function addLineAfterBlock(id) {
         const block = document.getElementById(`${id}`);
@@ -203,16 +210,21 @@ export default function ToolbarInner() {
             block.after(div);
         }
     }
-    //experiementing saving stuffs  to firebase
-    var content;
-    var title;
+    
     function handleSave_2() {
-        content = document.getElementById('editor').innerHTML;
-        title = document.getElementById('title').textContent;        
+        
+          //firebase.initializeApp(config);
+
+        var content = document.getElementById('editor').innerHTML;
+        
+       const itemsRef= firebase.database().ref('items');
+       var childRef = itemsRef.child(user.name);
+       childRef.update({
+           editor: content
+       })
+                
     }
-    function pasteSave(){
-        document.getElementById('editor').innerHTML= content;
-    }
+    
     ////////////////////////////////////////////////////////
 
     //Emily working on this. Uses the Mathlive library and API
@@ -537,7 +549,7 @@ export default function ToolbarInner() {
                 </div>
                 <div class="tooltip">
                     <span class="tooltiptext">Save</span>
-                    <button class={"bar"} onClick={e => handleSave()}>
+                    <button class={"bar"} onClick={e => handleSave_2()}>
                         <SaveAltIcon/>
                     </button>
                 </div>

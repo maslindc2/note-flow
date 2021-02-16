@@ -18,13 +18,12 @@ is
 */
   class App extends Component {
     constructor(props) {
-      super(props);
-   
+      super(props);   
       this.state = {
         authUser: null,
-      };
+      };      
     }
-
+  
     componentDidMount() {
         this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
           authUser

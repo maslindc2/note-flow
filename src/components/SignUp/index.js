@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 
 import { withFirebase } from '../Firebase';
-
+import Firebase from '../Firebase/firebase.js';
+import firebase from 'firebase';
+import user from '../UserInfo/userInfo'
 //implementation of sign up functionality
 //successfull sign up will take you to the homepage
 
@@ -20,6 +22,7 @@ const INITIAL_STATE = {
     passwordOne: '',
     passwordTwo: '',
     error: null,
+    content:" it's working"
   };
  
 class SignUpFormBase extends Component {
@@ -35,6 +38,17 @@ class SignUpFormBase extends Component {
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
+        
+        //set initial structure in database
+        user.name= this.state.email.split('@')[0];
+        
+        const itemsRef= firebase.database().ref('items/'+user.name);
+        itemsRef.set({
+            fullName: this.state.username,
+            editor:'the account is first created'
+          
+        })
+
         this.setState({ ...INITIAL_STATE });
         //redirects user after a successful sign-in back to the home page
         this.props.history.push("/");
@@ -59,6 +73,7 @@ class SignUpFormBase extends Component {
         passwordOne,
         passwordTwo,
         error,
+        content
       } = this.state;
 
     const isInvalid =

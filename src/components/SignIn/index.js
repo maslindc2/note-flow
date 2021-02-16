@@ -4,6 +4,9 @@ import { FirebaseContext } from '../Firebase';
 
 import { SignUpLink } from '../SignUp';
 import { withFirebase } from '../Firebase';
+import user from '../UserInfo/userInfo';
+import Firebase from '../Firebase/firebase.js';
+import firebase from 'firebase';
 
 
 //implementation of sign in functionality
@@ -23,7 +26,10 @@ const INITIAL_STATE = {
   email: '',
   password: '',
   error: null,
+  
+
 };
+
  
 class SignInFormBase extends Component {
   constructor(props) {
@@ -31,15 +37,28 @@ class SignInFormBase extends Component {
  
     this.state = { ...INITIAL_STATE };
   }
- 
+  
   onSubmit = event => {
     const { email, password } = this.state;
- 
+    
     this.props.firebase
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
-        this.setState({ ...INITIAL_STATE });
+        //update username
+        user.name= this.state.email.split('@')[0];
 
+        //set state back to initial
+        this.setState({ ...INITIAL_STATE });
+        
+        //get content from the database
+         const itemsRef= firebase.database().ref('items');
+          itemsRef.on('value', (snapshot) => {
+          let items = snapshot.val();
+          
+          //update the content of the user
+          user.content= items[user.name].editor;
+          document.getElementById('editor').innerHTML=user.content;
+      })
         //Successful sign in will send user to editor page for now
         this.props.history.push("/editor");
       })
@@ -75,6 +94,7 @@ class SignInFormBase extends Component {
           type="password"
           placeholder="Password"
         />
+        
         <button disabled={isInvalid} type="submit" color={"black"}>
           Sign In
         </button>
