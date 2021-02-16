@@ -20,13 +20,6 @@
   margin: initial
 }
 
-/*This tag sets the app bar to have a z-index of 1
-  This was done because the app bar would overwrite the tool tip text.  
-*/
-.MuiAppBar-root{
-  z-index:1;
-}
-
 /*.toolbar >li{
   list-style: square;
   display: inline-block;
@@ -80,6 +73,8 @@
   font-size: 40px;
   background-color: white;
   color: #282c34;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .editor:focus, #title:focus {
   outline: none;

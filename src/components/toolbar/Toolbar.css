@@ -71,7 +71,7 @@ button:hover{
 
   /* Position the tooltip */
   position: absolute;
-  z-index: 1;
+  z-index: 1100; /*This z-index makes certain the app bar does not overwrite the tooltip*/
   bottom: 100%;
   left: 50%;
   margin-left: -60px;
