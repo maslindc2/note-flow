@@ -248,15 +248,15 @@ export default function ToolbarInner() {
 
         //Chunk of code setting math block options and attributes
         mathBlock.setOptions({
-            virtualKeyboardMode: "off",
-            //virtualKeyboards: "all",
-            //virtualKeyboardTheme: "",
-            //virtualKeyboardLayout: "auto",
-            //virtualKeyboardToolbarOptions: "default",
+            virtualKeyboardMode: "manual",
+            virtualKeyboards: "all",
+            virtualKeyboardTheme: "",
+            virtualKeyboardLayout: "auto",
+            virtualKeyboardToolbarOptions: "default",
             smartMode: true,
             smartFence: true,
             resetStyle: true,
-            selectionMode: "beforeendr",
+            selectionMode: "beforeend",
         });
         mathBlock.setAttribute("resetStyle", "true");
         mathBlock.setAttribute("id",
@@ -273,7 +273,7 @@ export default function ToolbarInner() {
                 var next_line = document.getElementById('editor');
                 format(
                     'insert',
-                    `<pre class='editor' id='${next_line}'</pre>`
+                    `<pre class='editor' id='${target}'</pre>`
                 );
             } else if (ev.detail.direction === "backward") {
                 document.getElementById('editor').focus();

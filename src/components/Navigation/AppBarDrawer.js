@@ -44,10 +44,16 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
-        background: '#424242',
+        background: '#212121',
+
     },
+
+    drawerButton: {
+        color: 'white',
+    },
+
     appBar: {
-        background: 'linear-gradient(45deg, #303f9f 30%, #7986cb 90%)',
+        background: 'linear-gradient(45deg, #F4976C 30%, #FBE8A6 90%)',
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -63,9 +69,19 @@ const useStyles = makeStyles((theme) => ({
     },
     menuButton: {
         marginRight: theme.spacing(2),
+        color: 'white',
     },
+
+    signOutButton: {
+        color: "white",
+    },
+
     hide: {
         display: 'none',
+    },
+
+    dividerColor: {
+      light: true,
     },
     drawer: {
         width: drawerWidth,
@@ -74,6 +90,8 @@ const useStyles = makeStyles((theme) => ({
     },
     drawerPaper: {
         width: drawerWidth,
+        backgroundColor: '#212121',
+        color: '#212121',
 
     },
     drawerHeader: {
@@ -83,6 +101,7 @@ const useStyles = makeStyles((theme) => ({
         // necessary for content to be below app bar
         ...theme.mixins.toolbar,
         justifyContent: 'flex-end',
+        color: "white",
     },
     content: {
         flexGrow: 1,
@@ -124,10 +143,6 @@ export default function AppBarDrawer() {
         setOpen(false);
     };
 
-    function home(e) {
-
-    }
-
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -167,51 +182,49 @@ export default function AppBarDrawer() {
                 >
                     Menu
                     <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                        {theme.direction === 'ltr' ? <ChevronLeftIcon className={classes.drawerButton}/> : <ChevronRightIcon className={classes.drawerButton} />}
                     </IconButton>
                 </div>
                 <Divider />
                 <List className={classes.drawerPaper}>
 
                     <ListItem button key={'Sign Out'}>
-                        <ListItemIcon> <SignOutButton /></ListItemIcon>
+                        <ListItemIcon > <SignOutButton style="color:#FBE8A6;"/></ListItemIcon>
                     </ListItem>
 
                     <NavLink exact activeClassName="active" to="/">
-                        <ListItem button={true} key={'Home'}>
-
-                                <ListItemIcon> <AccountCircleIcon /></ListItemIcon>
+                        <ListItem className={classes.drawerButton} button={true} key={'Home'}>
+                                <ListItemIcon className={classes.drawerButton}> <AccountCircleIcon /></ListItemIcon>
                                 <ListItemText primary={'Home'}/>
-
                         </ListItem>
                     </NavLink>
 
                     <NavLink  activeClassName="active" to="/editor">
-                        <ListItem button key={'Editor'}>
-                            <ListItemIcon> <EditIcon /> </ListItemIcon>
+                        <ListItem className={classes.drawerButton} button key={'Editor'}>
+                            <ListItemIcon className={classes.drawerButton}> <EditIcon /> </ListItemIcon>
                             <ListItemText primary={'Editor'} />
                         </ListItem>
                     </NavLink>
 
-                    <ListItem button key={'BarChartIcon'}>
-                        <ListItemIcon> <BarChartIcon /> </ListItemIcon>
+                    <ListItem className={classes.drawerButton} button key={'BarChartIcon'}>
+                        <ListItemIcon className={classes.drawerButton} > <BarChartIcon /> </ListItemIcon>
                         <ListItemText primary={'Diagrams'} />
                     </ListItem>
                 </List>
-                <Divider />
+                <Divider color={"white"} />
                 <List className={classes.drawerPaper}>
-                    <ListItem button key={'All Files'} >
-                        <ListItemIcon> <FolderIcon/> </ListItemIcon>
+                    <ListItem className={classes.drawerButton} button key={'All Files'} >
+                        <ListItemIcon className={classes.drawerButton}> <FolderIcon/> </ListItemIcon>
                         <ListItemText primary={'All Files'} />
                     </ListItem>
 
-                    <ListItem button key={'Tags'}>
-                        <ListItemIcon> <LocalOfferIcon /> </ListItemIcon>
+                    <ListItem className={classes.drawerButton} button key={'Tags'}>
+                        <ListItemIcon className={classes.drawerButton}> <LocalOfferIcon /> </ListItemIcon>
                         <ListItemText primary={'Tags'} />
                     </ListItem>
 
-                    <ListItem button key={'Important'}>
-                        <ListItemIcon> <StarsIcon /> </ListItemIcon>
+                    <ListItem className={classes.drawerButton} button key={'Important'}>
+                        <ListItemIcon className={classes.drawerButton}> <StarsIcon /> </ListItemIcon>
                         <ListItemText primary={'Important'} />
                     </ListItem>
                 </List>
@@ -220,7 +233,3 @@ export default function AppBarDrawer() {
         </div>
     );
 }
-//Fixed nav bar sizing as you resize the window
-//Put in material ui icons
-//Changing navigation panel with material ui
-//background is next

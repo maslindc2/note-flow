@@ -69,7 +69,7 @@
   padding-top: 10px;
   margin-left: 0px;
   margin-right: auto;
-  margin-top: 10px;
+  margin-top: 120px;
   font-size: 40px;
   background-color: white;
   color: #282c34;
@@ -107,4 +107,12 @@
   margin-right: auto;
   border-radius: 8px;
   border: #61dafb;
+}
+
+#editorPageWrapper {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
 }

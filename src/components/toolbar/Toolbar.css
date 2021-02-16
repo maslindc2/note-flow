@@ -1,6 +1,6 @@
 .toolbar {
-  padding: 5px;
-  position: relative;
+  padding: 4px;
+  position: fixed;
   margin-top: 64px;
   top:0px;
   height: 50px;
@@ -28,6 +28,11 @@
   background-color: white;
 }
 
+/*CSS Style for Sign Out Button, held in Navigation Drawer*/
+#signout {
+  color: #F4976C;
+}
+
 /* Gets rid of the border for the buttons so its just icons only*/
 button {
   background-color: Transparent;
@@ -51,6 +56,10 @@ button:hover{
     color: black;
 }
 .bar {
+  color: white;
+}
+
+.drawer {
   color: white;
 }
 

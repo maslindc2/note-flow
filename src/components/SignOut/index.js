@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Button from '@material-ui/core/Button';
 import { withFirebase } from '../Firebase';
  
 /*
@@ -10,10 +10,11 @@ editor component until they sign in again
 */
 
 
+
 const SignOutButton = ({ firebase }) => (
-  <a id = "signout" type="button" href='/signinpage' onClick={firebase.doSignOut}>
-    Sign Out
-  </a>
+
+    <Button id={"signout"} href='/signinpage' onClick={firebase.doSignOut} > Sign Out </Button>
+
   
 );
 
