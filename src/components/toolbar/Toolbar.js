@@ -157,7 +157,7 @@ export default function ToolbarInner() {
             `<pre class='codeBlock' id='${id}'>${target}</pre>`
         );
         
-        //Embbedding Ace editor
+        //Embedding Ace editor
         var mode_name = "ace/mode/"+lang;
         ace.require("ace/ext/language_tools");
         var code_editor = ace.edit(id, {
@@ -211,7 +211,7 @@ export default function ToolbarInner() {
         }
     }
     
-    function handleSave_2() {
+    function handleSave() {
         
           //firebase.initializeApp(config);
 
@@ -463,33 +463,6 @@ export default function ToolbarInner() {
     //
     //
 
-
-
-    //Temporary code for storing title and content into a txt file
-    function handleSave() {
-        const content = document.getElementById('editor').innerHTML;
-        const title = document.getElementById('title').textContent;
-
-        let data =
-            '\r' + title + ' \r\n' +
-            '\r\n' + content + ' \r\n';
-        const textToBLOB = new Blob([data], { type: 'text/plain' });
-        const sFileName = 'noteOutput.txt';
-
-        let newLink = document.createElement("a");
-        newLink.download = sFileName;
-        if (window.webkitURL != null) {
-            newLink.href = window.webkitURL.createObjectURL(textToBLOB);
-        }
-        else {
-            newLink.href = window.URL.createObjectURL(textToBLOB);
-            newLink.style.display = "none";
-            document.body.appendChild(newLink);
-        }
-
-        newLink.click();
-    }
-
     return (
             <div className='toolbar'>
                 <div class="tooltip">
@@ -549,7 +522,7 @@ export default function ToolbarInner() {
                 </div>
                 <div class="tooltip">
                     <span class="tooltiptext">Save</span>
-                    <button class={"bar"} onClick={e => handleSave_2()}>
+                    <button class={"bar"} onClick={e => handleSave()}>
                         <SaveAltIcon/>
                     </button>
                 </div>
