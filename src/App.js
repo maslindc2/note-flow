@@ -9,6 +9,7 @@ import EditorPage from './components/editorpage'
 import SignInPage from './components/signinpage'
 import Notfound from './components/notfound';
 import { withFirebase } from './components/Firebase';
+import PasswordPage from './components/passwordpage'
 
 /*
 Implementation of our main App component
@@ -46,6 +47,7 @@ is
                     <Route path="/signuppage" component={SignUpPage} />
                     <Route path="/signinpage" component={SignInPage} />
                     <Route path="/editor" component={EditorPage} />
+                    <Route path="/passwordpage" component={PasswordPage} />
                     <Route component={Notfound} />
                 </Switch>
          </div>

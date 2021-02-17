@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 
 import { withFirebase } from '../Firebase';
-import Firebase from '../Firebase/firebase.js';
+
 import firebase from 'firebase';
 import user from '../UserInfo/userInfo'
 //implementation of sign up functionality

@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { FirebaseContext } from '../Firebase';
 
-import { SignUpLink } from '../SignUp';
 import { withFirebase } from '../Firebase';
 import user from '../UserInfo/userInfo';
-import Firebase from '../Firebase/firebase.js';
+
 import firebase from 'firebase';
 
 
