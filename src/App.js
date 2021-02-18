@@ -6,6 +6,7 @@ import Navigation from './components/Navigation'
 import SignUpPage from './components/signuppage'
 import HomePage from './components/homepage';
 import EditorPage from './components/editorpage'
+import ChartPage from './components/chartpage'
 import SignInPage from './components/signinpage'
 import Notfound from './components/notfound';
 import { withFirebase } from './components/Firebase';
@@ -47,6 +48,7 @@ is
                     <Route path="/signuppage" component={SignUpPage} />
                     <Route path="/signinpage" component={SignInPage} />
                     <Route path="/editor" component={EditorPage} />
+                    <Route path="/charts" component={ChartPage} />
                     <Route path="/passwordpage" component={PasswordPage} />
                     <Route component={Notfound} />
                 </Switch>
