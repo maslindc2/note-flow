@@ -34,7 +34,10 @@ import { withFirebase } from '../Firebase';
 import Firebase from '../Firebase/firebase.js';
 import firebase from 'firebase';
 import user from '../UserInfo/userInfo';
+//embedding
+import ReactDOM from 'react-dom';
 
+import ReactPlayer from 'react-player';
 
 
 
@@ -121,8 +124,8 @@ export default function ToolbarInner() {
     //Vito is working on this
 
     //openmenu for code block
-    function openMenu() {
-        document.getElementById("dropdown").classList.toggle("active");
+    function openMenu(id) {
+        document.getElementById(id).classList.toggle("active");
     }
 
     
@@ -223,6 +226,35 @@ export default function ToolbarInner() {
            editor: content
        })
                 
+    }
+    function embedding_video(){
+        //getting youtube video id
+        //Stores the input from the url box into inputVal
+        var inputVal = document.getElementById('textFormatUrl').value;
+        
+        //fixing a spacing problem when copy and paste
+        const show = document.getElementById('url-input');
+        if(inputVal.substr(0,1) === " "){
+            inputVal = inputVal.substr(1);
+        }
+        
+
+        var next_line = document.getElementById('editor');
+        format(
+            'insertParagraph',
+            `<pre class='editor' id='${next_line}'</pre>`
+        );
+        const youTube = document.createElement('pre');
+        const target = document.getSelection();
+        const id = `youTube-${document.getElementsByClassName('youTubeClass').length + 1}`;
+        youTube.classList.add('youTubeClass');
+        format(
+            'insertHTML',
+            `<pre class='youTubeClass' id='${id}'>${target}</pre>`
+        );
+        const bool = true;
+        ReactDOM.render(<ReactPlayer url= {inputVal} controls={bool}/> , document.getElementById(`${id}`));
+        
     }
     
     ////////////////////////////////////////////////////////
@@ -521,8 +553,13 @@ export default function ToolbarInner() {
 
                 <div id='url-input' className='hidden container'>
                     <input id='textFormatUrl' placeholder='url' />
-                    <button class={"bar"} onClick={e => setUrl(e)}>
+                    <button class={"bar"} onClick={e => openMenu("dropdown_links")}>
                         <CheckIcon/>
+                        <ul id="dropdown_links">
+                            <li onClick={e => setUrl()} >Link</li>
+                            <li onClick={e => embedding_video()}>Video</li>
+                            <li>Image</li>
+                        </ul>
                     </button>
                 </div>
                 <div class="tooltip container">
@@ -533,7 +570,7 @@ export default function ToolbarInner() {
                 </div>
                 <div class="tooltip container">
                 <span class="tooltiptext">Code Block</span>
-                <button class={"bar"} onClick={e => openMenu()}>
+                <button class={"bar"} onClick={e => openMenu("dropdown")}>
                     <CodeIcon />
                     <ul id="dropdown">
                     <li onClick={e => addCodeBlock("javascript")} >Javascript</li>
