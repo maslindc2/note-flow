@@ -453,6 +453,16 @@ export default function ToolbarInner() {
             }
         }
     }
+        function changeFont(fontName) {
+        const selectedFont = fontName.target.value;
+        document.execCommand("fontName", false, selectedFont);
+    }
+
+    function changeFSize(Size){
+        const FSize = Size.target.value;
+        document.execCommand("fontSize", false, FSize);
+    }
+
 
     //
     //
@@ -462,47 +472,66 @@ export default function ToolbarInner() {
     //
     //
     //
+
 
     return (
             <div className='toolbar'>
-                <div class="tooltip">
+                <div class="tooltip container">
                     <span class="tooltiptext">Bold</span>
                     <button class={"bar"} onClick={e => format('bold')}>
                         <FormatBoldIcon/>
                     </button>
                 </div>
-                <div class="tooltip">
+                <div class="tooltip container">
                     <span class="tooltiptext">Italicize</span>
                     <button class={"bar"} onClick={e => format('italic')}>
                         <FormatItalicIcon/>
                     </button>
                 </div>
-                <div class="tooltip">
+                <div class="tooltip container">
                     <span class="tooltiptext">List</span>
                     <button class={"bar"} onClick={e => bulletPoint()}>
                         <FormatListBulletedIcon/>
                     </button>
                 </div>
-                <div class="tooltip">
+                     <div className="container">
+        <select onChange={changeFont}>
+            <option value="Arial">Arial</option>
+            <option value="Calibri">Calibri</option>
+            <option value="Comic Sans MS">Comic Sans MS</option>
+            <option value="Times New Roman">Times New Roman</option>
+        </select>
+        <select onChange={changeFSize}>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+        </select>
+            </div>
+
+                <div class="tooltip container">
                     <span class="tooltiptext">Hyperlink</span>
                     <button class={"bar"} onClick={e => addLink()}>
                         <InsertLinkIcon/>
                     </button>
                 </div>
 
-                <div id='url-input' className='hidden'>
+                <div id='url-input' className='hidden container'>
                     <input id='textFormatUrl' placeholder='url' />
                     <button class={"bar"} onClick={e => setUrl(e)}>
                         <CheckIcon/>
                     </button>
                 </div>
-                <div class="tooltip">
+                <div class="tooltip container">
                     <span class="tooltiptext">Header</span>
                     <button class={"bar"} onClick={e => setHeader()}>
                         <TextFieldsIcon/>
                     </button>
                 </div>
-                <div class="tooltip">
+                <div class="tooltip container">
                 <span class="tooltiptext">Code Block</span>
                 <button class={"bar"} onClick={e => openMenu()}>
                     <CodeIcon />
@@ -514,20 +543,18 @@ export default function ToolbarInner() {
                 </ul>
                 </button>
             </div>
-                <div class="tooltip">
+                <div class="tooltip container">
                     <span class="tooltiptext">Equation</span>
                     <button class={"bar"} onClick={e => addEquation()}>
                         <FunctionsIcon/>
                     </button>
                 </div>
-                <div class="tooltip">
+                <div class="tooltip container">
                     <span class="tooltiptext">Save</span>
                     <button class={"bar"} onClick={e => handleSave()}>
                         <SaveAltIcon/>
                     </button>
                 </div>
-                
-
             </div>
     )
 }

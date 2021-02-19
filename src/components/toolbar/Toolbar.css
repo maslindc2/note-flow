@@ -36,10 +36,7 @@
 /* Gets rid of the border for the buttons so its just icons only*/
 button {
   background-color: Transparent;
-  border: none;
-  margin-left: 35px;
-  margin-right: 35px;
-  margin-bottom:1px;
+  border: none;    
 }
 
 button:hover{
@@ -93,3 +90,11 @@ button:hover{
 .hidden {
   display: none;
 }
+
+.container
+{
+  margin-left: 35px;
+  margin-right: 35px;
+  margin-bottom:1px;
+}
+
