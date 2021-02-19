@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import './charts.css'
 import mermaid from 'mermaid';
 import debounce from 'debounce';
 
@@ -31,6 +32,18 @@ class Charts extends Component {
         mermaid.render('theGraph', graphDefinition, function (svgCode) {
             console.log(svgCode);
             output.innerHTML = svgCode;
-        })
+        });
     }
-}
+    render(){
+        return (
+            
+            <div className="Charts">
+                <textarea
+                    rows="4"
+                    onChange={(e) => this.handleChange(e.target.value)}
+                />
+                <div id="output"/>
+            </div>
+        );
+    }
+}export default Charts;
