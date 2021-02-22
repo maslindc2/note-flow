@@ -1,11 +1,13 @@
+import { Email } from '@material-ui/icons';
 import React, { Component } from 'react';
 
 
 
 
 var user ={
-    username: '',
-    content:''
+    email: '',
+    content:'',
+    fullname:'',
 };
 export default user;
 

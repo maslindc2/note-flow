@@ -135,7 +135,7 @@ export default function ToolbarInner() {
         //creating new filled div
         var next_line = document.getElementById('editor');
         
-        alert(" Language chosen for codeblock is: "+lang);
+        //alert(" Language chosen for codeblock is: "+lang);
         format(
             'insertParagraph',
             `<pre class='editor' id='${next_line}'</pre>`
@@ -180,6 +180,26 @@ export default function ToolbarInner() {
         });
 
         addLineAfterBlock(id);
+        return code_editor;
+    }
+
+    function Code_save(){
+        const length = document.getElementsByClassName("codeBlock").length;
+        var i;
+        const arr=[]
+        for( i=0;i<length;i++){
+            var id ="codeBlock-"+(i+1);
+            var editor = ace.edit(id);
+            arr.push(editor.getValue());
+            editor.destroy();
+            editor.container.remove();
+        }
+        for( i=0;i<arr.length;i++){
+            var new_editor= addCodeBlock("java");
+            
+            //new_editor.setValue("working "+arr[i]);
+
+        }
     }
 
     
@@ -219,12 +239,19 @@ export default function ToolbarInner() {
           //firebase.initializeApp(config);
 
         var content = document.getElementById('editor').innerHTML;
-        
+        /*
        const itemsRef= firebase.database().ref('items');
        var childRef = itemsRef.child(user.name);
        childRef.update({
-           editor: content
+        editor: content
+    })*/
+
+        //Save to Default editor for now.
+       const usersRef=firebase.firestore().collection("users").doc(user.email).collection("Editors").doc("Default_Editor");
+       usersRef.update({
+           'text_HTML': content
        })
+       
                 
     }
     function embedding_video(){

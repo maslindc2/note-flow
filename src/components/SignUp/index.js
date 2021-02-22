@@ -17,12 +17,12 @@ const SignUp = () => (
 );
 
 const INITIAL_STATE = {
-    username: '',
+    fullname: '',
     email: '',
     passwordOne: '',
     passwordTwo: '',
     error: null,
-    content:" it's working"
+    content:""
   };
  
 class SignUpFormBase extends Component {
@@ -33,24 +33,32 @@ class SignUpFormBase extends Component {
   }
  
   onSubmit = event => {
-    const { username, email, passwordOne } = this.state;
+    const { fullname, email, passwordOne } = this.state;
  
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
         
-        //set initial structure in database
-        user.name= this.state.email.split('@')[0];
+        //set initial structure in database including USERNAME and EMAIL
+        user.email= this.state.email;
+        user.fullname=this.state.fullname;
         
-        const itemsRef= firebase.database().ref('items/'+user.name);
-        itemsRef.set({
-            fullName: this.state.username,
-            editor:'the account is first created'
-          
-        })
+        //update user email to the database
+        const db= firebase.firestore();
+        const userRef= db.collection('users').doc(user.email);
 
-        this.setState({ ...INITIAL_STATE });
+        //update user full name to the database
+        userRef.set({
+          'FullName': user.fullname
+        })
+        
+        //set up the initial data in the database
+        userRef.collection('Editors').doc('Default_Editor').set({
+          text_HTML:'This account is first created'
+        });
+
         //redirects user after a successful sign-in back to the home page
+        this.setState({ ...INITIAL_STATE });
         this.props.history.push("/");
       })
       .catch(error => {
@@ -68,7 +76,7 @@ class SignUpFormBase extends Component {
  
   render() {
     const {
-        username,
+        fullname,
         email,
         passwordOne,
         passwordTwo,
@@ -80,13 +88,13 @@ class SignUpFormBase extends Component {
     passwordOne !== passwordTwo ||
     passwordOne === '' ||
     email === '' ||
-    username === '';
+    fullname === '';
 
     return (
       <form onSubmit={this.onSubmit}>
          <input
-          name="username"
-          value={username}
+          name="fullname"
+          value={fullname}
           onChange={this.onChange}
           type="text"
           placeholder="Full Name"
