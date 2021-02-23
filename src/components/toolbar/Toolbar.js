@@ -22,6 +22,10 @@ import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import CodeIcon from '@material-ui/icons/Code';
 import FunctionsIcon from '@material-ui/icons/Functions';
 import InsertLinkIcon from '@material-ui/icons/InsertLink';
+import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
+import FormatAlignCenterIcon from '@material-ui/icons/FormatAlignCenter';
+import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight';
+import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import CheckIcon from '@material-ui/icons/Check';
@@ -34,7 +38,10 @@ import { withFirebase } from '../Firebase';
 import Firebase from '../Firebase/firebase.js';
 import firebase from 'firebase';
 import user from '../UserInfo/userInfo';
+//embedding
+import ReactDOM from 'react-dom';
 
+import ReactPlayer from 'react-player';
 
 
 
@@ -121,8 +128,8 @@ export default function ToolbarInner() {
     //Vito is working on this
 
     //openmenu for code block
-    function openMenu() {
-        document.getElementById("dropdown").classList.toggle("active");
+    function openMenu(id) {
+        document.getElementById(id).classList.toggle("active");
     }
 
     
@@ -132,7 +139,7 @@ export default function ToolbarInner() {
         //creating new filled div
         var next_line = document.getElementById('editor');
         
-        alert(" Language chosen for codeblock is: "+lang);
+        //alert(" Language chosen for codeblock is: "+lang);
         format(
             'insertParagraph',
             `<pre class='editor' id='${next_line}'</pre>`
@@ -177,6 +184,26 @@ export default function ToolbarInner() {
         });
 
         addLineAfterBlock(id);
+        return code_editor;
+    }
+
+    function Code_save(){
+        const length = document.getElementsByClassName("codeBlock").length;
+        var i;
+        const arr=[]
+        for( i=0;i<length;i++){
+            var id ="codeBlock-"+(i+1);
+            var editor = ace.edit(id);
+            arr.push(editor.getValue());
+            editor.destroy();
+            editor.container.remove();
+        }
+        for( i=0;i<arr.length;i++){
+            var new_editor= addCodeBlock("java");
+            
+            //new_editor.setValue("working "+arr[i]);
+
+        }
     }
 
     
@@ -216,13 +243,49 @@ export default function ToolbarInner() {
           //firebase.initializeApp(config);
 
         var content = document.getElementById('editor').innerHTML;
-        
+        /*
        const itemsRef= firebase.database().ref('items');
        var childRef = itemsRef.child(user.name);
        childRef.update({
-           editor: content
+        editor: content
+    })*/
+
+        //Save to Default editor for now.
+       const usersRef=firebase.firestore().collection("users").doc(user.email).collection("Editors").doc("Default_Editor");
+       usersRef.update({
+           'text_HTML': content
        })
+       
                 
+    }
+    function embedding_video(){
+        //getting youtube video id
+        //Stores the input from the url box into inputVal
+        var inputVal = document.getElementById('textFormatUrl').value;
+        
+        //fixing a spacing problem when copy and paste
+        const show = document.getElementById('url-input');
+        if(inputVal.substr(0,1) === " "){
+            inputVal = inputVal.substr(1);
+        }
+        
+
+        var next_line = document.getElementById('editor');
+        format(
+            'insertParagraph',
+            `<pre class='editor' id='${next_line}'</pre>`
+        );
+        const youTube = document.createElement('pre');
+        const target = document.getSelection();
+        const id = `youTube-${document.getElementsByClassName('youTubeClass').length + 1}`;
+        youTube.classList.add('youTubeClass');
+        format(
+            'insertHTML',
+            `<pre class='youTubeClass' id='${id}'>${target}</pre>`
+        );
+        const bool = true;
+        ReactDOM.render(<ReactPlayer url= {inputVal} controls={bool}/> , document.getElementById(`${id}`));
+        
     }
     
     ////////////////////////////////////////////////////////
@@ -453,6 +516,16 @@ export default function ToolbarInner() {
             }
         }
     }
+        function changeFont(fontName) {
+        const selectedFont = fontName.target.value;
+        document.execCommand("fontName", false, selectedFont);
+    }
+
+    function changeFSize(Size){
+        const FSize = Size.target.value;
+        document.execCommand("fontSize", false, FSize);
+    }
+
 
     //
     //
@@ -462,27 +535,76 @@ export default function ToolbarInner() {
     //
     //
     //
+
 
     return (
             <div className='toolbar'>
-                <div class="tooltip">
+                <div class="tooltip container">
                     <span class="tooltiptext">Bold</span>
                     <button class={"bar"} onClick={e => format('bold')}>
                         <FormatBoldIcon/>
                     </button>
                 </div>
-                <div class="tooltip">
+                <div class="tooltip container">
                     <span class="tooltiptext">Italicize</span>
                     <button class={"bar"} onClick={e => format('italic')}>
                         <FormatItalicIcon/>
                     </button>
                 </div>
-                <div class="tooltip">
+                <div class="tooltip container">
                     <span class="tooltiptext">List</span>
                     <button class={"bar"} onClick={e => bulletPoint()}>
                         <FormatListBulletedIcon/>
                     </button>
                 </div>
+                     <div className="container">
+        <select onChange={changeFont}>
+            <option value="Arial">Arial</option>
+            <option value="Calibri">Calibri</option>
+            <option value="Comic Sans MS">Comic Sans MS</option>
+            <option value="Times New Roman">Times New Roman</option>
+        </select>
+        <select onChange={changeFSize}>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+        </select>
+            </div>
+                <div class = "container">
+                <div class="tooltip">
+                <span class="tooltiptext">Align Left</span>
+                <button class={"bar"} onClick={e => document.execCommand('justifyLeft',false)}>
+                    <FormatAlignLeftIcon/>
+                    </button>
+                </div>
+
+                <div class="tooltip">
+                <span class="tooltiptext">Align Center</span>
+                <button class={"bar"} onClick={e => document.execCommand('justifyCenter',false)}>
+                    <FormatAlignCenterIcon/>
+                    </button>
+                </div>
+
+                <div class="tooltip">
+                <span class="tooltiptext">Align Right</span>
+                <button class={"bar"} onClick={e => document.execCommand('justifyRight',false)}>
+                    <FormatAlignRightIcon/>
+                    </button>
+                </div>
+
+                <div class="tooltip ">
+                <span class="tooltiptext">Justify Full</span>
+                <button class={"bar"} onClick={e =>document.execCommand('justifyFull',false)}>
+                    <FormatAlignJustifyIcon/>
+                    </button>
+
+                </div>
+                </div>
+
                 <div class="tooltip">
                     <span class="tooltiptext">Hyperlink</span>
                     <button class={"bar"} onClick={e => addLink()}>
@@ -490,21 +612,26 @@ export default function ToolbarInner() {
                     </button>
                 </div>
 
-                <div id='url-input' className='hidden'>
+                <div id='url-input' className='hidden container'>
                     <input id='textFormatUrl' placeholder='url' />
-                    <button class={"bar"} onClick={e => setUrl(e)}>
+                    <button class={"bar"} onClick={e => openMenu("dropdown_links")}>
                         <CheckIcon/>
+                        <ul id="dropdown_links">
+                            <li onClick={e => setUrl()} >Link</li>
+                            <li onClick={e => embedding_video()}>Video</li>
+                            <li>Image</li>
+                        </ul>
                     </button>
                 </div>
-                <div class="tooltip">
+                <div class="tooltip container">
                     <span class="tooltiptext">Header</span>
                     <button class={"bar"} onClick={e => setHeader()}>
                         <TextFieldsIcon/>
                     </button>
                 </div>
-                <div class="tooltip">
+                <div class="tooltip container">
                 <span class="tooltiptext">Code Block</span>
-                <button class={"bar"} onClick={e => openMenu()}>
+                <button class={"bar"} onClick={e => openMenu("dropdown")}>
                     <CodeIcon />
                     <ul id="dropdown">
                     <li onClick={e => addCodeBlock("javascript")} >Javascript</li>
@@ -514,20 +641,18 @@ export default function ToolbarInner() {
                 </ul>
                 </button>
             </div>
-                <div class="tooltip">
+                <div class="tooltip container">
                     <span class="tooltiptext">Equation</span>
                     <button class={"bar"} onClick={e => addEquation()}>
                         <FunctionsIcon/>
                     </button>
                 </div>
-                <div class="tooltip">
+                <div class="tooltip container">
                     <span class="tooltiptext">Save</span>
                     <button class={"bar"} onClick={e => handleSave()}>
                         <SaveAltIcon/>
                     </button>
                 </div>
-                
-
             </div>
     )
 }

@@ -4,7 +4,7 @@ import PasswordForget from './PasswordForget';
 
 
 
-//Top level of password recovery functionality 
+//Top level of password recovery functionality for unauthorized users
 
 class PassWordForgetPage extends React.Component {
   render() {

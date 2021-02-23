@@ -1,3 +1,6 @@
+body{
+  font-family: 'Arial';
+}
 .editor {
   width: 100%;
   min-height: 800px;
@@ -37,6 +40,15 @@
   z-index: 1;
   text-align: center;
 }
+#dropdown_links {
+  display: none;
+  position: absolute;
+  height:auto;
+  width: auto;
+  
+  z-index: 1;
+  text-align: center;
+}
 
 .wrap {
   background-color: white;
@@ -60,6 +72,23 @@
 }
 
 #dropdown.active{
+  display:block;
+}
+
+#dropdown_links li{
+  padding:10px 15px;
+  border: 1px solid black;
+  border-radius: 10px;
+  font-size: 100%;
+  color: black;
+  
+}
+
+#dropdown_links li:hover{
+  background-color: #f1f1f1;
+}
+
+#dropdown_links.active{
   display:block;
 }
 #title {

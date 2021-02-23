@@ -42,21 +42,32 @@ class SignInFormBase extends Component {
     this.props.firebase
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
-        //update username
-        user.name= this.state.email.split('@')[0];
-
+        //update username, and email
+        //user.name= this.state.email.split('@')[0];
+        user.email=this.state.email;
         //set state back to initial
         this.setState({ ...INITIAL_STATE });
         
         //get content from the database
-         const itemsRef= firebase.database().ref('items');
-          itemsRef.on('value', (snapshot) => {
-          let items = snapshot.val();
-          
-          //update the content of the user
-          user.content= items[user.name].editor;
-          document.getElementById('editor').innerHTML=user.content;
-      })
+        const db= firebase.firestore();
+        const userRef=db.collection('users').doc(user.email);
+        const docRef=userRef.collection('Editors').doc('Default_Editor');
+        
+        //update the innerHTML editor
+        docRef.get().then(documentSnapshot => {
+          if (documentSnapshot.exists) {
+            user.content = documentSnapshot.get('text_HTML');
+            document.getElementById('editor').innerHTML=user.content;
+          }
+        });
+
+        //update user full name
+        userRef.get().then(documentSnapshot => {
+          if (documentSnapshot.exists) {
+            user.fullname = documentSnapshot.get('name');
+          }
+        });
+        //alert(test);
         //Successful sign in will send user to editor page for now
         this.props.history.push("/editor");
       })

@@ -229,6 +229,14 @@ export default function AppBarDrawer() {
                         <ListItemIcon className={classes.drawerButton}> <StarsIcon /> </ListItemIcon>
                         <ListItemText primary={'Important'} />
                     </ListItem>
+
+                    <NavLink  activeClassName="active" to="/accountpage">
+                        <ListItem className={classes.drawerButton} button key={'Account'}>
+                                <ListItemIcon className={classes.drawerButton}> <AccountCircleIcon /></ListItemIcon>
+                                <ListItemText primary={'Account'}/>
+                        </ListItem>
+                    </NavLink>
+
                 </List>
             </Drawer>
 
