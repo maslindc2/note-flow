@@ -22,6 +22,10 @@ import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import CodeIcon from '@material-ui/icons/Code';
 import FunctionsIcon from '@material-ui/icons/Functions';
 import InsertLinkIcon from '@material-ui/icons/InsertLink';
+import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
+import FormatAlignCenterIcon from '@material-ui/icons/FormatAlignCenter';
+import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight';
+import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import CheckIcon from '@material-ui/icons/Check';
@@ -570,8 +574,38 @@ export default function ToolbarInner() {
             <option value="7">7</option>
         </select>
             </div>
+                <div class = "container">
+                <div class="tooltip">
+                <span class="tooltiptext">Align Left</span>
+                <button class={"bar"} onClick={e => document.execCommand('justifyLeft',false)}>
+                    <FormatAlignLeftIcon/>
+                    </button>
+                </div>
 
-                <div class="tooltip container">
+                <div class="tooltip">
+                <span class="tooltiptext">Align Center</span>
+                <button class={"bar"} onClick={e => document.execCommand('justifyCenter',false)}>
+                    <FormatAlignCenterIcon/>
+                    </button>
+                </div>
+
+                <div class="tooltip">
+                <span class="tooltiptext">Align Right</span>
+                <button class={"bar"} onClick={e => document.execCommand('justifyRight',false)}>
+                    <FormatAlignRightIcon/>
+                    </button>
+                </div>
+
+                <div class="tooltip ">
+                <span class="tooltiptext">Justify Full</span>
+                <button class={"bar"} onClick={e =>document.execCommand('justifyFull',false)}>
+                    <FormatAlignJustifyIcon/>
+                    </button>
+
+                </div>
+                </div>
+
+                <div class="tooltip">
                     <span class="tooltiptext">Hyperlink</span>
                     <button class={"bar"} onClick={e => addLink()}>
                         <InsertLinkIcon/>
