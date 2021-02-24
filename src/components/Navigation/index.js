@@ -3,9 +3,17 @@ import React from 'react';
 import { NavLink } from 'react-router-dom'
 import SignOutButton from '../SignOut';
 import AppBarDrawer from "./AppBarDrawer";
+ 
+import { AuthUserContext } from '../Session';
 
 const Navigation = ({ authUser }) => (
-    <div>{authUser ? <NavigationAuth /> : <NavigationNonAuth />}</div>
+    <div>
+       <AuthUserContext.Consumer>
+      {authUser =>
+        authUser ? <NavigationAuth /> : <NavigationNonAuth />
+      }
+    </AuthUserContext.Consumer>
+      </div>
   );
 
 

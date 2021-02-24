@@ -2,7 +2,7 @@ import React from 'react'
 
 
 import PasswordChangeForm from './PasswordChange';
-
+import { withAuthorization } from './Session';
 
 //Administrative features for signed in users - right now only functionality is changning password
 
@@ -20,4 +20,6 @@ class AccountPage extends React.Component {
       </div>
     )
   }
-}export default AccountPage
+}
+const condition = authUser => !!authUser;
+export default withAuthorization(condition)(AccountPage);
