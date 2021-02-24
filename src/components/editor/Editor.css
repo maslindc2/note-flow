@@ -41,6 +41,7 @@ body{
   text-align: center;
 }
 #dropdown_links {
+  list-style-type: none;
   display: none;
   position: absolute;
   height:auto;

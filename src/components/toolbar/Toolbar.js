@@ -65,7 +65,17 @@ export default function ToolbarInner() {
     function bulletPoint() {
         format('insertHTML', `<ul><li class="bulletList"></li></ul>`);
     }
+    
+    function changeFont(fontName) {
+        const selectedFont = fontName.target.value;
+        document.execCommand("fontName", false, selectedFont);
+    }
 
+    function changeFSize(Size) {
+        const FSize = Size.target.value;
+        document.execCommand("fontSize", false, FSize);
+    }
+    
     //Sets the url input box to shown or hidden
     function addLink() {
         const show = document.getElementById('url-input');
@@ -85,6 +95,8 @@ export default function ToolbarInner() {
         
         //used for showing or hiding url input box
         const show = document.getElementById('url-input');
+
+        //Fixes problem with a leading space in the url when copying and pasting
         if(inputVal.substr(0,1) === " "){
             inputVal = inputVal.substr(1);
         }
@@ -119,6 +131,69 @@ export default function ToolbarInner() {
         show.classList.add('hidden');
     }
 
+
+    function insertImage(){
+        //Stores the input from the url box into inputVal
+        var inputVal = document.getElementById('textFormatUrl').value;
+
+        //used for showing url input box
+        const show = document.getElementById('url-input');
+
+        //Fixes problem with a leading space in the url when copying and pasting
+        if (inputVal.substr(0, 1) === " ") {
+            inputVal = inputVal.substr(1);
+        }
+    
+        //Insert image
+        format(
+            'insertHTML', `<img src='${inputVal}'>`
+        );
+
+
+        //This makes the url input tag blank again. I could use "" or '' but JS thinks strings are the same as null
+        document.getElementById('textFormatUrl').value = " ";
+        
+        //hides the input tag again 
+        show.classList.add('hidden');
+    }
+    
+
+
+    function embedding_video() {
+        //getting youtube video id
+        //Stores the input from the url box into inputVal
+        var inputVal = document.getElementById('textFormatUrl').value;
+
+        //Fixes problem with a leading space in the url when copying and pasting
+        const show = document.getElementById('url-input');
+        if (inputVal.substr(0, 1) === " ") {
+            inputVal = inputVal.substr(1);
+        }
+
+
+        var next_line = document.getElementById('editor');
+        format(
+            'insertParagraph',
+            `<pre class='editor' id='${next_line}'</pre>`
+        );
+
+        const youTube = document.createElement('pre');
+        const target = document.getSelection();
+        const id = `youTube-${document.getElementsByClassName('youTubeClass').length + 1}`;
+        youTube.classList.add('youTubeClass');
+        format(
+            'insertHTML',
+            `<pre class='youTubeClass' id='${id}'>${target}</pre>`
+        );
+        const bool = true;
+        ReactDOM.render(<ReactPlayer url={inputVal} controls={bool} />, document.getElementById(`${id}`));
+        
+        //Clears out url box
+        document.getElementById('textFormatUrl').value = " ";
+        //Hides the url box
+        show.classList.add('hidden');
+    }
+
     function setHeader() {
         const target = document.getSelection();
         format('insertHTML', `<h2>${target}</h2>`);
@@ -131,8 +206,6 @@ export default function ToolbarInner() {
     function openMenu(id) {
         document.getElementById(id).classList.toggle("active");
     }
-
-    
 
     //Main function to create new code block
     function addCodeBlock(lang) {
@@ -258,35 +331,7 @@ export default function ToolbarInner() {
        
                 
     }
-    function embedding_video(){
-        //getting youtube video id
-        //Stores the input from the url box into inputVal
-        var inputVal = document.getElementById('textFormatUrl').value;
-        
-        //fixing a spacing problem when copy and paste
-        const show = document.getElementById('url-input');
-        if(inputVal.substr(0,1) === " "){
-            inputVal = inputVal.substr(1);
-        }
-        
-
-        var next_line = document.getElementById('editor');
-        format(
-            'insertParagraph',
-            `<pre class='editor' id='${next_line}'</pre>`
-        );
-        const youTube = document.createElement('pre');
-        const target = document.getSelection();
-        const id = `youTube-${document.getElementsByClassName('youTubeClass').length + 1}`;
-        youTube.classList.add('youTubeClass');
-        format(
-            'insertHTML',
-            `<pre class='youTubeClass' id='${id}'>${target}</pre>`
-        );
-        const bool = true;
-        ReactDOM.render(<ReactPlayer url= {inputVal} controls={bool}/> , document.getElementById(`${id}`));
-        
-    }
+    
     
     ////////////////////////////////////////////////////////
 
@@ -516,15 +561,7 @@ export default function ToolbarInner() {
             }
         }
     }
-        function changeFont(fontName) {
-        const selectedFont = fontName.target.value;
-        document.execCommand("fontName", false, selectedFont);
-    }
-
-    function changeFSize(Size){
-        const FSize = Size.target.value;
-        document.execCommand("fontSize", false, FSize);
-    }
+    
 
 
     //
@@ -604,9 +641,8 @@ export default function ToolbarInner() {
 
                 </div>
                 </div>
-
                 <div class="tooltip">
-                    <span class="tooltiptext">Hyperlink</span>
+                    <span class="tooltiptext">Insert link</span>
                     <button class={"bar"} onClick={e => addLink()}>
                         <InsertLinkIcon/>
                     </button>
@@ -618,8 +654,8 @@ export default function ToolbarInner() {
                         <CheckIcon/>
                         <ul id="dropdown_links">
                             <li onClick={e => setUrl()} >Link</li>
+                            <li onClick={e => insertImage()} >Image</li>
                             <li onClick={e => embedding_video()}>Video</li>
-                            <li>Image</li>
                         </ul>
                     </button>
                 </div>
