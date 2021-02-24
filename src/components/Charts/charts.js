@@ -25,11 +25,11 @@ class Charts extends Component {
 
     flowChart() {
         var graphType = `graph TD
-        A[Christmas] -->|Get money| B(Go shopping)
-        B --> C{Let me think}
-        C -->|One| D[Laptop]
-        C -->|Two| E[iPhone]
-        C -->|Three| F[fa:fa-car Car]`;
+        A[On button] --> B{Rectifier out}
+        B -->|KT66 L| C[Plate & Heater]
+        B -->|KT66 R| D[Plate & Heater]
+        C-->F{Output}
+        D-->F{Output}`;
 
         this.componentDidMount(graphType);
     }
@@ -80,10 +80,9 @@ class Charts extends Component {
 
     render() {
         return (
-
             <div className="Charts">
-                <button onClick={(e) => this.classDiagram(e)}>flowChart</button>
-                <button onClick={(e) => this.flowChart(e)}>Class</button>
+                <button class="select" onClick={(e) => this.classDiagram(e)}>UML</button>
+                <button class="select" onClick={(e) => this.flowChart(e)}>Flow Chart</button>
                 <textarea
                     id="textBox"
                     rows="4"

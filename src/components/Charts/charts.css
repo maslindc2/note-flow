@@ -1,4 +1,12 @@
 .Charts{
     position: absolute;
     top: 10%;
+    left:40%;
+}
+.select {
+    background-color: gray;
+    margin: 2px;
+}
+.theGraph{
+    width: 200%
 }
