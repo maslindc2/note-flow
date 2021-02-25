@@ -3,11 +3,13 @@ import React, { Component } from 'react';
 
 
 
-
 var user ={
     email: '',
     content:'',
     fullname:'',
+    arr_Values: [],
+    arr_DOMs: [],
+    arr_Langs:[],
 };
-export default user;
 
+export default user;

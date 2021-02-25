@@ -208,10 +208,11 @@ export default function ToolbarInner() {
     }
 
     //Main function to create new code block
-    function addCodeBlock(lang) {
+    function addCodeBlock(lang,id) {
         //creating new filled div
+        if(id==null){
         var next_line = document.getElementById('editor');
-
+        
         //alert(" Language chosen for codeblock is: "+lang);
         format(
             'insertParagraph',
@@ -228,17 +229,17 @@ export default function ToolbarInner() {
             return
         }
         */
-        const id = `codeBlock-${document.getElementsByClassName('codeBlock').length + 1}`;
+         id = `codeBlock-${document.getElementsByClassName('codeBlock').length + 1}`;
         codeBlock.classList.add('codeBlock');
-
-
+        
         var new_block = format(
             'insertHTML',
             `<pre class='codeBlock' id='${id}'>${target}</pre>`
         );
-
+        }
+        
         //Embedding Ace editor
-        var mode_name = "ace/mode/" + lang;
+        var mode_name = lang;
         ace.require("ace/ext/language_tools");
         var code_editor = ace.edit(id, {
             theme: "ace/theme/tomorrow_night_eighties",
@@ -246,7 +247,7 @@ export default function ToolbarInner() {
             minLines: 2,
             maxLines: 30,
             wrap: true,
-            autoScrollEditorIntoView: true,
+            autoScrollEditorIntoView: true,    
         });
 
         code_editor.setOptions({
@@ -255,49 +256,89 @@ export default function ToolbarInner() {
             enableSnippets: true,
             enableLiveAutocompletion: true
         });
-
+        
         addLineAfterBlock(id);
         return code_editor;
     }
-
-    function Code_save() {
+    //function to save code
+    function Code_save(){
         const length = document.getElementsByClassName("codeBlock").length;
         var i;
-        const arr = []
-        for (i = 0; i < length; i++) {
-            var id = "codeBlock-" + (i + 1);
+        const arr_Values=[];
+        const arr_DOMs=[];
+        const arr_Langs=[];
+        //const arr_Langs=[];
+        for( i=0;i<length;i++){
+            var id ="codeBlock-"+(i+1);
             var editor = ace.edit(id);
-            arr.push(editor.getValue());
-            editor.destroy();
-            editor.container.remove();
+            arr_Values.push(editor.getValue());
+            //editor.destroy();
+            arr_DOMs.push(id);
+            arr_Langs.push(editor.getOptions().mode);
+            
+            
         }
-        for (i = 0; i < arr.length; i++) {
-            var new_editor = addCodeBlock("java");
-
-            //new_editor.setValue("working "+arr[i]);
+        user.arr_Values=arr_Values;
+        user.arr_Langs=arr_Langs;
+        user.arr_DOMs=arr_DOMs;
+        console.log(user.arr_Values);
+        console.log(user.arr_DOMs);
+        
+        //loading part
+        /*
+        for( i=0;i<arr_DOMs.length;i++){
+            var new_editor= addCodeBlock(arr_Langs[i],arr_DOMs[i]);
+            new_editor.setValue("Saved and loaded working \n"+arr_Values[i]+user.arr_Langs[i]);
 
         }
+        */
+        
     }
 
+    //Function to load content from code block
+    function code_load(){
+        var i;
+        var arr_DOMs=user.arr_DOMs;
+        var arr_Langs=user.arr_Langs;
+        var arr_Values=user.arr_Values;
+        console.log(user.arr_DOMs);
+        //destroy the old editor
+        for( i=0;i<arr_DOMs.length;i++){
+            var old_editor = ace.edit(arr_DOMs[i]);
+            old_editor.destroy();
+           
+        }
+        //recreate a new one
+        for( i=0;i<arr_DOMs.length;i++){
+            var new_editor= addCodeBlock(arr_Langs[i],arr_DOMs[i]);
+            new_editor.setValue(arr_Values[i]+arr_Langs[i]);
+        }
+        
+    }
+    
 
+    
+    
+
+    
     //experimenting to fix a dumb bug when trying to delete the code block
-    /* function deleteBlock(){
-         const codeBlock = document.getElementsByTagName("pre");
-         const target = document.getSelection();
-         
-         
-         const id='';
-         $(document).ready(function(){
-             $(document).click(function(){
-             
-             });
-         });
-         
-         const code_editor=ace.edit(id);
-         code_editor.destroy();
-         code_editor.container.remove();
-     }*/
-
+   /* function deleteBlock(){
+        const codeBlock = document.getElementsByTagName("pre");
+        const target = document.getSelection();
+        
+        
+        const id='';
+        $(document).ready(function(){
+            $(document).click(function(){
+            
+            });
+        });
+        
+        const code_editor=ace.edit(id);
+        code_editor.destroy();
+        code_editor.container.remove();
+    }*/
+    
     function addLineAfterBlock(id) {
         const block = document.getElementById(`${id}`);
         const div = document.createElement('div');
@@ -442,28 +483,44 @@ export default function ToolbarInner() {
         range.deleteContents();
         range.insertNode(block);
     }
-
-    
+    //handling save
     function handleSave() {
-
+        
         //firebase.initializeApp(config);
 
-        var content = document.getElementById('editor').innerHTML;
-        /*
-       const itemsRef= firebase.database().ref('items');
-       var childRef = itemsRef.child(user.name);
-       childRef.update({
-        editor: content
-    })*/
-
-        //Save to Default editor for now.
-        const usersRef = firebase.firestore().collection("users").doc(user.email).collection("Editors").doc("Default_Editor");
+      var content = document.getElementById('editor').innerHTML;
+      /*
+     const itemsRef= firebase.database().ref('items');
+     var childRef = itemsRef.child(user.name);
+     childRef.update({
+      editor: content
+  })*/
+      
+      
+      //Save to Default editor for now.
+      console.log("before saving");
+      Code_save();
+     const usersRef=firebase.firestore().collection("users").doc(user.email).collection("Editors").doc("Default_Editor");
+    if(user.arr_Langs !=null){
+        //Save Code Editors
+        console.log("special saving");
+        
         usersRef.update({
-            'text_HTML': content
+            
+            'arr_Values': user.arr_Values,
+            'arr_DOMs': user.arr_DOMs,
+            'arr_Langs':user.arr_Langs,
+
         })
-
-
     }
+    usersRef.update({
+        'text_HTML': content,
+    })
+       
+                
+    }
+    
+    
 
 
     //
@@ -572,10 +629,10 @@ export default function ToolbarInner() {
                 <button class={"bar"} onClick={e => openMenu("dropdown")}>
                     <CodeIcon />
                     <ul id="dropdown">
-                        <li onClick={e => addCodeBlock("javascript")} >Javascript</li>
-                        <li onClick={e => addCodeBlock("java")}>Java</li>
-                        <li onClick={e => addCodeBlock("python")}>Python</li>
-                        <li onClick={e => addCodeBlock("c_cpp")}>C++</li>
+                        <li onClick={e => addCodeBlock("ace/mode/javascript")} >Javascript</li>
+                        <li onClick={e => addCodeBlock("ace/mode/java")}>Java</li>
+                        <li onClick={e => addCodeBlock("ace/mode/python")}>Python</li>
+                        <li onClick={e => addCodeBlock("ace/mode/c_cpp")}>C++</li>
                     </ul>
                 </button>
             </div>
@@ -591,6 +648,7 @@ export default function ToolbarInner() {
                     <SaveAltIcon />
                 </button>
             </div>
+            
         </div>
     )
 }

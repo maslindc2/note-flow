@@ -5,7 +5,7 @@ import { withFirebase } from '../Firebase';
 import user from '../UserInfo/userInfo';
 
 import firebase from 'firebase';
-
+import code_load from'../toolbar/Toolbar';
 
 //implementation of sign in functionality
 //succesfull sign in will send you to the editor component
@@ -42,8 +42,6 @@ class SignInFormBase extends Component {
     this.props.firebase
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
-        //update username, and email
-        //user.name= this.state.email.split('@')[0];
         user.email=this.state.email;
         //set state back to initial
         this.setState({ ...INITIAL_STATE });
@@ -51,13 +49,28 @@ class SignInFormBase extends Component {
         //get content from the database
         const db= firebase.firestore();
         const userRef=db.collection('users').doc(user.email);
+        userRef.get().then(documentSnapshot => {
+          if (documentSnapshot.exists) {
+            user.fullname=documentSnapshot.get('Fullname');
+          }
+        });
+        
+
         const docRef=userRef.collection('Editors').doc('Default_Editor');
         
         //update the innerHTML editor
         docRef.get().then(documentSnapshot => {
           if (documentSnapshot.exists) {
             user.content = documentSnapshot.get('text_HTML');
+            user.arr_DOMs= documentSnapshot.get('arr_DOMs');
+            user.arr_Langs=documentSnapshot.get('arr_Langs');
+            user.arr_Values= documentSnapshot.get('arr_Values');
+            
             document.getElementById('editor').innerHTML=user.content;
+            if(user.arr_Values  !=null && user.arr_Langs!=null &&  user.arr_DOMs != null){
+              console.log(user.arr_Langs);
+              code_load();
+          }
           }
         });
 
