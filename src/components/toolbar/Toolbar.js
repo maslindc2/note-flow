@@ -1,4 +1,4 @@
-import React,{ Component } from 'react'
+import React, { Component } from 'react'
 import './Toolbar.css'
 
 //Imports for MathBlock
@@ -6,7 +6,7 @@ import './Toolbar.css'
 import { MathfieldComponent } from 'react-mathlive'
 import Mathlive from 'mathlive'
 import { Mathfield, MathfieldElement } from 'mathlive'
- 
+
 //imports for CodeBlock
 import * as ace from 'ace-builds/src-noconflict/ace';
 import 'ace-builds/src-min-noconflict/ext-language_tools';
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function ToolbarInner() {
-    
+
     function format(com, val) {
         document.getElementById('editor').focus();
         document.execCommand(com, false, val);
@@ -67,7 +67,7 @@ export default function ToolbarInner() {
     function bulletPoint() {
         format('insertHTML', `<ul><li class="bulletList"></li></ul>`);
     }
-    
+
     function changeFont(fontName) {
         const selectedFont = fontName.target.value;
         document.execCommand("fontName", false, selectedFont);
@@ -77,7 +77,7 @@ export default function ToolbarInner() {
         const FSize = Size.target.value;
         document.execCommand("fontSize", false, FSize);
     }
-    
+
     //Sets the url input box to shown or hidden
     function addLink() {
         const show = document.getElementById('url-input');
@@ -91,25 +91,25 @@ export default function ToolbarInner() {
     function setUrl() {
         //Stores the input from the url box into inputVal
         var inputVal = document.getElementById('textFormatUrl').value;
-        
+
         //Text is used for creating a hyperlink
         const text = document.getSelection();
-        
+
         //used for showing or hiding url input box
         const show = document.getElementById('url-input');
 
         //Fixes problem with a leading space in the url when copying and pasting
-        if(inputVal.substr(0,1) === " "){
+        if (inputVal.substr(0, 1) === " ") {
             inputVal = inputVal.substr(1);
         }
         //Appends http:// to the url if the input did not have it to begin with
         var prefix1 = 'http://';
         var prefix2 = 'https://';
-        if ((inputVal.substr(0, prefix1.length) !== prefix1) && (inputVal.substr(0, prefix2.length) !== prefix2)){
-            
+        if ((inputVal.substr(0, prefix1.length) !== prefix1) && (inputVal.substr(0, prefix2.length) !== prefix2)) {
+
             inputVal = prefix2 + inputVal;
         }
-        
+
         /**
          * This block handles url insert. text.baseNode.data==undefined checks to see if the user
          * is trying to insert only a url and NOT create a hyper link.  Else handles creating the hyperlink.
@@ -134,7 +134,7 @@ export default function ToolbarInner() {
     }
 
 
-    function insertImage(){
+    function insertImage() {
         //Stores the input from the url box into inputVal
         var inputVal = document.getElementById('textFormatUrl').value;
 
@@ -145,7 +145,7 @@ export default function ToolbarInner() {
         if (inputVal.substr(0, 1) === " ") {
             inputVal = inputVal.substr(1);
         }
-    
+
         //Insert image
         format(
             'insertHTML', `<img src='${inputVal}'>`
@@ -154,14 +154,12 @@ export default function ToolbarInner() {
 
         //This makes the url input tag blank again. I could use "" or '' but JS thinks strings are the same as null
         document.getElementById('textFormatUrl').value = " ";
-        
+
         //hides the input tag again 
         show.classList.add('hidden');
     }
-    
 
-
-    function embedding_video() {
+    function embedVideo() {
         //getting youtube video id
         //Stores the input from the url box into inputVal
         var inputVal = document.getElementById('textFormatUrl').value;
@@ -189,7 +187,7 @@ export default function ToolbarInner() {
         );
         const bool = true;
         ReactDOM.render(<ReactPlayer url={inputVal} controls={bool} />, document.getElementById(`${id}`));
-        
+
         //Clears out url box
         document.getElementById('textFormatUrl').value = " ";
         //Hides the url box
@@ -213,7 +211,7 @@ export default function ToolbarInner() {
     function addCodeBlock(lang) {
         //creating new filled div
         var next_line = document.getElementById('editor');
-        
+
         //alert(" Language chosen for codeblock is: "+lang);
         format(
             'insertParagraph',
@@ -232,15 +230,15 @@ export default function ToolbarInner() {
         */
         const id = `codeBlock-${document.getElementsByClassName('codeBlock').length + 1}`;
         codeBlock.classList.add('codeBlock');
-        
+
 
         var new_block = format(
             'insertHTML',
             `<pre class='codeBlock' id='${id}'>${target}</pre>`
         );
-        
+
         //Embedding Ace editor
-        var mode_name = "ace/mode/"+lang;
+        var mode_name = "ace/mode/" + lang;
         ace.require("ace/ext/language_tools");
         var code_editor = ace.edit(id, {
             theme: "ace/theme/tomorrow_night_eighties",
@@ -248,7 +246,7 @@ export default function ToolbarInner() {
             minLines: 2,
             maxLines: 30,
             wrap: true,
-            autoScrollEditorIntoView: true,    
+            autoScrollEditorIntoView: true,
         });
 
         code_editor.setOptions({
@@ -262,44 +260,44 @@ export default function ToolbarInner() {
         return code_editor;
     }
 
-    function Code_save(){
+    function Code_save() {
         const length = document.getElementsByClassName("codeBlock").length;
         var i;
-        const arr=[]
-        for( i=0;i<length;i++){
-            var id ="codeBlock-"+(i+1);
+        const arr = []
+        for (i = 0; i < length; i++) {
+            var id = "codeBlock-" + (i + 1);
             var editor = ace.edit(id);
             arr.push(editor.getValue());
             editor.destroy();
             editor.container.remove();
         }
-        for( i=0;i<arr.length;i++){
-            var new_editor= addCodeBlock("java");
-            
+        for (i = 0; i < arr.length; i++) {
+            var new_editor = addCodeBlock("java");
+
             //new_editor.setValue("working "+arr[i]);
 
         }
     }
 
-    
+
     //experimenting to fix a dumb bug when trying to delete the code block
-   /* function deleteBlock(){
-        const codeBlock = document.getElementsByTagName("pre");
-        const target = document.getSelection();
-        
-        
-        const id='';
-        $(document).ready(function(){
-            $(document).click(function(){
-            
-            });
-        });
-        
-        const code_editor=ace.edit(id);
-        code_editor.destroy();
-        code_editor.container.remove();
-    }*/
-    
+    /* function deleteBlock(){
+         const codeBlock = document.getElementsByTagName("pre");
+         const target = document.getSelection();
+         
+         
+         const id='';
+         $(document).ready(function(){
+             $(document).click(function(){
+             
+             });
+         });
+         
+         const code_editor=ace.edit(id);
+         code_editor.destroy();
+         code_editor.container.remove();
+     }*/
+
     function addLineAfterBlock(id) {
         const block = document.getElementById(`${id}`);
         const div = document.createElement('div');
@@ -311,57 +309,6 @@ export default function ToolbarInner() {
         } else {
             block.after(div);
         }
-    }
-    
-    function handleSave() {
-        
-          //firebase.initializeApp(config);
-
-        var content = document.getElementById('editor').innerHTML;
-        /*
-       const itemsRef= firebase.database().ref('items');
-       var childRef = itemsRef.child(user.name);
-       childRef.update({
-        editor: content
-    })*/
-
-        //Save to Default editor for now.
-       const usersRef=firebase.firestore().collection("users").doc(user.email).collection("Editors").doc("Default_Editor");
-       usersRef.update({
-           'text_HTML': content
-       })
-       
-                
-    }
-    
-    function embedding_video(){
-        //getting youtube video id
-        //Stores the input from the url box into inputVal
-        var inputVal = document.getElementById('textFormatUrl').value;
-        
-        //fixing a spacing problem when copy and paste
-        const show = document.getElementById('url-input');
-        if(inputVal.substr(0,1) === " "){
-            inputVal = inputVal.substr(1);
-        }
-        
-
-        var next_line = document.getElementById('editor');
-        format(
-            'insertParagraph',
-            `<pre class='editor' id='${next_line}'</pre>`
-        );
-        const youTube = document.createElement('pre');
-        const target = document.getSelection();
-        const id = `youTube-${document.getElementsByClassName('youTubeClass').length + 1}`;
-        youTube.classList.add('youTubeClass');
-        format(
-            'insertHTML',
-            `<pre class='youTubeClass' id='${id}'>${target}</pre>`
-        );
-        const bool = true;
-        ReactDOM.render(<ReactPlayer url= {inputVal} controls={bool}/> , document.getElementById(`${id}`));
-        
     }
 
     //Function for entering equation. Uses the Mathlive library and API
@@ -495,15 +442,27 @@ export default function ToolbarInner() {
         range.deleteContents();
         range.insertNode(block);
     }
-    
-    function changeFont(fontName) {
-        const selectedFont = fontName.target.value;
-        document.execCommand("fontName", false, selectedFont);
-    }
 
-    function changeFSize(Size){
-        const FSize = Size.target.value;
-        document.execCommand("fontSize", false, FSize);
+    
+    function handleSave() {
+
+        //firebase.initializeApp(config);
+
+        var content = document.getElementById('editor').innerHTML;
+        /*
+       const itemsRef= firebase.database().ref('items');
+       var childRef = itemsRef.child(user.name);
+       childRef.update({
+        editor: content
+    })*/
+
+        //Save to Default editor for now.
+        const usersRef = firebase.firestore().collection("users").doc(user.email).collection("Editors").doc("Default_Editor");
+        usersRef.update({
+            'text_HTML': content
+        })
+
+
     }
 
 
@@ -518,120 +477,120 @@ export default function ToolbarInner() {
 
 
     return (
-            <div className='toolbar'>
-                <div class="tooltip container">
-                    <span class="tooltiptext">Bold</span>
-                    <button class={"bar"} onClick={e => format('bold')}>
-                        <FormatBoldIcon/>
-                    </button>
-                </div>
-                <div class="tooltip container">
-                    <span class="tooltiptext">Italicize</span>
-                    <button class={"bar"} onClick={e => format('italic')}>
-                        <FormatItalicIcon/>
-                    </button>
-                </div>
-                <div class="tooltip container">
-                    <span class="tooltiptext">List</span>
-                    <button class={"bar"} onClick={e => bulletPoint()}>
-                        <FormatListBulletedIcon/>
-                    </button>
-                </div>
-                     <div className="container">
-        <select onChange={changeFont}>
-            <option value="Arial">Arial</option>
-            <option value="Calibri">Calibri</option>
-            <option value="Comic Sans MS">Comic Sans MS</option>
-            <option value="Times New Roman">Times New Roman</option>
-        </select>
-        <select onChange={changeFSize}>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-        </select>
+        <div className='toolbar'>
+            <div class="tooltip container">
+                <span class="tooltiptext">Bold</span>
+                <button class={"bar"} onClick={e => format('bold')}>
+                    <FormatBoldIcon />
+                </button>
             </div>
-                <div class = "container">
+            <div class="tooltip container">
+                <span class="tooltiptext">Italicize</span>
+                <button class={"bar"} onClick={e => format('italic')}>
+                    <FormatItalicIcon />
+                </button>
+            </div>
+            <div class="tooltip container">
+                <span class="tooltiptext">List</span>
+                <button class={"bar"} onClick={e => bulletPoint()}>
+                    <FormatListBulletedIcon />
+                </button>
+            </div>
+            <div className="container">
+                <select onChange={changeFont}>
+                    <option value="Arial">Arial</option>
+                    <option value="Calibri">Calibri</option>
+                    <option value="Comic Sans MS">Comic Sans MS</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                </select>
+                <select onChange={changeFSize}>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                </select>
+            </div>
+            <div class="container">
                 <div class="tooltip">
-                <span class="tooltiptext">Align Left</span>
-                <button class={"bar"} onClick={e => document.execCommand('justifyLeft',false)}>
-                    <FormatAlignLeftIcon/>
+                    <span class="tooltiptext">Align Left</span>
+                    <button class={"bar"} onClick={e => document.execCommand('justifyLeft', false)}>
+                        <FormatAlignLeftIcon />
                     </button>
                 </div>
 
                 <div class="tooltip">
-                <span class="tooltiptext">Align Center</span>
-                <button class={"bar"} onClick={e => document.execCommand('justifyCenter',false)}>
-                    <FormatAlignCenterIcon/>
+                    <span class="tooltiptext">Align Center</span>
+                    <button class={"bar"} onClick={e => document.execCommand('justifyCenter', false)}>
+                        <FormatAlignCenterIcon />
                     </button>
                 </div>
 
                 <div class="tooltip">
-                <span class="tooltiptext">Align Right</span>
-                <button class={"bar"} onClick={e => document.execCommand('justifyRight',false)}>
-                    <FormatAlignRightIcon/>
+                    <span class="tooltiptext">Align Right</span>
+                    <button class={"bar"} onClick={e => document.execCommand('justifyRight', false)}>
+                        <FormatAlignRightIcon />
                     </button>
                 </div>
 
                 <div class="tooltip ">
-                <span class="tooltiptext">Justify Full</span>
-                <button class={"bar"} onClick={e =>document.execCommand('justifyFull',false)}>
-                    <FormatAlignJustifyIcon/>
+                    <span class="tooltiptext">Justify Full</span>
+                    <button class={"bar"} onClick={e => document.execCommand('justifyFull', false)}>
+                        <FormatAlignJustifyIcon />
                     </button>
 
                 </div>
-                </div>
-                <div class="tooltip">
-                    <span class="tooltiptext">Insert link</span>
-                    <button class={"bar"} onClick={e => addLink()}>
-                        <InsertLinkIcon/>
-                    </button>
-                </div>
+            </div>
+            <div class="tooltip">
+                <span class="tooltiptext">Insert link</span>
+                <button class={"bar"} onClick={e => addLink()}>
+                    <InsertLinkIcon />
+                </button>
+            </div>
 
-                <div id='url-input' className='hidden container'>
-                    <input id='textFormatUrl' placeholder='url' />
-                    <button class={"bar"} onClick={e => openMenu("dropdown_links")}>
-                        <CheckIcon/>
-                        <ul id="dropdown_links">
-                            <li onClick={e => setUrl()} >Link</li>
-                            <li onClick={e => insertImage()} >Image</li>
-                            <li onClick={e => embedding_video()}>Video</li>
-                        </ul>
-                    </button>
-                </div>
-                <div class="tooltip container">
-                    <span class="tooltiptext">Header</span>
-                    <button class={"bar"} onClick={e => setHeader()}>
-                        <TextFieldsIcon/>
-                    </button>
-                </div>
-                <div class="tooltip container">
+            <div id='url-input' className='hidden container'>
+                <input id='textFormatUrl' placeholder='url' />
+                <button class={"bar"} onClick={e => openMenu("dropdown_links")}>
+                    <CheckIcon />
+                    <ul id="dropdown_links">
+                        <li onClick={e => setUrl()} >Link</li>
+                        <li onClick={e => insertImage()} >Image</li>
+                        <li onClick={e => embedVideo()}>Video</li>
+                    </ul>
+                </button>
+            </div>
+            <div class="tooltip container">
+                <span class="tooltiptext">Header</span>
+                <button class={"bar"} onClick={e => setHeader()}>
+                    <TextFieldsIcon />
+                </button>
+            </div>
+            <div class="tooltip container">
                 <span class="tooltiptext">Code Block</span>
                 <button class={"bar"} onClick={e => openMenu("dropdown")}>
                     <CodeIcon />
                     <ul id="dropdown">
-                    <li onClick={e => addCodeBlock("javascript")} >Javascript</li>
-                    <li onClick={e => addCodeBlock("java")}>Java</li>
-                    <li onClick={e => addCodeBlock("python")}>Python</li>
-                    <li onClick={e => addCodeBlock("c_cpp")}>C++</li>
-                </ul>
+                        <li onClick={e => addCodeBlock("javascript")} >Javascript</li>
+                        <li onClick={e => addCodeBlock("java")}>Java</li>
+                        <li onClick={e => addCodeBlock("python")}>Python</li>
+                        <li onClick={e => addCodeBlock("c_cpp")}>C++</li>
+                    </ul>
                 </button>
             </div>
-                <div class="tooltip container">
-                    <span class="tooltiptext">Equation</span>
-                    <button class={"bar"} onClick={e => addEquation()}>
-                        <FunctionsIcon/>
-                    </button>
-                </div>
-                <div class="tooltip container">
-                    <span class="tooltiptext">Save</span>
-                    <button class={"bar"} onClick={e => handleSave()}>
-                        <SaveAltIcon/>
-                    </button>
-                </div>
+            <div class="tooltip container">
+                <span class="tooltiptext">Equation</span>
+                <button class={"bar"} onClick={e => addEquation()}>
+                    <FunctionsIcon />
+                </button>
             </div>
+            <div class="tooltip container">
+                <span class="tooltiptext">Save</span>
+                <button class={"bar"} onClick={e => handleSave()}>
+                    <SaveAltIcon />
+                </button>
+            </div>
+        </div>
     )
 }
