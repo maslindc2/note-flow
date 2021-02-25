@@ -20,11 +20,7 @@ const Navigation = ({ authUser }) => (
 
 //Links the user sees if they are authenticated by our authentification API - Currently Home, Editor, and Sign Out button
 const NavigationAuth = () =>  (
-
-
     <AppBarDrawer/>
-
-  
   );
 
   //Links users see if they are not authenticated - currently all links and sign out button 

@@ -99,3 +99,17 @@ button:hover{
   margin-bottom:1px;
 }
 
+.mathBlock {
+  font-size: 16px;
+  display: inline-block;
+  width: fit-content;
+  padding-inline-end: 20px;
+  padding-inline-start: 8px;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 8px;
+  border: #61dafb;
+
+}

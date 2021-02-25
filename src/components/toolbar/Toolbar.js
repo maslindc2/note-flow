@@ -1,6 +1,8 @@
 import React,{ Component } from 'react'
 import './Toolbar.css'
 
+//Imports for MathBlock
+//Link to Imported Library Documentation: https://mathlive.io/ (site), https://cortexjs.io/docs/ (docs)
 import { MathfieldComponent } from 'react-mathlive'
 import Mathlive from 'mathlive'
 import { Mathfield, MathfieldElement } from 'mathlive'
@@ -332,10 +334,39 @@ export default function ToolbarInner() {
                 
     }
     
-    
-    ////////////////////////////////////////////////////////
+    function embedding_video(){
+        //getting youtube video id
+        //Stores the input from the url box into inputVal
+        var inputVal = document.getElementById('textFormatUrl').value;
+        
+        //fixing a spacing problem when copy and paste
+        const show = document.getElementById('url-input');
+        if(inputVal.substr(0,1) === " "){
+            inputVal = inputVal.substr(1);
+        }
+        
 
-    //Emily working on this. Uses the Mathlive library and API
+        var next_line = document.getElementById('editor');
+        format(
+            'insertParagraph',
+            `<pre class='editor' id='${next_line}'</pre>`
+        );
+        const youTube = document.createElement('pre');
+        const target = document.getSelection();
+        const id = `youTube-${document.getElementsByClassName('youTubeClass').length + 1}`;
+        youTube.classList.add('youTubeClass');
+        format(
+            'insertHTML',
+            `<pre class='youTubeClass' id='${id}'>${target}</pre>`
+        );
+        const bool = true;
+        ReactDOM.render(<ReactPlayer url= {inputVal} controls={bool}/> , document.getElementById(`${id}`));
+        
+    }
+
+    //Function for entering equation. Uses the Mathlive library and API
+    //CSS element is in Editor.css file
+    //Bugs persisting with tabbing/moving out of mathblock focus, inline mathblock, add mathblock on same line
     function addEquation() {
 
         //Focus on editor, insert line
@@ -349,16 +380,16 @@ export default function ToolbarInner() {
         //Create new math block element
         const mathBlock = new MathfieldElement();
 
-        //set initial value and options. Changing this will
+        //Set initial value and options. Changing this will
         //change what the initial math equation looks like upon adding
-        //Currently empty
+        //Currently value is empty
         mathBlock.setValue("");
 
         //Chunk of code setting math block options and attributes
         mathBlock.setOptions({
             virtualKeyboardMode: "manual",
             virtualKeyboards: "all",
-            virtualKeyboardTheme: "",
+            virtualKeyboardTheme: "material",
             virtualKeyboardLayout: "auto",
             virtualKeyboardToolbarOptions: "default",
             smartMode: true,
@@ -367,17 +398,21 @@ export default function ToolbarInner() {
             selectionMode: "beforeend",
         });
         mathBlock.setAttribute("resetStyle", "true");
+        mathBlock.setAttribute("class", 'mathBlock');
+
+        //Setting Math Block ID upon creation. Each new math block should
+        //be assigned individual ID based on number of other existing math blocks
+        //in document
         mathBlock.setAttribute("id",
             `mathBlock-${document.getElementsByClassName('mathBlock').length + 1}`);
         const id = mathBlock.id;
-        mathBlock.setAttribute("class", 'mathBlock');
 
-        //Added event listener for when you exit out of math block using arrow
-        //key
+        //Added event listener for moving out of math block with arrow key
         mathBlock.addEventListener('focus-out', (ev) => {
             if (ev.detail.direction === "forward") {
 
-                document.getElementById('editor').focus();
+                //target.executeCommand('moveToMathFieldEnd');
+                document.getElementById('editor').focus()
                 var next_line = document.getElementById('editor');
                 format(
                     'insert',
@@ -389,10 +424,12 @@ export default function ToolbarInner() {
         });
 
         //Event Listener to change math block value when there is user input
+        //May be beneficial when saving documents, since value itself is changed
         mathBlock.addEventListener('input', (ev) => {
             mathBlock.setValue(ev.target.value);
         })
 
+        //Target is where selection/cursor is
         const target = document.getSelection();
 
         //Checking if valid location to place a math block
@@ -410,22 +447,10 @@ export default function ToolbarInner() {
         document.getElementById('editor').focus();
         insertBlockAtCursor(mathBlock, target);
 
-        /*
-            //Block of comments to test out different methods of inserting
-            //blocks and text elements
-
-            //const texty = document.createTextNode("hello world!");
-            //const spanny = document.createElement('span');
-            //const t = document.createTextNode("This is a span element");
-            //spanny.appendChild(t);
-            //ellie.appendChild(spanny);
-            //document.body.appendChild(spanny);
-            //insertTextAtCaret(spanny);
-
-        */
         document.getElementById(id).focus();
+
         /* Original format/executeCommand function. Does not appear to
-            be functional in the context of a <math-field> element
+            be functional in the context of a <math-field> html element
         format('insert',
                     `<pre class="mathBlock" id="${id}">${target}</pre>`
                 );
@@ -435,11 +460,10 @@ export default function ToolbarInner() {
         //the right of the math field. Will hold off on text to side of
         //until inline equation is figured out
         addLineAfterBlock(id);
-
     }
 
 
-    //Method to handle Tab and Enter button press (Emily)
+    //Method to handle Tab and Enter button press
     function keyHandle(evt) {
         const key = evt.keyCode;
         switch (key) {
@@ -454,7 +478,8 @@ export default function ToolbarInner() {
         }
     }
 
-    //Inserts text block at current cursor position (Emily)
+    //Inserts text block at current cursor position
+    //Used in keyHandle function
     function insertTextAtCursor(text) {
         var sel, range;
         sel = window.getSelection();
@@ -463,105 +488,23 @@ export default function ToolbarInner() {
         range.insertNode(document.createTextNode(text));
     }
 
-    //Inserts an inline-block element at current cursor position (Emily)
+    //Inserts an inline-block element at current cursor position
     function insertBlockAtCursor(block, target) {
         var range;
         range = target.getRangeAt(0);
         range.deleteContents();
         range.insertNode(block);
     }
-
-    //Experiment method to perform a different text insertion at cursor (Emily)
-    function insertTextAtCaret(text) {
-        var sel, range;
-        if (window.getSelection) {
-            sel = window.getSelection();
-            if (sel.getRangeAt && sel.rangeCount) {
-                range = sel.getRangeAt(0);
-                range.deleteContents();
-                range.insertNode(document.createTextNode(text));
-            }
-        } else if (document.selection && document.selection.createRange) {
-            document.selection.createRange().text = text;
-        }
-    }
-
-    //Save selection before you insert an element (Emily)
-    function saveSelection(sel) {
-        if (window.getSelection) {
-            sel = window.getSelection();
-            if (sel.getRangeAt && sel.rangeCount) {
-                return sel.getRangeAt(0);
-            }
-        } else if (document.selection && document.selection.createRange) {
-            return document.selection.createRange();
-        }
-        return null;
-    }
-
-    //Restore the previously saved selection (Emily)
-    function restoreSelection(range, sel) {
-        if (range) {
-            if (window.getSelection) {
-                sel = window.getSelection();
-                sel.removeAllRanges();
-                sel.addRange(range);
-            } else if (document.selection && range.select) {
-                range.select();
-            }
-        }
-    }
-
-    //Insert HTML directly at caret position. Basically another
-    //experimental method to test out insertion of elements at
-    //cursor in doc (Emily)
-    function pasteHtmlAtCaret(html, selectPastedContent) {
-        var sel, range;
-        if (window.getSelection) {
-            // IE9 and non-IE
-            sel = window.getSelection();
-            if (sel.getRangeAt && sel.rangeCount) {
-                range = sel.getRangeAt(0);
-                range.deleteContents();
-
-                // Range.createContextualFragment() would be useful here but is
-                // only relatively recently standardized and is not supported in
-                // some browsers (IE9, for one)
-                var el = document.createElement("div");
-                el.innerHTML = html;
-                var frag = document.createDocumentFragment(), node, lastNode;
-                while ((node = el.firstChild)) {
-                    lastNode = frag.appendChild(node);
-                }
-                var firstNode = frag.firstChild;
-                range.insertNode(frag);
-
-                // Preserve the selection
-                if (lastNode) {
-                    range = range.cloneRange();
-                    range.setStartAfter(lastNode);
-                    if (selectPastedContent) {
-                        range.setStartBefore(firstNode);
-                    } else {
-                        range.collapse(true);
-                    }
-                    sel.removeAllRanges();
-                    sel.addRange(range);
-                }
-            }
-        } else if ((sel = document.selection) && sel.type !== "Control") {
-            // IE < 9
-            var originalRange = sel.createRange();
-            originalRange.collapse(true);
-            sel.createRange().pasteHTML(html);
-            if (selectPastedContent) {
-                range = sel.createRange();
-                range.setEndPoint("StartToStart", originalRange);
-                range.select();
-            }
-        }
-    }
     
+    function changeFont(fontName) {
+        const selectedFont = fontName.target.value;
+        document.execCommand("fontName", false, selectedFont);
+    }
+
+    function changeFSize(Size){
+        const FSize = Size.target.value;
+        document.execCommand("fontSize", false, FSize);
+    }
 
 
     //

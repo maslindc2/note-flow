@@ -213,10 +213,12 @@ export default function AppBarDrawer() {
                 </List>
                 <Divider color={"white"} />
                 <List className={classes.drawerPaper}>
-                    <ListItem className={classes.drawerButton} button key={'All Files'} >
-                        <ListItemIcon className={classes.drawerButton}> <FolderIcon/> </ListItemIcon>
-                        <ListItemText primary={'All Files'} />
-                    </ListItem>
+                    <NavLink activeClassName="active" to="/userFiles">
+                        <ListItem className={classes.drawerButton} button key={'All Files'} >
+                            <ListItemIcon className={classes.drawerButton}> <FolderIcon/> </ListItemIcon>
+                            <ListItemText primary={'All Files'} />
+                        </ListItem>
+                    </NavLink>
 
                     <ListItem className={classes.drawerButton} button key={'Tags'}>
                         <ListItemIcon className={classes.drawerButton}> <LocalOfferIcon /> </ListItemIcon>

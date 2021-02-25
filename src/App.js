@@ -10,6 +10,7 @@ import SignInPage from './components/signinpage'
 import Notfound from './components/notfound';
 import PasswordPage from './components/passwordpage'
 import AccountPage from './components/accountpage'
+import UserFiles from './components/UserFiles/userFiles'
 
 
 import { withAuthentication } from './components/Session';
@@ -31,6 +32,7 @@ const App = () => (
                     <Route path="/editor" component={EditorPage} />
                     <Route path="/passwordpage" component={PasswordPage} />
                     <Route path="/accountpage" component={AccountPage} />
+                    <Route path="/userfiles" component={UserFiles} />
                     <Route component={Notfound} />
                 </Switch>
          </div>
