@@ -1,7 +1,15 @@
 body{
   font-family: 'Arial';
+  
+  /*
+   Removes the bottom scroll bar on the editor. Text will automatically wrap around to next line
+   so its not needed.  Also if you try to use the arrow key to exit out of mathblock it ends
+   up controlling the bottom scroll bar. -Maslin
+  */
+  overflow-x: hidden;
 }
 .editor {
+  overflow: hidden;
   width: 100%;
   min-height: 800px;
   padding-left: 10%;

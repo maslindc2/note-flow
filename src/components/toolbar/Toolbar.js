@@ -93,7 +93,7 @@ export default function ToolbarInner() {
         var inputVal = document.getElementById('textFormatUrl').value;
 
         //Text is used for creating a hyperlink
-        const text = document.getSelection();
+        const text = window.getSelection();
 
         //used for showing or hiding url input box
         const show = document.getElementById('url-input');
@@ -111,12 +111,13 @@ export default function ToolbarInner() {
         }
 
         /**
-         * This block handles url insert. text.baseNode.data==undefined checks to see if the user
-         * is trying to insert only a url and NOT create a hyper link.  Else handles creating the hyperlink.
+         * This obscene if statement checks to see if anchordNode.data is not the same as the selected text
+         * this is how firefox handles selections.  The left side is there to make sure no false positives occur.
+         * I'm not proud of this by any means but it works, this is the only time MATH260 is remotely useful.
          * A hyperlink is created by first clicking the url button, then paste your url in the input box,
          * then highlight the text you want to turn into a hyperlink and then press the check mark button. 
          */
-        if (text.baseNode.data === undefined) {
+        if (text.anchorNode.data != text || (text.baseNode === undefined && text.anchorNode.data != text)) {
             format(
                 'insertHTML', `<a href='${inputVal}' target='_blank'>${inputVal}</a>`
             );
