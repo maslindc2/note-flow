@@ -55,9 +55,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+//Function to load content from code block
 
 
 export default function ToolbarInner() {
+    
 
     function format(com, val) {
         document.getElementById('editor').focus();
@@ -295,14 +297,13 @@ export default function ToolbarInner() {
         */
         
     }
-
-    //Function to load content from code block
+    //
     function code_load(){
         var i;
         var arr_DOMs=user.arr_DOMs;
         var arr_Langs=user.arr_Langs;
         var arr_Values=user.arr_Values;
-        console.log(user.arr_DOMs);
+        console.log("loading  code_load");
         //destroy the old editor
         for( i=0;i<arr_DOMs.length;i++){
             var old_editor = ace.edit(arr_DOMs[i]);
@@ -312,10 +313,12 @@ export default function ToolbarInner() {
         //recreate a new one
         for( i=0;i<arr_DOMs.length;i++){
             var new_editor= addCodeBlock(arr_Langs[i],arr_DOMs[i]);
-            new_editor.setValue(arr_Values[i]+arr_Langs[i]);
+            new_editor.setValue(arr_Values[i]);
         }
         
     }
+
+    
     
 
     
@@ -523,18 +526,18 @@ export default function ToolbarInner() {
     
     
 
+    
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    
 
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-
-
-    return (
+    return [code_load,(
         <div className='toolbar'>
             <div class="tooltip container">
                 <span class="tooltiptext">Bold</span>
@@ -650,6 +653,8 @@ export default function ToolbarInner() {
                 </button>
             </div>
             
+            
         </div>
     )
+    ]
 }

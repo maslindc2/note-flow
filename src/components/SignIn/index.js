@@ -5,8 +5,8 @@ import { withFirebase } from '../Firebase';
 import user from '../UserInfo/userInfo';
 
 import firebase from 'firebase';
+import ToolbarInner from'../toolbar/Toolbar';
 import code_load from'../toolbar/Toolbar';
-
 //implementation of sign in functionality
 //succesfull sign in will send you to the editor component
 
@@ -69,17 +69,14 @@ class SignInFormBase extends Component {
             document.getElementById('editor').innerHTML=user.content;
             if(user.arr_Values  !=null && user.arr_Langs!=null &&  user.arr_DOMs != null){
               console.log(user.arr_Langs);
-              code_load();
+              var code_load = ToolbarInner();
+              code_load[0]();
+              
           }
           }
         });
 
-        //update user full name
-        userRef.get().then(documentSnapshot => {
-          if (documentSnapshot.exists) {
-            user.fullname = documentSnapshot.get('name');
-          }
-        });
+       
         //alert(test);
         //Successful sign in will send user to editor page for now
         this.props.history.push("/editor");
