@@ -410,6 +410,7 @@ export default function ToolbarInner() {
                     'insert',
                     `<pre class='editor' id='${target}'</pre>`
                 );
+
             } else if (ev.detail.direction === "backward") {
                 document.getElementById('editor').focus();
             }
@@ -421,22 +422,30 @@ export default function ToolbarInner() {
             mathBlock.setValue(ev.target.value);
         })
 
+        
         //Target is where selection/cursor is
         const target = document.getSelection();
-
-        //Checking if valid location to place a math block
+        //This if statement causes text to not be in-line with the mathBlock
+        //Commenting this out allows you to place the mathBlock in front of text
+        //i.e. "testing <math block can insert here>"
+        //However if you accidentally click the titlebar before clicking the insert math button
+        //it will just place it at the top of the page.
+        //What this if statement did: Checking if valid location to place a math block
+        /*
         if (
             target.focusNode.nodeName.includes('#text') ||
             target.focusNode.classList.contains('title') ||
             target.focusNode.className.includes('mathBlock')
         ) {
             return
-        }
+        }*/
 
         //Focuses back on editor, and then inserts a block at
         //the cursor using added function insertBlockAtCursor
         const ellie = document.getElementById('editor');
         document.getElementById('editor').focus();
+        //format('insertHTML', `<div>${mathBlock}</div>`);
+
         insertBlockAtCursor(mathBlock, target);
 
         document.getElementById(id).focus();
