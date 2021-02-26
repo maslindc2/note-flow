@@ -37,7 +37,7 @@ import '../toolbar/Toolbar.css';
 //Import Editor
 import Editor from '../editor/Editor'
 import '../editor/Editor.css';
-import {Edit, Home} from "@material-ui/icons";
+import { Edit, Home } from "@material-ui/icons";
 
 const drawerWidth = 240;
 
@@ -45,11 +45,11 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         background: '#212121',
-
     },
 
     drawerButton: {
         color: 'white',
+        
     },
 
     appBar: {
@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     dividerColor: {
-      light: true,
+        light: true,
     },
     drawer: {
         width: drawerWidth,
@@ -92,6 +92,7 @@ const useStyles = makeStyles((theme) => ({
         width: drawerWidth,
         backgroundColor: '#212121',
         color: '#212121',
+        overflowX: "hidden", //Removes the left-right scroll bar thats in the drawer
 
     },
     drawerHeader: {
@@ -182,24 +183,24 @@ export default function AppBarDrawer() {
                 >
                     Menu
                     <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'ltr' ? <ChevronLeftIcon className={classes.drawerButton}/> : <ChevronRightIcon className={classes.drawerButton} />}
+                        {theme.direction === 'ltr' ? <ChevronLeftIcon className={classes.drawerButton} /> : <ChevronRightIcon className={classes.drawerButton} />}
                     </IconButton>
                 </div>
                 <Divider />
                 <List className={classes.drawerPaper}>
 
                     <ListItem button key={'Sign Out'}>
-                        <ListItemIcon > <SignOutButton style="color:#FBE8A6;"/></ListItemIcon>
+                        <ListItemIcon > <SignOutButton style="color:#FBE8A6;" /></ListItemIcon>
                     </ListItem>
 
                     <NavLink exact activeClassName="active" to="/">
                         <ListItem className={classes.drawerButton} button={true} key={'Home'}>
-                                <ListItemIcon className={classes.drawerButton}> <AccountCircleIcon /></ListItemIcon>
-                                <ListItemText primary={'Home'}/>
+                            <ListItemIcon className={classes.drawerButton}> <AccountCircleIcon /></ListItemIcon>
+                            <ListItemText primary={'Home'} />
                         </ListItem>
                     </NavLink>
 
-                    <NavLink  activeClassName="active" to="/editor">
+                    <NavLink activeClassName="active" to="/editor">
                         <ListItem className={classes.drawerButton} button key={'Editor'}>
                             <ListItemIcon className={classes.drawerButton}> <EditIcon /> </ListItemIcon>
                             <ListItemText primary={'Editor'} />
@@ -215,7 +216,7 @@ export default function AppBarDrawer() {
                 <List className={classes.drawerPaper}>
                     <NavLink activeClassName="active" to="/userFiles">
                         <ListItem className={classes.drawerButton} button key={'All Files'} >
-                            <ListItemIcon className={classes.drawerButton}> <FolderIcon/> </ListItemIcon>
+                            <ListItemIcon className={classes.drawerButton}> <FolderIcon /> </ListItemIcon>
                             <ListItemText primary={'All Files'} />
                         </ListItem>
                     </NavLink>
@@ -230,10 +231,10 @@ export default function AppBarDrawer() {
                         <ListItemText primary={'Important'} />
                     </ListItem>
 
-                    <NavLink  activeClassName="active" to="/accountpage">
+                    <NavLink activeClassName="active" to="/accountpage">
                         <ListItem className={classes.drawerButton} button key={'Account'}>
-                                <ListItemIcon className={classes.drawerButton}> <AccountCircleIcon /></ListItemIcon>
-                                <ListItemText primary={'Account'}/>
+                            <ListItemIcon className={classes.drawerButton}> <AccountCircleIcon /></ListItemIcon>
+                            <ListItemText primary={'Account'} />
                         </ListItem>
                     </NavLink>
 
