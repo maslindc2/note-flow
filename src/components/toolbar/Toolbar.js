@@ -497,6 +497,7 @@ export default function ToolbarInner() {
         range.insertNode(block);
     }
     //handling save
+    //handling save
     function handleSave() {
         
         //firebase.initializeApp(config);
@@ -513,10 +514,11 @@ export default function ToolbarInner() {
       //Save to Default editor for now.
       console.log("before saving");
       Code_save();
+      math_save();
      const usersRef=firebase.firestore().collection("users").doc(user.email).collection("Editors").doc("Default_Editor");
     if(user.arr_Langs !=null){
         //Save Code Editors
-        console.log("special saving");
+        //console.log("special saving");
         
         usersRef.update({
             
@@ -526,11 +528,45 @@ export default function ToolbarInner() {
 
         })
     }
+    if(user.arr_math_Values!=null){
+        //Save Math Block content
+        usersRef.update({
+            'arr_math_Values': user.arr_math_Values
+        })
+    }
     usersRef.update({
         'text_HTML': content,
     })
        
                 
+    }
+    
+    //save math content
+    function math_save(){
+        
+        var i;
+        var arr_math_Values=[]
+        for( i=0; i< document.getElementsByClassName("mathBlock").length;i++){
+            var id='mathBlock-'+(i+1);
+            var mathBlock= document.getElementById(id);
+            arr_math_Values.push(mathBlock.getValue());
+            //console.log(mathBlock.getValue());
+            
+        }
+        user.arr_math_Values=arr_math_Values;
+        
+    }
+    //load math content
+    function math_load(){
+        var i;
+        for( i=0; i< document.getElementsByClassName("mathBlock").length;i++){
+            var id='mathBlock-'+(i+1);
+            var mathBlock= document.getElementById(id);
+            //console.log(user.arr_math_Values[i]);
+            mathBlock.setValue(user.arr_math_Values[i]);
+            //console.log(mathBlock.getValue());
+
+        }
     }
     
     
@@ -546,7 +582,7 @@ export default function ToolbarInner() {
     //
     
 
-    return [code_load,(
+    return [code_load,math_load,(
         <div className='toolbar'>
             <div class="tooltip container">
                 <span class="tooltiptext">Bold</span>

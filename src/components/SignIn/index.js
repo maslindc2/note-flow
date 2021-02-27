@@ -61,17 +61,27 @@ class SignInFormBase extends Component {
         //update the innerHTML editor
         docRef.get().then(documentSnapshot => {
           if (documentSnapshot.exists) {
+            //load html
             user.content = documentSnapshot.get('text_HTML');
+            //load codeblock
             user.arr_DOMs= documentSnapshot.get('arr_DOMs');
             user.arr_Langs=documentSnapshot.get('arr_Langs');
             user.arr_Values= documentSnapshot.get('arr_Values');
-            
+            //load mathblock
+            user.arr_math_Values=documentSnapshot.get('arr_math_Values');
+            //push contents to the editor
             document.getElementById('editor').innerHTML=user.content;
+            //push codeblock
             if(user.arr_Values  !=null && user.arr_Langs!=null &&  user.arr_DOMs != null){
               console.log(user.arr_Langs);
               var code_load = ToolbarInner();
               code_load[0]();
               
+          }
+            //push mathblock
+            if(user.arr_math_Values!=null){
+            var math_load= ToolbarInner();
+            math_load[1]();
           }
           }
         });

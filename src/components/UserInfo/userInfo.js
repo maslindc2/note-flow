@@ -10,6 +10,7 @@ var user ={
     arr_Values: [],
     arr_DOMs: [],
     arr_Langs:[],
+    arr_math_Values:[]
 };
 
 export default user;
