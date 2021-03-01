@@ -35,6 +35,8 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBarDrawer from "../Navigation/AppBarDrawer";
 import App from "../../App";
+//React color for dropdown color picker
+
 //saving
 import { withFirebase } from '../Firebase';
 import Firebase from '../Firebase/firebase.js';
@@ -80,6 +82,15 @@ export default function ToolbarInner() {
         document.execCommand("fontSize", false, FSize);
     }
 
+    function highlightText(Color){
+        const cColor = Color.target.value;
+        document.execCommand("backColor", false, cColor);
+    }
+
+    function changeFColor(Color){
+        const cColor = Color.target.value;
+        document.execCommand("foreColor", false, cColor);
+    }
     //Sets the url input box to shown or hidden
     function addLink() {
         const show = document.getElementById('url-input');
@@ -602,7 +613,8 @@ export default function ToolbarInner() {
                     <FormatListBulletedIcon />
                 </button>
             </div>
-            <div className="container">
+            <div className="tooltip container">
+                <span class="tooltiptext">Font Style and Size</span>
                 <select onChange={changeFont}>
                     <option value="Arial">Arial</option>
                     <option value="Calibri">Calibri</option>
@@ -617,6 +629,31 @@ export default function ToolbarInner() {
                     <option value="5">5</option>
                     <option value="6">6</option>
                     <option value="7">7</option>
+                </select>
+            </div>
+            <div class="tooltip">
+            <span class="tooltiptext">Highlight Text Color</span>
+                <span class="HLightText">Highlight</span>
+                <select onChange={highlightText}>
+                    <option value ="#ffffff">None</option>
+                    <option value ="Black">Black</option>
+                    <option value="#99c2ff">Blue</option>
+                    <option value="Orange">Orange</option>
+                    <option value="#ff9999">Red</option>
+                    <option value="Yellow">Yellow</option>
+
+                </select>
+            </div>
+            <div class="tooltip">
+            <span class="tooltiptext">Text Color</span>
+            <span class="HLightText">Text Color</span>
+                <select onChange={changeFColor}>
+                    <option value ="Black">Black</option>
+                    <option value ="#ffffff">White</option>
+                    <option value="Blue">Blue</option>
+                    <option value="Orange">Orange</option>
+                    <option value="Red">Red</option>
+                    <option value="#b3b300">Yellow</option>
                 </select>
             </div>
             <div class="container">
