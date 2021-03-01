@@ -35,8 +35,6 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBarDrawer from "../Navigation/AppBarDrawer";
 import App from "../../App";
-//React color for dropdown color picker
-
 //saving
 import { withFirebase } from '../Firebase';
 import Firebase from '../Firebase/firebase.js';
@@ -47,7 +45,10 @@ import ReactDOM from 'react-dom';
 
 import ReactPlayer from 'react-player';
 
-
+//Text Style Imports
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Roboto&family=Roboto+Mono&display=swap');
+</style> 
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -620,6 +621,8 @@ export default function ToolbarInner() {
                     <option value="Calibri">Calibri</option>
                     <option value="Comic Sans MS">Comic Sans MS</option>
                     <option value="Times New Roman">Times New Roman</option>
+                    <option value="Roboto">Roboto</option>
+                    <option value="Roboto Mono">Roboto Mono</option>
                 </select>
                 <select onChange={changeFSize}>
                     <option value="1">1</option>
