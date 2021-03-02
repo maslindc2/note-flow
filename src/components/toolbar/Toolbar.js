@@ -39,7 +39,7 @@ import App from "../../App";
 import { withFirebase } from '../Firebase';
 import Firebase from '../Firebase/firebase.js';
 import firebase from 'firebase';
-import user from '../UserInfo/userInfo';
+import userInner from '../UserInfo/userInfo';
 //embedding
 import ReactDOM from 'react-dom';
 
@@ -279,6 +279,7 @@ export default function ToolbarInner() {
     function Code_save(){
         const length = document.getElementsByClassName("codeBlock").length;
         var i;
+        var user = userInner()[0];
         const arr_Values=[];
         const arr_DOMs=[];
         const arr_Langs=[];
@@ -312,6 +313,7 @@ export default function ToolbarInner() {
     //
     function code_load(){
         var i;
+        var user = userInner()[0];
         var arr_DOMs=user.arr_DOMs;
         var arr_Langs=user.arr_Langs;
         var arr_Values=user.arr_Values;
@@ -527,6 +529,7 @@ export default function ToolbarInner() {
       console.log("before saving");
       Code_save();
       math_save();
+      var user = userInner()[0];
      const usersRef=firebase.firestore().collection("users").doc(user.email).collection("Editors").doc("Default_Editor");
     if(user.arr_Langs !=null){
         //Save Code Editors
@@ -557,6 +560,7 @@ export default function ToolbarInner() {
     function math_save(){
         
         var i;
+        var user = userInner()[0];
         var arr_math_Values=[]
         for( i=0; i< document.getElementsByClassName("mathBlock").length;i++){
             var id='mathBlock-'+(i+1);
@@ -571,6 +575,7 @@ export default function ToolbarInner() {
     //load math content
     function math_load(){
         var i;
+        var user = userInner()[0];
         for( i=0; i< document.getElementsByClassName("mathBlock").length;i++){
             var id='mathBlock-'+(i+1);
             var mathBlock= document.getElementById(id);
@@ -580,7 +585,11 @@ export default function ToolbarInner() {
 
         }
     }
-    
+    //load everything
+    /*
+    var loading_editor=userInner()[2];
+    loading_editor();
+    */
     
 
     

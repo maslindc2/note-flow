@@ -2,6 +2,7 @@ import React from 'react';
 import ToolbarInner from '../toolbar/Toolbar'
 import './Editor.css';
 import AppBarDrawer from "../Navigation/AppBarDrawer";
+import userInner from "../UserInfo/userInfo"
 
 //Editor function
 export default function Editor() {
@@ -17,6 +18,7 @@ export default function Editor() {
         document.execCommand('insertHTML', false, text)
 
     }
+    
 
     //Return the content from Toolbar and Editor this goes to App.js
     return (
@@ -42,3 +44,4 @@ export default function Editor() {
         </React.Fragment>
     )
 }
+
