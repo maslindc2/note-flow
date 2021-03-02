@@ -1,8 +1,8 @@
 import React from 'react'
 
 import firebase from 'firebase'
-import PasswordChangeForm from './PasswordChange';
-import { withAuthorization } from './Session';
+import PasswordChangeForm from '../PasswordChange';
+import { withAuthorization } from '../Session';
 
 //Administrative features for signed in users - right now only functionality is changning password
 

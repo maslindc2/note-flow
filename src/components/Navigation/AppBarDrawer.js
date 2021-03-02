@@ -193,9 +193,16 @@ export default function AppBarDrawer() {
                         <ListItemIcon > <SignOutButton style="color:#FBE8A6;" /></ListItemIcon>
                     </ListItem>
 
-                    <NavLink exact activeClassName="active" to="/">
-                        <ListItem className={classes.drawerButton} button={true} key={'Home'}>
+                    <NavLink activeClassName="active" to="/accountpage">
+                        <ListItem className={classes.drawerButton} button key={'Account'}>
                             <ListItemIcon className={classes.drawerButton}> <AccountCircleIcon /></ListItemIcon>
+                            <ListItemText primary={'Account'} />
+                        </ListItem>
+                    </NavLink>
+
+                    <NavLink exact activeClassName="active" to="/homepage">
+                        <ListItem className={classes.drawerButton} button={true} key={'Home'}>
+                            <ListItemIcon className={classes.drawerButton}> <HomeIcon /></ListItemIcon>
                             <ListItemText primary={'Home'} />
                         </ListItem>
                     </NavLink>
@@ -221,22 +228,7 @@ export default function AppBarDrawer() {
                         </ListItem>
                     </NavLink>
 
-                    <ListItem className={classes.drawerButton} button key={'Tags'}>
-                        <ListItemIcon className={classes.drawerButton}> <LocalOfferIcon /> </ListItemIcon>
-                        <ListItemText primary={'Tags'} />
-                    </ListItem>
-
-                    <ListItem className={classes.drawerButton} button key={'Important'}>
-                        <ListItemIcon className={classes.drawerButton}> <StarsIcon /> </ListItemIcon>
-                        <ListItemText primary={'Important'} />
-                    </ListItem>
-
-                    <NavLink activeClassName="active" to="/accountpage">
-                        <ListItem className={classes.drawerButton} button key={'Account'}>
-                            <ListItemIcon className={classes.drawerButton}> <AccountCircleIcon /></ListItemIcon>
-                            <ListItemText primary={'Account'} />
-                        </ListItem>
-                    </NavLink>
+                    
 
                 </List>
             </Drawer>

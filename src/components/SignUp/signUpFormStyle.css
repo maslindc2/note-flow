@@ -1,0 +1,17 @@
+.inputFormWrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 10;
+    align-items: flex-start;
+    align-content: space-between;
+    height: 150px;
+    width: 430px;
+    margin: 20px;
+}
+
+
+#submitButton:enabled {
+    color: #1B98E0;
+    border-color: #1B98E0;   
+}

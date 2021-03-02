@@ -20,39 +20,17 @@ const Navigation = ({ authUser }) => (
 
 //Links the user sees if they are authenticated by our authentification API - Currently Home, Editor, and Sign Out button
 const NavigationAuth = () =>  (
+    //Needs App bar and additional functionality
+    
     <AppBarDrawer/>
   );
 
   //Links users see if they are not authenticated - currently all links and sign out button 
   const NavigationNonAuth = () =>  (
 
-    <div>
-      
-     
-
-      <ul>
-  
-        <li>
-            <NavLink exact activeClassName="active" to="/">
-              Home
-            </NavLink>
-         </li>
-        <li>
-            <NavLink  activeClassName="active" to="/signuppage">
-             Sign Up
-           </NavLink>
-        </li>
-        <li>
-            <NavLink  activeClassName="active" to="/signinpage">
-             Sign In
-           </NavLink>
-        </li>
-        
-        
-      </ul>
-     
-        
-    </div>
+    //Needs App Bar
+    <div display="none"/>
+    
   
   );
 

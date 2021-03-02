@@ -13,7 +13,7 @@ editor component until they sign in again
 
 const SignOutButton = ({ firebase }) => (
 
-    <Button id={"signout"} href='/signinpage' onClick={firebase.doSignOut} > Sign Out </Button>
+    <Button id={"signout"} href='/' onClick={firebase.doSignOut} > Sign Out </Button>
 
   
 );

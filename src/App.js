@@ -3,14 +3,13 @@ import React from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 
 import Navigation from './components/Navigation'
-import SignUpPage from './components/signuppage'
-import HomePage from './components/homepage';
-import EditorPage from './components/editorpage'
-import SignInPage from './components/signinpage'
+import HomePage from './components/HomePage/homepage';
+import EditorPage from './components/editor/editorpage';
 import Notfound from './components/notfound';
 import PasswordPage from './components/passwordpage'
-import AccountPage from './components/accountpage'
+import AccountPage from './components/Account/accountpage'
 import UserFiles from './components/UserFiles/userFiles'
+import WelcomePage from './components/WelcomePage/welcomePage'
 
 
 import { withAuthentication } from './components/Session';
@@ -26,9 +25,8 @@ const App = () => (
         <div>
             <Navigation/>
                 <Switch>
-                    <Route exact path="/" component={HomePage} />
-                    <Route path="/signuppage" component={SignUpPage} />
-                    <Route path="/signinpage" component={SignInPage} />
+                    <Route exact path="/" component={WelcomePage}/>
+                    <Route path="/homepage" component={HomePage} />
                     <Route path="/editor" component={EditorPage} />
                     <Route path="/passwordpage" component={PasswordPage} />
                     <Route path="/accountpage" component={AccountPage} />

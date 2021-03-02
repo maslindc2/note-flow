@@ -14,8 +14,8 @@ import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 //Import images
-import fileCardImage from './Images/{get.myFiles}.jpg'
-import accountCardImage from './Images/MyAccount.jpg'
+import fileCardImage from '../Images/{get.myFiles}.jpg'
+import accountCardImage from '../Images/MyAccount.jpg'
 
 //Import Navigation
 import { NavLink } from 'react-router-dom'

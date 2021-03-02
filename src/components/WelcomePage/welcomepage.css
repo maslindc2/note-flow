@@ -1,0 +1,100 @@
+#welPage {
+    height: 100%;
+    background: linear-gradient(45deg, to bottom right, #F4976C 20%, 'white' 30% 70%, #FBE8A6 80%);
+    width: 100%;
+
+}
+
+#welcomeTitle {
+    margin-top: 100px;
+    line-height: 30px;
+}
+
+#welcomeSubtitle {
+    font-size: 20px;
+    font-style: italic;
+}
+
+#signInForm {
+    text-align: left;
+
+}
+
+#signInForm > text {
+    margin-left: 10px;
+}
+
+.background {    
+    
+    background-image: url("welcomeTopImg.png");
+    min-height: 900px; 
+    
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 1200px, 900px;
+  bottom: 10px ;
+  top: 100px;
+
+}
+
+#welPageArrow {
+    margin-top: 30px;
+    position: relative;
+    color: #212121;
+    font-size: 70px;
+
+}
+
+#logo {
+    
+    alt: "Note Flow";
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    align-self: center;
+    min-height: 50px;
+    width: 300px;
+    position: sticky;
+    top: 0;
+    right: 55%;
+    left: 40%;
+}
+
+#logoContainer {
+    margin-left: auto;
+    margin-right: auto;
+
+    align-self: center;
+    min-height: 50px;
+    width: 300px;
+    
+    position: sticky;
+    top: 0;
+
+}
+
+#introBody {
+    text-align: left;
+}
+
+#welIntro {
+    max-width: 40%;
+    text-align: left;
+    text-indent: 40px;
+}
+
+
+#welIntro > h2 {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    text-indent: 0;
+}
+
+.introFlexWrap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}

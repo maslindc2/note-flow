@@ -11,6 +11,18 @@ import code_load from'../toolbar/Toolbar';
 //implementation of sign in functionality
 //succesfull sign in will send you to the editor component
 
+//MUI Imports
+import { makeStyles } from '@material-ui/core/styles';
+import FilledInput from '@material-ui/core/FilledInput';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import clsx from 'clsx';
+import Button from '@material-ui/core/Button';
+import './signInFormStyle.css'
+
 const SignIn = () => (
   <div>
     
@@ -136,25 +148,20 @@ class SignInFormBase extends Component {
     const isInvalid = password === '' || email === '';
  
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="password"
-          value={password}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
+      <form onSubmit={this.onSubmit} class="signInFormWrapper" noValidate autoComplete="off">
+        <FormControl variant="outlined" size="small" >
+            <InputLabel htmlFor="email">Email</InputLabel>
+            <OutlinedInput name="email" value={email} onChange={this.onChange} label="Email" placeholder="appleseed.johnny@website.com"/>
+          </FormControl>
+
+          <FormControl variant="outlined" size="small" >
+            <InputLabel htmlFor="password">Password</InputLabel>
+            <OutlinedInput name="password" value={password} onChange={this.onChange} type="password" label="Password" placeholder="password123"/>
+          </FormControl>
         
-        <button disabled={isInvalid} type="submit" color={"black"}>
+        <Button variant="outlined" id="submitButton" disabled={isInvalid} type="submit" color={"black"}>
           Sign In
-        </button>
+        </Button>
  
         {error && <p>{error.message}</p>}
       </form>

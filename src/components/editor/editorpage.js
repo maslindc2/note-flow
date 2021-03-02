@@ -1,8 +1,8 @@
 import React from 'react'
-import Editor from './editor/Editor'
-import './editor/Editor.css'
-import ToolbarInner from "./toolbar/Toolbar";
-import { withAuthorization } from './Session';
+import Editor from './Editor'
+import './Editor.css'
+import ToolbarInner from "../toolbar/Toolbar";
+import { withAuthorization } from '../Session';
 //top level of editor functionality
 
 

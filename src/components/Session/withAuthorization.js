@@ -11,7 +11,7 @@ const withAuthorization = condition => Component => {
         authUser => {
           if (!condition(authUser)) {
              //redirects non-authenticated user to sign-in page 
-            this.props.history.push("/signinpage");
+            this.props.history.push("/");
           }
         },
       );

@@ -8,6 +8,42 @@ import user from '../UserInfo/userInfo'
 //implementation of sign up functionality
 //successfull sign up will take you to the homepage
 
+//MUI Imports
+import { makeStyles } from '@material-ui/core/styles';
+import FilledInput from '@material-ui/core/FilledInput';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import clsx from 'clsx';
+import Button from '@material-ui/core/Button';
+import './signUpFormStyle.css'
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+
+  rootTwo: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  margin: {
+    margin: theme.spacing(1),
+  },
+  withoutLabel: {
+    marginTop: theme.spacing(3),
+  },
+  textField: {
+    width: '25ch',
+  },
+}));
+
 const SignUp = () => (
   <div>
    
@@ -59,7 +95,7 @@ class SignUpFormBase extends Component {
 
         //redirects user after a successful sign-in back to the home page
         this.setState({ ...INITIAL_STATE });
-        this.props.history.push("/");
+        this.props.history.push("/homepage");
       })
       .catch(error => {
         this.setState({ error });
@@ -91,39 +127,34 @@ class SignUpFormBase extends Component {
     fullname === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-         <input
-          name="fullname"
-          value={fullname}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Full Name"
-        />
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="passwordOne"
-          value={passwordOne}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <input
-          name="passwordTwo"
-          value={passwordTwo}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Confirm Password"
-        />
-        <button disabled={isInvalid} type = "submit">Sign Up </button>
- 
-        {error && <p>{error.message}</p>}
-      </form>
+      
+        <form onSubmit={this.onSubmit} class="inputFormWrapper" noValidate autoComplete="off">
+          <FormControl variant="outlined" size="small" >
+            <InputLabel htmlFor="fullname">Full Name</InputLabel>
+            <OutlinedInput name="fullname" value={fullname} onChange={this.onChange} label="Full Name" placeholder="Johnny Appleseed"/>
+          </FormControl>
+
+          <FormControl variant="outlined" size="small" >
+            <InputLabel htmlFor="email">Email</InputLabel>
+            <OutlinedInput name="email" value={email} onChange={this.onChange} label="Email" placeholder="appleseed.johnny@website.com"/>
+          </FormControl>
+          
+          <FormControl variant="outlined" size="small" >
+            <InputLabel htmlFor="passwordOne">Password</InputLabel>
+            <OutlinedInput name="passwordOne" value={passwordOne} onChange={this.onChange} type="password" label="Password" placeholder="password123"/>
+          </FormControl>
+
+          <FormControl variant="outlined" size="small" >
+            <InputLabel htmlFor="passwordTwo">Confirm Password</InputLabel>
+            <OutlinedInput name="passwordTwo" value={passwordTwo} onChange={this.onChange} type="password" label="Confirm Password" placeholder="password123"/>
+          </FormControl>
+          
+          
+          <Button id="submitButton" variant="outlined" disabled={isInvalid} type = "submit">Sign Up </Button>
+  
+          {error && <p>{error.message}</p>}
+        </form>
+      
     );
   }
 }
