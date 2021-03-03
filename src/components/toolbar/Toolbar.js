@@ -58,9 +58,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-//Function to load content from code block
-
-
 export default function ToolbarInner() {
     
 
@@ -125,13 +122,12 @@ export default function ToolbarInner() {
         }
 
         /**
-         * This obscene if statement checks to see if anchordNode.data is not the same as the selected text
-         * this is how firefox handles selections.  The left side is there to make sure no false positives occur.
-         * I'm not proud of this by any means but it works, this is the only time MATH260 is remotely useful.
+         * Checks to see if anchorNode.data is not the same as the selected text his is how firefox handles selections.  
+         * The left side is there to make sure no false positives occur.  
          * A hyperlink is created by first clicking the url button, then paste your url in the input box,
          * then highlight the text you want to turn into a hyperlink and then press the check mark button. 
          */
-        if (text.anchorNode.data != text || (text.baseNode === undefined && text.anchorNode.data != text)) {
+        if (text.anchorNode.data !== text || (text.baseNode === undefined && text.anchorNode.data !== text)) {
             format(
                 'insertHTML', `<a href='${inputVal}' target='_blank'>${inputVal}</a>`
             );
@@ -152,21 +148,16 @@ export default function ToolbarInner() {
     function insertImage() {
         //Stores the input from the url box into inputVal
         var inputVal = document.getElementById('textFormatUrl').value;
-
         //used for showing url input box
         const show = document.getElementById('url-input');
-
         //Fixes problem with a leading space in the url when copying and pasting
         if (inputVal.substr(0, 1) === " ") {
             inputVal = inputVal.substr(1);
         }
-
         //Insert image
         format(
             'insertHTML', `<img src='${inputVal}'>`
         );
-
-
         //This makes the url input tag blank again. I could use "" or '' but JS thinks strings are the same as null
         document.getElementById('textFormatUrl').value = " ";
 
@@ -372,7 +363,6 @@ export default function ToolbarInner() {
 
     //Function for entering equation. Uses the Mathlive library and API
     //CSS element is in Editor.css file
-    //Bugs persisting with tabbing/moving out of mathblock focus, inline mathblock, add mathblock on same line
     function addEquation() {
 
         //Focus on editor, insert line
@@ -409,10 +399,26 @@ export default function ToolbarInner() {
             `mathBlock-${document.getElementsByClassName('mathBlock').length + 1}`);
         const id = mathBlock.id;
 
+        //Adds a blank space to use later for typing in
+        format('insertText', ' ');
+
+        //This ugly block of code moves the cursor one position to the left
+        var setPos = document.createRange();
+        var set = window.getSelection();
+        setPos.setStart(tag.childNodes[0], tag.childNodes[0].textContent.length - 1);
+        setPos.collapse(true);
+        set.removeAllRanges();
+        set.addRange(setPos);
+        tag.focus();
+
         //Added event listener for moving out of math block with arrow key
         mathBlock.addEventListener('focus-out', (ev) => {
             if (ev.detail.direction === "forward") {
-                document.getElementById('editor').focus()
+                setPos.setStart(tag.childNodes[0], tag.childNodes[0].textContent.length);
+                setPos.collapse(true);
+                set.removeAllRanges();
+                set.addRange(setPos);
+                tag.focus();
             } else if (ev.detail.direction === "backward") {
                 document.getElementById('editor').focus();
             }
@@ -424,17 +430,7 @@ export default function ToolbarInner() {
             mathBlock.setValue(ev.target.value);
         })
         
-        //Adds a blank space to use later for typing in
-        format('insertText', ' ');
-
-        //This ugly block of code moves the cursor one position to the left
-        var setPos = document.createRange();
-        var set = window.getSelection();
-        setPos.setStart(tag.childNodes[0], tag.childNodes[0].textContent.length-1);
-        setPos.collapse(true);
-        set.removeAllRanges();
-        set.addRange(setPos);
-        tag.focus();
+        
 
         //Target is where selection/cursor is
         const target = document.getSelection();
@@ -453,7 +449,7 @@ export default function ToolbarInner() {
         range.insertNode(block);
         
     }
-    //handling save
+
     //handling save
     function handleSave() {
         
