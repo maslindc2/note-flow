@@ -12,9 +12,9 @@ Currently the stable version will be on the branch heroku-deployment but will ev
 - Firefox
 
 ## Community
-- Contribute or Ask questions on [Issues](https://github.com/maslindc2/note-flow/issues)
+- Contribute or ask questions on [Issues](https://github.com/maslindc2/note-flow/issues)
 
 ## Road Map
-- Desktop application will eventually be released using electron
+- Desktop application will eventually be released using electron.js
 - UML and Flowchart section for designing diagrams
 - [Trello Board](https://trello.com/b/WjvqTByL/cs-382-note-taking-project)
