@@ -5,6 +5,7 @@ import user from '../UserInfo/userInfo'
 import firebase from'firebase'
 import Firebase from '../Firebase/firebase.js';
 import { withFirebase } from '../Firebase';
+import { withAuthorization } from '../Session';
 //What user sees as the home page of our app
 var size=0;
 function loadFIle(){
@@ -38,4 +39,7 @@ class UserFiles extends React.Component {
       </div>
     )
   }
-}export default UserFiles
+}
+
+const condition = authUser => !!authUser;
+export default withAuthorization(condition)(UserFiles);
