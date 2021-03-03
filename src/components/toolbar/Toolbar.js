@@ -360,9 +360,9 @@ export default function ToolbarInner() {
     function addLineAfterBlock(id) {
         const block = document.getElementById(`${id}`);
         const div = document.createElement('div');
-        const br = document.createElement('br');
+        const a = document.createElement('a');
 
-        div.appendChild(br);
+        div.appendChild(a);
         if (!block) {
             return;
         } else {
@@ -412,11 +412,7 @@ export default function ToolbarInner() {
         //Added event listener for moving out of math block with arrow key
         mathBlock.addEventListener('focus-out', (ev) => {
             if (ev.detail.direction === "forward") {
-
-                //target.executeCommand('moveToMathFieldEnd');
                 document.getElementById('editor').focus()
-                
-
             } else if (ev.detail.direction === "backward") {
                 document.getElementById('editor').focus();
             }
@@ -427,13 +423,25 @@ export default function ToolbarInner() {
         mathBlock.addEventListener('input', (ev) => {
             mathBlock.setValue(ev.target.value);
         })
-
         
+        //Adds a blank space to use later for typing in
+        format('insertText', ' ');
+
+        //This ugly block of code moves the cursor one position to the left
+        var setPos = document.createRange();
+        var set = window.getSelection();
+        setPos.setStart(tag.childNodes[0], tag.childNodes[0].textContent.length-1);
+        setPos.collapse(true);
+        set.removeAllRanges();
+        set.addRange(setPos);
+        tag.focus();
+
         //Target is where selection/cursor is
         const target = document.getSelection();
 
-        document.getElementById('editor').focus();
+        //Insert that math block
         insertBlockAtCursor(mathBlock, target);
+        //Focus on that block
         document.getElementById(id).focus();
     }
 
@@ -443,6 +451,7 @@ export default function ToolbarInner() {
         range = target.getRangeAt(0);
         range.deleteContents();
         range.insertNode(block);
+        
     }
     //handling save
     //handling save
