@@ -70,8 +70,8 @@ class PasswordForgetFormBase extends Component {
 }
  
 const PasswordForgetLink = () => (
-  <p>
-    <NavLink  activeClassName="active" to="/passwordpage">Forgot your password?</NavLink>
+  <p class="signInFormWrapper">
+    <NavLink  class="forgetText" activeClassName="active" to="/passwordpage">Forgot your password?</NavLink>
   </p>
 );
  

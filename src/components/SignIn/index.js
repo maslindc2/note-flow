@@ -149,14 +149,14 @@ class SignInFormBase extends Component {
  
     return (
       <form onSubmit={this.onSubmit} class="signInFormWrapper" noValidate autoComplete="off">
-        <FormControl variant="outlined" size="small" >
+        <FormControl class="formEmailPassword" variant="outlined" size="small" >
             <InputLabel htmlFor="email">Email</InputLabel>
-            <OutlinedInput name="email" value={email} onChange={this.onChange} label="Email" placeholder="appleseed.johnny@website.com"/>
+            <OutlinedInput name="email" value={email} onChange={this.onChange} label="Email" placeholder="Email Address"/>
           </FormControl>
 
-          <FormControl variant="outlined" size="small" >
+        <FormControl class="formEmailPassword" variant="outlined" size="small" >
             <InputLabel htmlFor="password">Password</InputLabel>
-            <OutlinedInput name="password" value={password} onChange={this.onChange} type="password" label="Password" placeholder="password123"/>
+            <OutlinedInput name="password" value={password} onChange={this.onChange} type="password" label="Password" placeholder="Password"/>
           </FormControl>
         
         <Button variant="outlined" id="submitButton" disabled={isInvalid} type="submit" color={"black"}>
