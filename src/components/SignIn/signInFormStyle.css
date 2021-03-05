@@ -15,3 +15,7 @@
     color: #1B98E0;
     border-color: #1B98E0;   
 }
+
+.errorMessage{
+    margin: 1%;
+}
