@@ -17,7 +17,7 @@
 
 #signInForm {
     text-align: left;
-
+    
 }
 
 #signInForm > text {
@@ -84,6 +84,9 @@
     text-indent: 40px;
 }
 
+.forgetText{
+    margin: 5px;
+}
 
 #welIntro > h2 {
     text-align: center;

@@ -10,8 +10,11 @@
     margin: 20px;
 }
 
-
+#submitButton{
+    margin: 5px;
+}
 #submitButton:enabled {
     color: #1B98E0;
     border-color: #1B98E0;   
+    margin: 5px;
 }

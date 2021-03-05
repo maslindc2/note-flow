@@ -84,8 +84,8 @@ const useStyles = makeStyles((theme) => ({
     paperContent: {
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'flex-start',
-        padding: 10,
+        justifyContent: 'space-between',
+        
     },
 
 
