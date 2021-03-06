@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -13,6 +13,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import IconButton from '@material-ui/core/IconButton';
 import FileImage from './FileImage.jpg'
+import { NavLink } from 'react-router-dom'
+import userInner from '../UserInfo/userInfo';
+
+
 
 const useStyles = makeStyles({
     root: {
@@ -70,14 +74,19 @@ const useStyles = makeStyles({
     
   });
 
-  export default function FileCard() {
-    const classes = useStyles();
   
+
+  export default function FileCard(props) {
+    const classes = useStyles();
+    const id = props.id;
+    
+    
     return (
-        <div className={classes.contentContainer}>
+        <div className={classes.contentContainer} id={"file-"}>
   
           <div float={'left'}>
               <Card className={classes.card}>
+              <NavLink activeClassName="active" to="/editor" onClick={e => userInner()[2](id)} >
               <CardActionArea>
               <CardMedia
               className={classes.media}
@@ -86,13 +95,14 @@ const useStyles = makeStyles({
               />
               <CardContent>
                   <Typography gutterBottom variant="h6" component="h2">
-                  File Example
+                  {id}
                   </Typography>
                   <Typography variant="body2" color="textSecondary" component="p">
-                  Example of file display
+                    Date saved: 
                   </Typography>
               </CardContent>
               </CardActionArea>
+              </NavLink>
               <CardActions>
               <Button size="small" color="primary">
                   Options

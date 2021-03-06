@@ -6,19 +6,20 @@ import firebase from'firebase'
 import Firebase from '../Firebase/firebase.js';
 import { withFirebase } from '../Firebase';
 import { withAuthorization } from '../Session';
+import userInner from '../UserInfo/userInfo'
 //What user sees as the home page of our app
-var size=0;
+
 function loadFIle(){
-  
+  let user= userInner()[0];
   var i;
-  var size;
-  var files=[];
-  var ids =[];
   
+  var files=[];
 
   //loading files information
   for( i=0;i<user.docs_size;i++){
-    files.push(<FileCard class={"file"} key={'doc'+(i+1)} id={user.docs_ids[i]}></FileCard>);
+    
+    
+    files.push(<FileCard id={user.docs_ids[i]} className={"files"} key={'doc'+(i+1)} ></FileCard>);
     console.log("test "+user.docs_ids);
   }  
   return files;

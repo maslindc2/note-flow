@@ -48,6 +48,7 @@ export default function userInner(){
     });
 
         //update the innerHTML editor
+    /*
         docRef.get().then(documentSnapshot => {
             console.log("loading user info");
             if (documentSnapshot.exists) {
@@ -61,17 +62,26 @@ export default function userInner(){
                 user.arr_math_Values=documentSnapshot.get('arr_math_Values');
             }
             });
+            */
         console.log(user);
         console.log("loaded user info");
         
     }
 
-    function loading_editor(){
+    function loading_editor(doc_id){
         const db= firebase.firestore();
         const userRef=db.collection('users').doc(user.email);
-        const docRef=userRef.collection('Editors').doc('Default_Editor');
+        const docRef=userRef.collection('Editors').doc(doc_id);
         console.log("loading the editor");
         docRef.get().then(documentSnapshot => {
+        //load html
+        user.content = documentSnapshot.get('text_HTML');
+        //load codeblock
+        user.arr_DOMs= documentSnapshot.get('arr_DOMs');
+        user.arr_Langs=documentSnapshot.get('arr_Langs');
+        user.arr_Values= documentSnapshot.get('arr_Values');
+        //load mathblock
+        user.arr_math_Values=documentSnapshot.get('arr_math_Values');
         //push contents to the editor
         console.log(user);
         document.getElementById('editor').innerHTML=user.content;

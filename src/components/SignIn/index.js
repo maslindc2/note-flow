@@ -6,7 +6,7 @@ import userInner from '../UserInfo/userInfo';
 
 import firebase from 'firebase';
 import ToolbarInner from'../toolbar/Toolbar';
-import code_load from'../toolbar/Toolbar';
+
 
 //implementation of sign in functionality
 //succesfull sign in will send you to the editor component
@@ -118,7 +118,7 @@ class SignInFormBase extends Component {
        
         //alert(test);
         userInner()[1]();
-        userInner()[2]();
+        userInner()[2]("Default_Editor");
         
         
     
