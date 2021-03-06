@@ -74,7 +74,10 @@ const useStyles = makeStyles({
     
   });
 
-  
+  function loadFile(id){
+    userInner()[1]=id;
+    userInner()[3](id);
+  }
 
   export default function FileCard(props) {
     const classes = useStyles();
@@ -86,7 +89,7 @@ const useStyles = makeStyles({
   
           <div float={'left'}>
               <Card className={classes.card}>
-              <NavLink activeClassName="active" to="/editor" onClick={e => userInner()[2](id)} >
+              <NavLink activeClassName="active" to="/editor" onClick={e => userInner()[3](id)} >
               <CardActionArea>
               <CardMedia
               className={classes.media}

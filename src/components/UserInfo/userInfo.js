@@ -4,7 +4,7 @@ import { withFirebase } from '../Firebase';
 import firebase from 'firebase';
 import ToolbarInner from'../toolbar/Toolbar';
 
-
+let current_page='Default_Editor';
 var user ={
     email: '',
     content:'',
@@ -102,7 +102,14 @@ export default function userInner(){
 });
     }
 
-    return [user,loading_user_info,loading_editor];
+    function load_current_page(){
+        if (current_page==''){
+            current_page="Default_Editor";
+        }
+        loading_editor(current_page);
+    }
+
+    return [user,current_page,loading_user_info,loading_editor,load_current_page];
 }
 
 

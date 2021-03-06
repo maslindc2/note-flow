@@ -38,7 +38,8 @@ import '../toolbar/Toolbar.css';
 import Editor from '../editor/Editor'
 import '../editor/Editor.css';
 import { Edit, Home } from "@material-ui/icons";
-
+//Import user info
+import userInner from '../UserInfo/userInfo'
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -131,6 +132,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+
 export default function AppBarDrawer() {
     const classes = useStyles();
     const theme = useTheme();
@@ -143,7 +145,7 @@ export default function AppBarDrawer() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-
+    userInner()[2]();
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -207,7 +209,7 @@ export default function AppBarDrawer() {
                         </ListItem>
                     </NavLink>
 
-                    <NavLink activeClassName="active" to="/editor">
+                    <NavLink activeClassName="active" to="/editor" onClick={e => userInner()[4]()}>
                         <ListItem className={classes.drawerButton} button key={'Editor'}>
                             <ListItemIcon className={classes.drawerButton}> <EditIcon /> </ListItemIcon>
                             <ListItemText primary={'Editor'} />

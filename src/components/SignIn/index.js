@@ -117,8 +117,9 @@ class SignInFormBase extends Component {
       */
        
         //alert(test);
-        userInner()[1]();
-        userInner()[2]("Default_Editor");
+        userInner()[2]();
+        userInner()[3]("Default_Editor");
+        userInner()[1]="Default_Editor";
         
         
     
