@@ -101,15 +101,14 @@ export default function userInner(){
         if(user.arr_math_Values!=null){
         var math_load= ToolbarBackend();
         math_load[1]();
+        current_page =doc_id;
     }
     console.log("loaded the editor");
 });
     }
 
     function load_current_page(){
-        if (current_page==''){
-            current_page="Default_Editor";
-        }
+        
         loading_editor(current_page);
     }
 
