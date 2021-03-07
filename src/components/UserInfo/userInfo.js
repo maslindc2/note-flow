@@ -2,9 +2,9 @@ import { Email } from '@material-ui/icons';
 import React, { Component } from 'react';
 import { withFirebase } from '../Firebase';
 import firebase from 'firebase';
-import ToolbarInner from'../toolbar/Toolbar';
+import ToolbarBackend from'../toolbar/Toolbar-backend';
 
-let current_page='Default_Editor';
+var current_page='Default_Editor';
 var user ={
     email: '',
     content:'',
@@ -32,7 +32,7 @@ export default function userInner(){
         const userRef=db.collection('users').doc(user.email);
 
 
-        const docRef=userRef.collection('Editors').doc('Default_Editor');
+        
         const usersRef=firebase.firestore().collection("users").doc(user.email);
 
         //update number of files
@@ -76,6 +76,7 @@ export default function userInner(){
         docRef.get().then(documentSnapshot => {
         //load html
         user.content = documentSnapshot.get('text_HTML');
+        user.title = documentSnapshot.get('title_HTML');
         //load codeblock
         user.arr_DOMs= documentSnapshot.get('arr_DOMs');
         user.arr_Langs=documentSnapshot.get('arr_Langs');
@@ -85,17 +86,20 @@ export default function userInner(){
         //push contents to the editor
         console.log(user);
         document.getElementById('editor').innerHTML=user.content;
+        if(user.title != undefined){
+        document.getElementById('title').innerHTML=user.title;
+        }
         //push codeblock
         if(user.arr_Values  !=null && user.arr_Langs!=null &&  user.arr_DOMs != null){
         console.log(user);
-        var code_load = ToolbarInner();
+        var code_load = ToolbarBackend();
         code_load[0]();
         
         
     }
         //push mathblock
         if(user.arr_math_Values!=null){
-        var math_load= ToolbarInner();
+        var math_load= ToolbarBackend();
         math_load[1]();
     }
     console.log("loaded the editor");

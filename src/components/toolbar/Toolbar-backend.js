@@ -40,8 +40,6 @@ import { withFirebase } from '../Firebase';
 import Firebase from '../Firebase/firebase.js';
 import firebase from 'firebase';
 import userInner from '../UserInfo/userInfo';
-import SaveDialog from '../UserFiles/dialogSave';
-import ToolbarBackend from '../toolbar/Toolbar-backend';
 //embedding
 import ReactDOM from 'react-dom';
 
@@ -60,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ToolbarInner() {
+export default function ToolbarBackend() {
     
 
     function format(com, val) {
@@ -68,144 +66,7 @@ export default function ToolbarInner() {
         document.execCommand(com, false, val);
     }
 
-    function bulletPoint() {
-        format('insertHTML', `<ul><li class="bulletList"></li></ul>`);
-    }
-
-    function changeFont(fontName) {
-        const selectedFont = fontName.target.value;
-        document.execCommand("fontName", false, selectedFont);
-    }
-
-    function changeFSize(Size) {
-        const FSize = Size.target.value;
-        document.execCommand("fontSize", false, FSize);
-    }
-
-    function highlightText(Color){
-        const cColor = Color.target.value;
-        document.execCommand("backColor", false, cColor);
-    }
-
-    function changeFColor(Color){
-        const cColor = Color.target.value;
-        document.execCommand("foreColor", false, cColor);
-    }
-    //Sets the url input box to shown or hidden
-    function addLink() {
-        const show = document.getElementById('url-input');
-        if (show.classList.contains('hidden')) {
-            show.classList.remove('hidden');
-        } else {
-            show.classList.add('hidden');
-        }
-    }
-
-    function setUrl() {
-        //Stores the input from the url box into inputVal
-        var inputVal = document.getElementById('textFormatUrl').value;
-
-        //Text is used for creating a hyperlink
-        const text = window.getSelection();
-
-        //used for showing or hiding url input box
-        const show = document.getElementById('url-input');
-
-        //Fixes problem with a leading space in the url when copying and pasting
-        if (inputVal.substr(0, 1) === " ") {
-            inputVal = inputVal.substr(1);
-        }
-        //Appends http:// to the url if the input did not have it to begin with
-        var prefix1 = 'http://';
-        var prefix2 = 'https://';
-        if ((inputVal.substr(0, prefix1.length) !== prefix1) && (inputVal.substr(0, prefix2.length) !== prefix2)) {
-
-            inputVal = prefix2 + inputVal;
-        }
-
-        /**
-         * Checks to see if anchorNode.data is not the same as the selected text his is how firefox handles selections.  
-         * The left side is there to make sure no false positives occur.  
-         * A hyperlink is created by first clicking the url button, then paste your url in the input box,
-         * then highlight the text you want to turn into a hyperlink and then press the check mark button. 
-         */
-        if (text.anchorNode.data !== text || (text.baseNode === undefined && text.anchorNode.data !== text)) {
-            format(
-                'insertHTML', `<a href='${inputVal}' target='_blank'>${inputVal}</a>`
-            );
-        } else {
-            format(
-                'insertHTML', `<a href='${inputVal}' target='_blank'>${text}</a>`
-            );
-        }
-
-        //This makes the url input tag blank again. I could use "" or '' but JS thinks strings are the same as null
-        document.getElementById('textFormatUrl').value = " ";
-
-        //hides the input tag again 
-        show.classList.add('hidden');
-    }
-
-
-    function insertImage() {
-        //Stores the input from the url box into inputVal
-        var inputVal = document.getElementById('textFormatUrl').value;
-        //used for showing url input box
-        const show = document.getElementById('url-input');
-        //Fixes problem with a leading space in the url when copying and pasting
-        if (inputVal.substr(0, 1) === " ") {
-            inputVal = inputVal.substr(1);
-        }
-        //Insert image
-        format(
-            'insertHTML', `<img src='${inputVal}'>`
-        );
-        //This makes the url input tag blank again. I could use "" or '' but JS thinks strings are the same as null
-        document.getElementById('textFormatUrl').value = " ";
-
-        //hides the input tag again 
-        show.classList.add('hidden');
-    }
-
-    function embedVideo() {
-        //getting youtube video id
-        //Stores the input from the url box into inputVal
-        var inputVal = document.getElementById('textFormatUrl').value;
-
-        //Fixes problem with a leading space in the url when copying and pasting
-        const show = document.getElementById('url-input');
-        if (inputVal.substr(0, 1) === " ") {
-            inputVal = inputVal.substr(1);
-        }
-
-
-        var next_line = document.getElementById('editor');
-        format(
-            'insertParagraph',
-            `<pre class='editor' id='${next_line}'</pre>`
-        );
-
-        const youTube = document.createElement('pre');
-        const target = document.getSelection();
-        const id = `youTube-${document.getElementsByClassName('youTubeClass').length + 1}`;
-        youTube.classList.add('youTubeClass');
-        format(
-            'insertHTML',
-            `<pre class='youTubeClass' id='${id}'>${target}</pre>`
-        );
-        const bool = true;
-        ReactDOM.render(<ReactPlayer url={inputVal} controls={bool} />, document.getElementById(`${id}`));
-
-        //Clears out url box
-        document.getElementById('textFormatUrl').value = " ";
-        //Hides the url box
-        show.classList.add('hidden');
-    }
-
-    function setHeader() {
-        const target = document.getSelection();
-        format('insertHTML', `<h2>${target}</h2>`);
-    }
+    
 
     ////////////////////////////////////////
     //Vito is working on this
@@ -453,12 +314,70 @@ export default function ToolbarInner() {
     }
 
     //handling save
+    
+
+    function check_doc(id){
+        const user = userInner()[0];
+        const docRef=firebase.firestore().collection("users").doc(user.email).collection("Editors").doc(id);
+        docRef.get()
+        .then((docSnapshot) => {
+            if (docSnapshot.exists) {
+            alert("This file already exist.")
+            handleSave(id);
+            } else {
+                // create the document
+            docRef.set({
+                text_HTML:'creating a new document'
+            }); 
+            console.log("in the check doc "+id);
+            handleSave(id);
+            }
+            
+        });
+        
+    }
+    
+    //save math content
+    function math_save(){
+        
+        var i;
+        var user = userInner()[0];
+        var arr_math_Values=[]
+        for( i=0; i< document.getElementsByClassName("mathBlock").length;i++){
+            var id='mathBlock-'+(i+1);
+            var mathBlock= document.getElementById(id);
+            arr_math_Values.push(mathBlock.getValue());
+            //console.log(mathBlock.getValue());
+            
+        }
+        user.arr_math_Values=arr_math_Values;
+        
+    }
+    //load math content
+    function math_load(){
+        var i;
+        var user = userInner()[0];
+        for( i=0; i< document.getElementsByClassName("mathBlock").length;i++){
+            var id='mathBlock-'+(i+1);
+            var mathBlock= document.getElementById(id);
+            //console.log(user.arr_math_Values[i]);
+            mathBlock.setValue(user.arr_math_Values[i]);
+            //console.log(mathBlock.getValue());
+
+        }
+    }
+
     function handleSave(id) {
         
         //firebase.initializeApp(config);
+      //update userinfo
+        userInner()[2]();
+        userInner()[1]=id;
+        console.log("testing "+userInner()[1]);
       
       console.log("from handlesave "+id);
       var content = document.getElementById('editor').innerHTML;
+      var title =document.getElementById('title').innerHTML;
       /*
      const itemsRef= firebase.database().ref('items');
      var childRef = itemsRef.child(user.name);
@@ -495,50 +414,16 @@ export default function ToolbarInner() {
         })
     }
     docRef.update({
+        'title_HTML': title,
         'text_HTML': content,
     })
+
+    
        
                 
     }
     
-    //save math content
-    function math_save(){
-        
-        var i;
-        var user = userInner()[0];
-        var arr_math_Values=[]
-        for( i=0; i< document.getElementsByClassName("mathBlock").length;i++){
-            var id='mathBlock-'+(i+1);
-            var mathBlock= document.getElementById(id);
-            arr_math_Values.push(mathBlock.getValue());
-            //console.log(mathBlock.getValue());
-            
-        }
-        user.arr_math_Values=arr_math_Values;
-        
-    }
-    //load math content
-    function math_load(){
-        var i;
-        var user = userInner()[0];
-        for( i=0; i< document.getElementsByClassName("mathBlock").length;i++){
-            var id='mathBlock-'+(i+1);
-            var mathBlock= document.getElementById(id);
-            //console.log(user.arr_math_Values[i]);
-            mathBlock.setValue(user.arr_math_Values[i]);
-            //console.log(mathBlock.getValue());
-
-        }
-    }
     
-    const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => {
-        setOpen(true);
-      };
-    
-      const handleClose = () => {
-        setOpen(false);
-      };
 
     
     //
@@ -551,125 +436,9 @@ export default function ToolbarInner() {
     //
     
 
-    return (
+    return [code_load,math_load,check_doc,handleSave,(
         <div className='toolbar'>
-            <div class="tooltip container">
-                <span class="tooltiptext">Bold</span>
-                <button class={"bar"} onClick={e => format('bold')}>
-                    <FormatBoldIcon />
-                </button>
-            </div>
-            <div class="tooltip container">
-                <span class="tooltiptext">Italicize</span>
-                <button class={"bar"} onClick={e => format('italic')}>
-                    <FormatItalicIcon />
-                </button>
-            </div>
-            <div class="tooltip container">
-                <span class="tooltiptext">List</span>
-                <button class={"bar"} onClick={e => bulletPoint()}>
-                    <FormatListBulletedIcon />
-                </button>
-            </div>
-            <div className="tooltip container">
-                <span class="tooltiptext">Font Style and Size</span>
-                <select onChange={changeFont}>
-                    <option value="Arial">Arial</option>
-                    <option value="Calibri">Calibri</option>
-                    <option value="Comic Sans MS">Comic Sans MS</option>
-                    <option value="Times New Roman">Times New Roman</option>
-                    <option value="Roboto">Roboto</option>
-                    <option value="Roboto Mono">Roboto Mono</option>
-                </select>
-                <select onChange={changeFSize}>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                </select>
-            </div>
-            <div class="tooltip">
-            <span class="tooltiptext">Highlight Text Color</span>
-                <span class="HLightText">Highlight</span>
-                <select onChange={highlightText}>
-                    <option value ="#ffffff">None</option>
-                    <option value ="Black">Black</option>
-                    <option value="#99c2ff">Blue</option>
-                    <option value="Orange">Orange</option>
-                    <option value="#ff9999">Red</option>
-                    <option value="Yellow">Yellow</option>
-
-                </select>
-            </div>
-            <div class="tooltip">
-            <span class="tooltiptext">Text Color</span>
-            <span class="HLightText">Text Color</span>
-                <select onChange={changeFColor}>
-                    <option value ="Black">Black</option>
-                    <option value ="#ffffff">White</option>
-                    <option value="Blue">Blue</option>
-                    <option value="Orange">Orange</option>
-                    <option value="Red">Red</option>
-                    <option value="#b3b300">Yellow</option>
-                </select>
-            </div>
-            <div class="container">
-                <div class="tooltip">
-                    <span class="tooltiptext">Align Left</span>
-                    <button class={"bar"} onClick={e => document.execCommand('justifyLeft', false)}>
-                        <FormatAlignLeftIcon />
-                    </button>
-                </div>
-
-                <div class="tooltip">
-                    <span class="tooltiptext">Align Center</span>
-                    <button class={"bar"} onClick={e => document.execCommand('justifyCenter', false)}>
-                        <FormatAlignCenterIcon />
-                    </button>
-                </div>
-
-                <div class="tooltip">
-                    <span class="tooltiptext">Align Right</span>
-                    <button class={"bar"} onClick={e => document.execCommand('justifyRight', false)}>
-                        <FormatAlignRightIcon />
-                    </button>
-                </div>
-
-                <div class="tooltip ">
-                    <span class="tooltiptext">Justify Full</span>
-                    <button class={"bar"} onClick={e => document.execCommand('justifyFull', false)}>
-                        <FormatAlignJustifyIcon />
-                    </button>
-
-                </div>
-            </div>
-            <div class="tooltip">
-                <span class="tooltiptext">Insert link</span>
-                <button class={"bar"} onClick={e => addLink()}>
-                    <InsertLinkIcon />
-                </button>
-            </div>
-
-            <div id='url-input' className='hidden container'>
-                <input id='textFormatUrl' placeholder='url' />
-                <button class={"bar"} onClick={e => openMenu("dropdown_links")}>
-                    <CheckIcon />
-                    <ul id="dropdown_links">
-                        <li onClick={e => setUrl()} >Link</li>
-                        <li onClick={e => insertImage()} >Image</li>
-                        <li onClick={e => embedVideo()}>Video</li>
-                    </ul>
-                </button>
-            </div>
-            <div class="tooltip container">
-                <span class="tooltiptext">Header</span>
-                <button class={"bar"} onClick={e => setHeader()}>
-                    <TextFieldsIcon />
-                </button>
-            </div>
+            
             <div class="tooltip container">
                 <span class="tooltiptext">Code Block</span>
                 <button class={"bar"} onClick={e => openMenu("dropdown")}>
@@ -688,22 +457,10 @@ export default function ToolbarInner() {
                     <FunctionsIcon />
                 </button>
             </div>
-        
-            <div class="tooltip container">
-                <span class="tooltiptext">Save</span>
-                <button class={"bar"} onClick={e => handleClickOpen()}>
-                <SaveAltIcon />
-                    
-                </button>
-                <SaveDialog
-                open={open}
-                handleClickOpen= {handleClickOpen}
-                handleClose={handleClose}
-                ></SaveDialog>
-            </div>
+            
             
             
         </div>
     )
-    
+    ]
 }

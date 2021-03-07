@@ -74,10 +74,6 @@ const useStyles = makeStyles({
     
   });
 
-  function loadFile(id){
-    userInner()[1]=id;
-    userInner()[3](id);
-  }
 
   export default function FileCard(props) {
     const classes = useStyles();
