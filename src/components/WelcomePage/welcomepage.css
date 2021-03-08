@@ -17,6 +17,7 @@
 
 #signInForm {
     text-align: left;
+    padding: 5px;
     
 }
 
@@ -28,13 +29,12 @@
     
     background-image: url("welcomeTopImg.png");
     min-height: 900px; 
-    
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 1200px, 900px;
-  bottom: 10px ;
-  top: 100px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 1100px, 900px;
+    bottom: 10px ;
+    top: 100px;
 
 }
 

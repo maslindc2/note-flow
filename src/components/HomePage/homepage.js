@@ -1,6 +1,8 @@
 import React from 'react'
 import HomeContent from './homePageContent'
 import './Homepage.css'
+import { withAuthorization } from '../Session';
+
 //What user sees as the home page of our app
 
 class HomePage extends React.Component {
@@ -13,4 +15,6 @@ class HomePage extends React.Component {
       </div>
     )
   }
-}export default HomePage
+}
+const condition = authUser => !!authUser;
+export default withAuthorization(condition)(HomePage);

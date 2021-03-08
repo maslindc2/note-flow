@@ -40,6 +40,8 @@ import { withFirebase } from '../Firebase';
 import Firebase from '../Firebase/firebase.js';
 import firebase from 'firebase';
 import userInner from '../UserInfo/userInfo';
+import SaveDialog from '../UserFiles/dialogSave';
+import ToolbarBackend from '../toolbar/Toolbar-backend';
 //embedding
 import ReactDOM from 'react-dom';
 
@@ -266,69 +268,9 @@ export default function ToolbarInner() {
         addLineAfterBlock(id);
         return code_editor;
     }
-    //function to save code
-    function Code_save(){
-        const length = document.getElementsByClassName("codeBlock").length;
-        var i;
-        var user = userInner()[0];
-        const arr_Values=[];
-        const arr_DOMs=[];
-        const arr_Langs=[];
-        //const arr_Langs=[];
-        for( i=0;i<length;i++){
-            var id ="codeBlock-"+(i+1);
-            var editor = ace.edit(id);
-            arr_Values.push(editor.getValue());
-            //editor.destroy();
-            arr_DOMs.push(id);
-            arr_Langs.push(editor.getOptions().mode);
-            
-            
-        }
-        user.arr_Values=arr_Values;
-        user.arr_Langs=arr_Langs;
-        user.arr_DOMs=arr_DOMs;
-        console.log(user.arr_Values);
-        console.log(user.arr_DOMs);
-        
-        //loading part
-        /*
-        for( i=0;i<arr_DOMs.length;i++){
-            var new_editor= addCodeBlock(arr_Langs[i],arr_DOMs[i]);
-            new_editor.setValue("Saved and loaded working \n"+arr_Values[i]+user.arr_Langs[i]);
-
-        }
-        */
-        
-    }
+    
     //
-    function code_load(){
-        var i;
-        var user = userInner()[0];
-        var arr_DOMs=user.arr_DOMs;
-        var arr_Langs=user.arr_Langs;
-        var arr_Values=user.arr_Values;
-        console.log("loading  code_load");
-        //destroy the old editor
-        for( i=0;i<arr_DOMs.length;i++){
-            var old_editor = ace.edit(arr_DOMs[i]);
-            old_editor.destroy();
-           
-        }
-        //recreate a new one
-        for( i=0;i<arr_DOMs.length;i++){
-            var new_editor= addCodeBlock(arr_Langs[i],arr_DOMs[i]);
-            new_editor.setValue(arr_Values[i]);
-        }
-        
-    }
-
     
-    
-
-    
-    
-
     
     //experimenting to fix a dumb bug when trying to delete the code block
    /* function deleteBlock(){
@@ -351,9 +293,9 @@ export default function ToolbarInner() {
     function addLineAfterBlock(id) {
         const block = document.getElementById(`${id}`);
         const div = document.createElement('div');
-        const a = document.createElement('a');
+        const br = document.createElement('br');
 
-        div.appendChild(a);
+        div.appendChild(br);
         if (!block) {
             return;
         } else {
@@ -450,86 +392,16 @@ export default function ToolbarInner() {
         
     }
 
-    //handling save
-    function handleSave() {
-        
-        //firebase.initializeApp(config);
-
-      var content = document.getElementById('editor').innerHTML;
-      /*
-     const itemsRef= firebase.database().ref('items');
-     var childRef = itemsRef.child(user.name);
-     childRef.update({
-      editor: content
-  })*/
-      
-      
-      //Save to Default editor for now.
-      console.log("before saving");
-      Code_save();
-      math_save();
-      var user = userInner()[0];
-     const usersRef=firebase.firestore().collection("users").doc(user.email).collection("Editors").doc("Default_Editor");
-    if(user.arr_Langs !=null){
-        //Save Code Editors
-        //console.log("special saving");
-        
-        usersRef.update({
-            
-            'arr_Values': user.arr_Values,
-            'arr_DOMs': user.arr_DOMs,
-            'arr_Langs':user.arr_Langs,
-
-        })
-    }
-    if(user.arr_math_Values!=null){
-        //Save Math Block content
-        usersRef.update({
-            'arr_math_Values': user.arr_math_Values
-        })
-    }
-    usersRef.update({
-        'text_HTML': content,
-    })
-       
-                
-    }
     
-    //save math content
-    function math_save(){
-        
-        var i;
-        var user = userInner()[0];
-        var arr_math_Values=[]
-        for( i=0; i< document.getElementsByClassName("mathBlock").length;i++){
-            var id='mathBlock-'+(i+1);
-            var mathBlock= document.getElementById(id);
-            arr_math_Values.push(mathBlock.getValue());
-            //console.log(mathBlock.getValue());
-            
-        }
-        user.arr_math_Values=arr_math_Values;
-        
-    }
-    //load math content
-    function math_load(){
-        var i;
-        var user = userInner()[0];
-        for( i=0; i< document.getElementsByClassName("mathBlock").length;i++){
-            var id='mathBlock-'+(i+1);
-            var mathBlock= document.getElementById(id);
-            //console.log(user.arr_math_Values[i]);
-            mathBlock.setValue(user.arr_math_Values[i]);
-            //console.log(mathBlock.getValue());
-
-        }
-    }
-    //load everything
-    /*
-    var loading_editor=userInner()[2];
-    loading_editor();
-    */
+    //open close dialog
+    const [open, setOpen] = React.useState(false);
+    const handleClickOpen = () => {
+        setOpen(true);
+      };
     
+      const handleClose = () => {
+        setOpen(false);
+      };
 
     
     //
@@ -542,7 +414,7 @@ export default function ToolbarInner() {
     //
     
 
-    return [code_load,math_load,(
+    return (
         <div className='toolbar'>
             <div class="tooltip container">
                 <span class="tooltiptext">Bold</span>
@@ -679,15 +551,22 @@ export default function ToolbarInner() {
                     <FunctionsIcon />
                 </button>
             </div>
+        
             <div class="tooltip container">
                 <span class="tooltiptext">Save</span>
-                <button class={"bar"} onClick={e => handleSave()}>
-                    <SaveAltIcon />
+                <button class={"bar"} onClick={e => handleClickOpen()}>
+                <SaveAltIcon />
+                    
                 </button>
+                <SaveDialog
+                open={open}
+                handleClickOpen= {handleClickOpen}
+                handleClose={handleClose}
+                ></SaveDialog>
             </div>
             
             
         </div>
     )
-    ]
+    
 }

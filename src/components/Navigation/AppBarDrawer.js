@@ -24,6 +24,7 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import FolderIcon from '@material-ui/icons/Folder';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import StarsIcon from '@material-ui/icons/Stars';
+import firebase from 'firebase'
 
 
 //Nav Imports
@@ -38,8 +39,11 @@ import '../toolbar/Toolbar.css';
 import Editor from '../editor/Editor'
 import '../editor/Editor.css';
 import { Edit, Home } from "@material-ui/icons";
-
+//Import user info
+import userInner from '../UserInfo/userInfo'
 const drawerWidth = 240;
+
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -131,6 +135,11 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+
+
+
+
+
 export default function AppBarDrawer() {
     const classes = useStyles();
     const theme = useTheme();
@@ -144,7 +153,17 @@ export default function AppBarDrawer() {
         setOpen(false);
     };
 
+    var user = firebase.auth().currentUser;
+    var name, email
+
+    if (user != null) {
+        name = user.displayName;
+        email = user.email;
+               
+  }
+    userInner()[2]();
     return (
+         
         <div className={classes.root}>
             <CssBaseline />
             <AppBar
@@ -155,6 +174,7 @@ export default function AppBarDrawer() {
             >
 
                 <Toolbar>
+                
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
@@ -167,8 +187,10 @@ export default function AppBarDrawer() {
                     <Typography variant="h6" noWrap>
                         Note Flow
                     </Typography>
-                </Toolbar>
 
+                    
+                </Toolbar>
+            
             </AppBar>
             <Drawer
                 className={classes.drawer}
@@ -207,7 +229,7 @@ export default function AppBarDrawer() {
                         </ListItem>
                     </NavLink>
 
-                    <NavLink activeClassName="active" to="/editor">
+                    <NavLink activeClassName="active" to="/editor" onClick={e => userInner()[4]()}>
                         <ListItem className={classes.drawerButton} button key={'Editor'}>
                             <ListItemIcon className={classes.drawerButton}> <EditIcon /> </ListItemIcon>
                             <ListItemText primary={'Editor'} />
@@ -231,6 +253,9 @@ export default function AppBarDrawer() {
                     
 
                 </List>
+                <div className={classes.drawerHeader}>
+                    Signed in as {email}
+                </div>
             </Drawer>
 
         </div>

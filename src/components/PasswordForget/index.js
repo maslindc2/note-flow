@@ -32,6 +32,8 @@ class PasswordForgetFormBase extends Component {
         this.setState({ ...INITIAL_STATE });
         //notify user that they will recieve an email to reset their password
         alert("A link to reset your password has been sent to the email address associated with your account.");
+        //password recovery will send user to landing page
+        window.location.href="/";
       })
       .catch(error => {
         this.setState({ error });
