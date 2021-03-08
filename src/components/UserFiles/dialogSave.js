@@ -16,7 +16,9 @@ export default function DialogSave(props) {
         handleClose();
         const doc_id=document.getElementById("file_name").value;
         console.log(userInner()[0]);
+        
         ToolbarBackend()[2](doc_id);
+        
         
     }  
   return (

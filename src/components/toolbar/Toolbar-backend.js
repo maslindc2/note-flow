@@ -151,8 +151,7 @@ export default function ToolbarBackend() {
         user.arr_Values=arr_Values;
         user.arr_Langs=arr_Langs;
         user.arr_DOMs=arr_DOMs;
-        console.log(user.arr_Values);
-        console.log(user.arr_DOMs);
+        
         
         //loading part
         /*
@@ -171,7 +170,6 @@ export default function ToolbarBackend() {
         var arr_DOMs=user.arr_DOMs;
         var arr_Langs=user.arr_Langs;
         var arr_Values=user.arr_Values;
-        console.log("loading  code_load");
         //destroy the old editor
         for( i=0;i<arr_DOMs.length;i++){
             var old_editor = ace.edit(arr_DOMs[i]);
@@ -319,20 +317,22 @@ export default function ToolbarBackend() {
     function check_doc(id){
         const user = userInner()[0];
         const docRef=firebase.firestore().collection("users").doc(user.email).collection("Editors").doc(id);
+        
+        
         docRef.get()
         .then((docSnapshot) => {
             if (docSnapshot.exists) {
-            alert("This file already exist.")
+            alert("This file already exist. Saving...")
             handleSave(id);
             } else {
-                // create the document
+
+            // Create the new document
             docRef.set({
-                text_HTML:'creating a new document'
+                text_HTML:'Creating a new document'
             }); 
-            console.log("in the check doc "+id);
             handleSave(id);
             }
-            
+        
         });
         
     }
@@ -368,43 +368,36 @@ export default function ToolbarBackend() {
     }
 
     function handleSave(id) {
-        
-        //firebase.initializeApp(config);
-      //update userinfo
+        //update userinfo and current file
         userInner()[2]();
-        userInner()[1]=id;
-        console.log("testing "+userInner()[1]);
-      
+        userInner()[5](id);
+        
+        
       console.log("from handlesave "+id);
       var content = document.getElementById('editor').innerHTML;
       var title =document.getElementById('title').innerHTML;
-      /*
-     const itemsRef= firebase.database().ref('items');
-     var childRef = itemsRef.child(user.name);
-     childRef.update({
-      editor: content
-  })*/
       
       
       //Save to Default editor for now.
-      console.log("before saving "+ id);
+      console.log("in handling save"+ userInner()[1]);
       Code_save();
       math_save();
       var user = userInner()[0];
+      const userRef =firebase.firestore().collection("users").doc(user.email);
+      
       const docRef=firebase.firestore().collection("users").doc(user.email).collection("Editors").doc(id);
 
         if(user.arr_Langs !=null){
         
 
         //Save Code Editors
-        //console.log("special saving");
         
         docRef.update({
             
             'arr_Values': user.arr_Values,
             'arr_DOMs': user.arr_DOMs,
             'arr_Langs':user.arr_Langs,
-
+            
         })
     }
     if(user.arr_math_Values!=null){
@@ -413,16 +406,24 @@ export default function ToolbarBackend() {
             'arr_math_Values': user.arr_math_Values
         })
     }
+    //saving HTML content and title
     docRef.update({
         'title_HTML': title,
         'text_HTML': content,
     })
+    update_current_page(id);           
+    }
 
     
-       
-                
+    function update_current_page(id){
+        let user = userInner()[0];
+        const userRef =firebase.firestore().collection("users").doc(user.email);
+        
+        userRef.update({
+          'active_page': id
+      });
+      console.log("updated current page to the database");
     }
-    
     
 
     

@@ -20,7 +20,7 @@ function loadFIle(){
     
     
     files.push(<FileCard id={user.docs_ids[i]} className={"files"} key={'doc'+(i+1)} ></FileCard>);
-    console.log("test "+user.docs_ids);
+    //console.log("test "+user.docs_ids);
   }  
   return files;
 }

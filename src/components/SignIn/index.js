@@ -6,7 +6,7 @@ import userInner from '../UserInfo/userInfo';
 
 import firebase from 'firebase';
 import ToolbarInner from'../toolbar/Toolbar';
-
+import $ from 'jquery'
 
 //implementation of sign in functionality
 //succesfull sign in will send you to the editor component
@@ -55,80 +55,11 @@ class SignInFormBase extends Component {
     this.props.firebase
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
-        /*
-        var user =userInner()[0];
-        
-        user.email=this.state.email;
-        //set state back to initial
-        this.setState({ ...INITIAL_STATE });
-        
-        //get content from the database
-        const db= firebase.firestore();
-        const userRef=db.collection('users').doc(user.email);
-        userRef.get().then(documentSnapshot => {
-          if (documentSnapshot.exists) {
-            user.fullname=documentSnapshot.get('Fullname');
-          }
-        });
-        
 
-        const docRef=userRef.collection('Editors').doc('Default_Editor');
-        const usersRef=firebase.firestore().collection("users").doc(user.email);
-        //update number of files
-        usersRef.collection('Editors').get().then(DocumentSnapshot => {
-          user.docs_size = DocumentSnapshot.size;
-        });
-        //update file name
-        usersRef.collection('Editors').get().then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-              // doc.data() is never undefined for query doc snapshots
-              //console.log(doc.id);
-              user.docs_ids.push(doc.id);
-          });
-      });
-        //update the innerHTML editor
-        docRef.get().then(documentSnapshot => {
-          if (documentSnapshot.exists) {
-            //load html
-            user.content = documentSnapshot.get('text_HTML');
-            //load codeblock
-            user.arr_DOMs= documentSnapshot.get('arr_DOMs');
-            user.arr_Langs=documentSnapshot.get('arr_Langs');
-            user.arr_Values= documentSnapshot.get('arr_Values');
-            //load mathblock
-            user.arr_math_Values=documentSnapshot.get('arr_math_Values');
-            
-          }
-        });
-        //push contents to the editor
-        document.getElementById('editor').innerHTML=user.content;
-        //push codeblock
-        if(user.arr_Values  !=null && user.arr_Langs!=null &&  user.arr_DOMs != null){
-          console.log(user.arr_Langs);
-          var code_load = ToolbarInner();
-          code_load[0]();
-          
-      }
-        //push mathblock
-        if(user.arr_math_Values!=null){
-        var math_load= ToolbarInner();
-        math_load[1]();
-      }
-      */
-       
-        //alert(test);
-        userInner()[2]();
-        console.log(userInner[0]);
-        userInner()[3]("Default_Editor");
-        userInner()[1]="Default_Editor";
-        
-        
-    
+          userInner()[2]();
+
         //Successful sign in will send user to editor page for now
-        this.props.history.push("/editor");
-        
-        
-        
+        this.props.history.push("/homepage");
         
       })
       

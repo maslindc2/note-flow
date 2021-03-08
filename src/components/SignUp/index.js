@@ -85,7 +85,7 @@ class SignUpFormBase extends Component {
 
         //update user full name to the database
         userRef.set({
-          'FullName': user.fullname
+          'FullName': user.fullname,
         })
         
         //set up the initial data in the database
