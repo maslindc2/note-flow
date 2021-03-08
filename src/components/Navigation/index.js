@@ -3,36 +3,36 @@ import React from 'react';
 import { NavLink } from 'react-router-dom'
 import SignOutButton from '../SignOut';
 import AppBarDrawer from "./AppBarDrawer";
- 
+
 import { AuthUserContext } from '../Session';
 
 const Navigation = ({ authUser }) => (
-    <div>
-       <AuthUserContext.Consumer>
+  <div>
+    <AuthUserContext.Consumer>
       {authUser =>
         authUser ? <NavigationAuth /> : <NavigationNonAuth />
       }
     </AuthUserContext.Consumer>
-      </div>
-  );
+  </div>
+);
 
 
 
 //What  user sees if they are authenticated by our authentification API 
-const NavigationAuth = () =>  (
-    //Needs App bar and additional functionality
-    
-    <AppBarDrawer/>
-  );
+const NavigationAuth = () => (
+  //Needs App bar and additional functionality
 
-  //What users see if they are not authenticated 
-  const NavigationNonAuth = () =>  (
+  <AppBarDrawer />
+);
 
-    //Needs App Bar
-    <div display="none"/>
-    
-  
-  );
+//What users see if they are not authenticated 
+const NavigationNonAuth = () => (
+
+  //Needs App Bar
+  <div display="none" />
 
 
-  export default Navigation;
+);
+
+
+export default Navigation;

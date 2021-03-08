@@ -129,24 +129,24 @@ class SignUpFormBase extends Component {
     return (
       
         <form onSubmit={this.onSubmit} class="inputFormWrapper" noValidate autoComplete="off">
-          <FormControl variant="outlined" size="small" >
+        <FormControl class="formSignUp" variant="outlined" size="small" >
             <InputLabel htmlFor="fullname">Full Name</InputLabel>
-            <OutlinedInput name="fullname" value={fullname} onChange={this.onChange} label="Full Name" placeholder="Johnny Appleseed"/>
+            <OutlinedInput name="fullname" value={fullname} onChange={this.onChange} label="Full Name"/>
           </FormControl>
 
-          <FormControl variant="outlined" size="small" >
+        <FormControl class="formSignUp" variant="outlined" size="small" >
             <InputLabel htmlFor="email">Email</InputLabel>
-            <OutlinedInput name="email" value={email} onChange={this.onChange} label="Email" placeholder="appleseed.johnny@website.com"/>
+            <OutlinedInput name="email" value={email} onChange={this.onChange} label="Email"/>
           </FormControl>
           
-          <FormControl variant="outlined" size="small" >
+        <FormControl class="formSignUp" variant="outlined" size="small" >
             <InputLabel htmlFor="passwordOne">Password</InputLabel>
-            <OutlinedInput name="passwordOne" value={passwordOne} onChange={this.onChange} type="password" label="Password" placeholder="password123"/>
+            <OutlinedInput name="passwordOne" value={passwordOne} onChange={this.onChange} type="password" label="Password"/>
           </FormControl>
 
-          <FormControl variant="outlined" size="small" >
+        <FormControl class="formSignUp" variant="outlined" size="small" >
             <InputLabel htmlFor="passwordTwo">Confirm Password</InputLabel>
-            <OutlinedInput name="passwordTwo" value={passwordTwo} onChange={this.onChange} type="password" label="Confirm Password" placeholder="password123"/>
+            <OutlinedInput name="passwordTwo" value={passwordTwo} onChange={this.onChange} type="password" label="Confirm Password"/>
           </FormControl>
           
           
