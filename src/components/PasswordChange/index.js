@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
  
 import { withFirebase } from '../Firebase';
-import Firebase from 'firebase' 
+import firebase from 'firebase' 
 
 const INITIAL_STATE = {
   passwordOne: '',
@@ -17,9 +17,30 @@ class PasswordChangeForm extends Component {
   }
   
   onSubmit = event => {
-    const { passwordOne } = this.state;
+    const { passwordOne, oldPassword } = this.state;
 
-    
+    var user = firebase.auth().currentUser;
+    //var validated;
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      user.email, 
+      oldPassword
+  );
+
+    // Prompt the user to re-provide their sign-in credentials
+
+    user.reauthenticateWithCredential(credential).then(function() {
+      // User re-authenticated.
+      //validated = true;
+      user.updatePassword(passwordOne)
+      alert("The password associated with your account has been changed.");
+    }).catch(function(error) {
+      // An error happened.
+      alert("The password you entered does not match the password associated with your account.")
+      
+    });
+
+/*
+    if(validated == true){
     this.props.firebase
       .doPasswordUpdate(passwordOne)
       .then(() => {
@@ -30,21 +51,25 @@ class PasswordChangeForm extends Component {
       .catch(error => {
         this.setState({ error });
       });
- 
+    }
+ */
     event.preventDefault();
   };
  
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
+
+  
+
  
   render() {
     const { passwordOne, passwordTwo, oldPassword, oldPasswordTwo, error } = this.state;
-    //I'm strugging with figuring out how to validate with the users ACTUAL old password associated with their firebase account
-    //Right now this is just checking that the user is entering the same thing for each form 
+  
     const isInvalid =
-      (passwordOne !== passwordTwo || passwordOne === '') || (oldPassword !== oldPasswordTwo || oldPassword==='');
- 
+      (passwordOne !== passwordTwo || passwordOne === '') ||/* (oldPassword !== oldPasswordTwo ||*/ (oldPassword==='');
+
+
     return (
       <form onSubmit={this.onSubmit}>
         <input
@@ -53,13 +78,6 @@ class PasswordChangeForm extends Component {
           onChange={this.onChange}
           type="password"
           placeholder="Enter Old Password"
-        />
-         <input
-          name="oldPasswordTwo"
-          value={oldPasswordTwo}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Confirm Old Password"
         />
         
         <input
