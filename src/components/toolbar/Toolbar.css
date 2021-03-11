@@ -39,11 +39,6 @@ button {
   border: none;    
 }
 
-button:hover{
-  transition:0.2;
-  opacity: 50%;
-}
-
 #dropdown {
   color: #212121;
   list-style-type: none;
