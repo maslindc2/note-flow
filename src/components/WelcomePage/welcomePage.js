@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
         alignSelf: 'center',
         marginTop: 20,
     },
-
+    
     root: {
 
         minHeight: '100%',
@@ -51,8 +51,8 @@ const useStyles = makeStyles((theme) => ({
         justifyItems: 'center',
         alignContent: 'center',
         alignItems: 'center',
-        borderColor: 'black',
         textAlign: 'center',
+
         paddingLeft: '10%',
         paddingRight: '10%',
         paddingBottom: '20%',
@@ -62,17 +62,51 @@ const useStyles = makeStyles((theme) => ({
 
     container: {
         width: '100%',
+    },
 
+    introFlexWrap: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'nowrap',
+        justifyContent: 'space-around',
+    },
+
+    logo: {
+        alt: "Note Flow",
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginBottom: 10,
+        alignSelf: 'center',
+        minHeight: 50,
+        width: 300,
+        position: 'fixed',
+        top: 0,
+        right: '55%',
+        left: '40%',
+        zIndex: 2,
+    },
+
+    logoContainer: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+    
+        alignSelf: 'center',
+        minHeight: 50,
+        width: 300,
+        
+        position: 'fixed',
+        top: 0,
+        marginBottom: 30,
     },
 
     pageButton: {
         '&#signin': {
             marginTop: 15,
         },
-        color: 'white',
-        backgroundColor: '#1B98E0',
+        color: theme.palette.common,
+        backgroundColor: theme.palette.secondary,
         '&:hover': {
-            backgroundColor: '#212121',
+            backgroundColor: theme.palette.primary,
         },
         width: 200,
         height: 40,
@@ -88,6 +122,37 @@ const useStyles = makeStyles((theme) => ({
 
     },
 
+    paperRoot: {
+        display: 'flex',
+        '& > *': {
+          
+          
+          width: 500,
+          minwidth: '100%',
+          minHeight: 250,
+          height: 'fit-content',
+          padding: 20,
+          paddingBottom: 25,
+        },
+        textAlign: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+         marginTop: 20,
+      },
+
+    pageArrow: {
+        marginTop: 30,
+        position: 'relative',
+        color: theme.palette.grey[900],
+        fontSize: 70,
+    },
+
+    signInForm: {
+        '& > text': {
+            marginLeft: 10,
+        },
+        textAlign: 'left',
+    },
 
 }));
 
@@ -115,6 +180,7 @@ export default function WelcomePage() {
         }
     }
 
+      
     return (
 
         <div className={classes.root}>

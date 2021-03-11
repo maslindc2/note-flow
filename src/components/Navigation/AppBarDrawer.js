@@ -26,6 +26,8 @@ import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import StarsIcon from '@material-ui/icons/Stars';
 import firebase from 'firebase'
 
+import { useState } from 'react';
+import { useContext } from "react";
 
 //Nav Imports
 import { NavLink } from 'react-router-dom'
@@ -41,6 +43,13 @@ import '../editor/Editor.css';
 import { Edit, Home } from "@material-ui/icons";
 //Import user info
 import userInner from '../UserInfo/userInfo'
+
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import Switch from "@material-ui/core/Switch";
+import { dark, light } from '@material-ui/core/styles/createPalette';
+import ThemeContext from "../Theme/ThemeContext";
+import ThemeSwitcher from "../Theme/ThemeSwitcher";
+
 const drawerWidth = 240;
 
 
@@ -48,16 +57,16 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
-        background: '#212121',
+        background: theme.palette.common,
     },
 
     drawerButton: {
-        color: 'white',
+        color: theme.palette.common,
         
     },
 
     appBar: {
-        background: 'linear-gradient(45deg, #F4976C 30%, #FBE8A6 90%)',
+        backgroundColor: "primary",
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -73,11 +82,11 @@ const useStyles = makeStyles((theme) => ({
     },
     menuButton: {
         marginRight: theme.spacing(2),
-        color: 'white',
+        color: theme.palette.common,
     },
 
     signOutButton: {
-        color: "white",
+        color: theme.palette.primary,
     },
 
     hide: {
@@ -94,8 +103,8 @@ const useStyles = makeStyles((theme) => ({
     },
     drawerPaper: {
         width: drawerWidth,
-        backgroundColor: '#212121',
-        color: '#212121',
+        backgroundColor: theme.palette.common,
+        color: theme.palette.common,
         overflowX: "hidden", //Removes the left-right scroll bar thats in the drawer
 
     },
@@ -106,7 +115,7 @@ const useStyles = makeStyles((theme) => ({
         // necessary for content to be below app bar
         ...theme.mixins.toolbar,
         justifyContent: 'flex-end',
-        color: "white",
+        color: theme.palette.common,
     },
     content: {
         flexGrow: 1,
@@ -141,8 +150,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function AppBarDrawer() {
-    const classes = useStyles();
-    const theme = useTheme();
+    const { theme } = useContext(ThemeContext);
+    const classes = useStyles(theme);
+
     const [open, setOpen] = React.useState(false);
 
     const handleDrawerOpen = () => {
@@ -187,10 +197,8 @@ export default function AppBarDrawer() {
                     <Typography variant="h6" noWrap>
                         Note Flow
                     </Typography>
-
-                    
+                    <ThemeSwitcher/>
                 </Toolbar>
-            
             </AppBar>
             <Drawer
                 className={classes.drawer}
@@ -212,7 +220,7 @@ export default function AppBarDrawer() {
                 <List className={classes.drawerPaper}>
 
                     <ListItem button key={'Sign Out'}>
-                        <ListItemIcon > <SignOutButton style="color:#FBE8A6;" /></ListItemIcon>
+                        <ListItemIcon > <SignOutButton/> </ListItemIcon>
                     </ListItem>
 
                     <NavLink activeClassName="active" to="/accountpage">
@@ -259,5 +267,6 @@ export default function AppBarDrawer() {
             </Drawer>
 
         </div>
+        
     );
 }

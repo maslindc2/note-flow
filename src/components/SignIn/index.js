@@ -19,17 +19,33 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
-import './signInFormStyle.css'
+
+const wrapperStyle = {
+  display: 'flex',
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  padding: 20,
+  alignItems: 'flex-start',
+  alignContent: 'space-between',
+  height: 100,
+  width: 430,
+  margin: 20,
+};
+
+const buttonStyle = {
+  enabled: {
+      color: '#1B98E0', 
+      borderColor: '#1B98E0',
+    },
+  disabled: {
+      color: 'black',
+  },
+  };
 
 const SignIn = () => (
   <div>
-    
- 
      <SignInForm  />
-     
- 
   </div>
 );
  
@@ -37,8 +53,6 @@ const INITIAL_STATE = {
   email: '',
   password: '',
   error: null,
-  
-
 };
 
  
@@ -81,8 +95,8 @@ class SignInFormBase extends Component {
     const isInvalid = password === '' || email === '';
  
     return (
-      <form onSubmit={this.onSubmit} class="signInFormWrapper" noValidate autoComplete="off">
-        <FormControl class="formEmailPassword" variant="outlined" size="small" >
+      <form onSubmit={this.onSubmit} noValidate autoComplete="off" style={wrapperStyle}>
+        <FormControl variant="outlined" size="small" >
             <InputLabel htmlFor="email">Email</InputLabel>
             <OutlinedInput name="email" value={email} onChange={this.onChange} label="Email" placeholder="Email Address"/>
           </FormControl>
@@ -92,7 +106,8 @@ class SignInFormBase extends Component {
             <OutlinedInput name="password" value={password} onChange={this.onChange} type="password" label="Password" placeholder="Password"/>
           </FormControl>
         
-        <Button variant="outlined" id="submitButton" disabled={isInvalid} type="submit" color={"black"}>
+        <Button variant="outlined" disabled={isInvalid} type="submit" 
+                style={ (isInvalid ? {} : buttonStyle.enabled) }>
           Sign In
         </Button>
  

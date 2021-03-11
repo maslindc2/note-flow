@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Editor from './Editor'
 import './Editor.css'
 import ToolbarInner from "../toolbar/Toolbar";
 import { withAuthorization } from '../Session';
+import ThemeContext from '../Theme/ThemeContext';
 //top level of editor functionality
 
 

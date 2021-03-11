@@ -9,7 +9,7 @@ import user from '../UserInfo/userInfo'
 //successfull sign up will take you to the homepage
 
 //MUI Imports
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import FilledInput from '@material-ui/core/FilledInput';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -43,6 +43,28 @@ const useStyles = makeStyles((theme) => ({
     width: '25ch',
   },
 }));
+
+const wrapperStyle = {
+  display: 'flex',
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  padding: 10,
+  alignItems: 'flex-start',
+  alignContent: 'space-between',
+  height: 150,
+  width: 430,
+  margin: 20,
+};
+
+const buttonStyle = {
+enabled: {
+    color: "1b98e0", 
+    borderColor: "1b98e0",
+  },
+disabled: {
+    color: "black",
+},
+};
 
 const SignUp = () => (
   <div>
@@ -109,7 +131,7 @@ class SignUpFormBase extends Component {
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
- 
+
   render() {
     const {
         fullname,
@@ -126,10 +148,12 @@ class SignUpFormBase extends Component {
     email === '' ||
     fullname === '';
 
+    
+
     return (
       
-        <form onSubmit={this.onSubmit} class="inputFormWrapper" noValidate autoComplete="off">
-        <FormControl class="formSignUp" variant="outlined" size="small" >
+        <form onSubmit={this.onSubmit} noValidate autoComplete="off" style={wrapperStyle}>
+          <FormControl variant="outlined" size="small" >
             <InputLabel htmlFor="fullname">Full Name</InputLabel>
             <OutlinedInput name="fullname" value={fullname} onChange={this.onChange} label="Full Name"/>
           </FormControl>
@@ -150,7 +174,10 @@ class SignUpFormBase extends Component {
           </FormControl>
           
           
-          <Button id="submitButton" variant="outlined" disabled={isInvalid} type = "submit">Sign Up </Button>
+          <Button variant="outlined" disabled={isInvalid} type = "submit" 
+                  style={ (isInvalid ? {} : buttonStyle.enabled) }>
+            Sign Up 
+          </Button>
   
           {error && <p>{error.message}</p>}
         </form>

@@ -1,4 +1,4 @@
-.toolbar {
+/*.toolbar {
   padding: 4px;
   position: fixed;
   margin-top: 64px;
@@ -27,13 +27,16 @@
   justify-content: center;
   background-color: white;
 }
+*/
 
 /*CSS Style for Sign Out Button, held in Navigation Drawer*/
-#signout {
+/*
+signout {
   color: #F4976C;
 }
-
+*/
 /* Gets rid of the border for the buttons so its just icons only*/
+/*
 button {
   background-color: Transparent;
   border: none;    
@@ -48,7 +51,9 @@ button:hover{
   color: #212121;
   list-style-type: none;
 }
+*/
 /* bulletList class is Used for the list function */ 
+/*
 .bulletList:hover:not(.active) {
     background-color: rgba(0, 0, 0, 0);
     color: black;
@@ -62,9 +67,8 @@ button:hover{
 }
 
 .tooltip {
-  position: relative;
+    position: relative;
   display: inline-block;
-
 }
 
 .tooltip .tooltiptext {
@@ -75,8 +79,8 @@ button:hover{
   text-align: center;
   border-radius: 6px;
   padding: 5px 0;
-  
-  /* Position the tooltip */
+  */
+  /* Position the tooltip 
   position: absolute;
   z-index: 1;
   top: 100%;
@@ -88,6 +92,7 @@ button:hover{
   opacity: 1;
   transition-delay: 1s;
 }
+
 .hidden {
   display: none;
 }
@@ -119,3 +124,324 @@ button:hover{
   margin-left: 5px;
   margin-right: 5px;
 }
+*/
+/*
+
+<div className={classes.toolbar}>
+            <div class="tooltip container">
+                <span class="tooltiptext">Bold</span>
+                <button class={"bar"} onClick={e => format('bold')}>
+                    <FormatBoldIcon />
+                </button>
+            </div>
+            <div class="tooltip container">
+                <span class="tooltiptext">Italicize</span>
+                <button class={"bar"} onClick={e => format('italic')}>
+                    <FormatItalicIcon />
+                </button>
+            </div>
+            <div class="tooltip container">
+                <span class="tooltiptext">List</span>
+                <button class={"bar"} onClick={e => bulletPoint()}>
+                    <FormatListBulletedIcon />
+                </button>
+            </div>
+            <div className="tooltip container">
+                <span class="tooltiptext">Font Style and Size</span>
+                <select onChange={changeFont}>
+                    <option value="Arial">Arial</option>
+                    <option value="Calibri">Calibri</option>
+                    <option value="Comic Sans MS">Comic Sans MS</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Roboto">Roboto</option>
+                    <option value="Roboto Mono">Roboto Mono</option>
+                </select>
+                <select onChange={changeFSize}>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                </select>
+            </div>
+            <div class="tooltip">
+            <span class="tooltiptext">Highlight Text Color</span>
+                <span class="HLightText">Highlight</span>
+                <select onChange={highlightText}>
+                    <option value ="#ffffff">None</option>
+                    <option value ="Black">Black</option>
+                    <option value="#99c2ff">Blue</option>
+                    <option value="Orange">Orange</option>
+                    <option value="#ff9999">Red</option>
+                    <option value="Yellow">Yellow</option>
+
+                </select>
+            </div>
+            <div class="tooltip">
+            <span class="tooltiptext">Text Color</span>
+            <span class="HLightText">Text Color</span>
+                <select onChange={changeFColor}>
+                    <option value ="Black">Black</option>
+                    <option value ="#ffffff">White</option>
+                    <option value="Blue">Blue</option>
+                    <option value="Orange">Orange</option>
+                    <option value="Red">Red</option>
+                    <option value="#b3b300">Yellow</option>
+                </select>
+            </div>
+            <div class="container">
+                <div class="tooltip">
+                    <span class="tooltiptext">Align Left</span>
+                    <button class={"bar"} onClick={e => document.execCommand('justifyLeft', false)}>
+                        <FormatAlignLeftIcon />
+                    </button>
+                </div>
+
+                <div class="tooltip">
+                    <span class="tooltiptext">Align Center</span>
+                    <button class={"bar"} onClick={e => document.execCommand('justifyCenter', false)}>
+                        <FormatAlignCenterIcon />
+                    </button>
+                </div>
+
+                <div class="tooltip">
+                    <span class="tooltiptext">Align Right</span>
+                    <button class={"bar"} onClick={e => document.execCommand('justifyRight', false)}>
+                        <FormatAlignRightIcon />
+                    </button>
+                </div>
+
+                <div class="tooltip ">
+                    <span class="tooltiptext">Justify Full</span>
+                    <button class={"bar"} onClick={e => document.execCommand('justifyFull', false)}>
+                        <FormatAlignJustifyIcon />
+                    </button>
+
+                </div>
+            </div>
+            <div class="tooltip">
+                <span class="tooltiptext">Insert link</span>
+                <button class={"bar"} onClick={e => addLink()}>
+                    <InsertLinkIcon />
+                </button>
+            </div>
+
+            <div id='url-input' className='hidden container'>
+                <input id='textFormatUrl' placeholder='url' />
+                <button class={"bar"} onClick={e => openMenu("dropdown_links")}>
+                    <CheckIcon />
+                    <ul id="dropdown_links">
+                        <li onClick={e => setUrl()} >Link</li>
+                        <li onClick={e => insertImage()} >Image</li>
+                        <li onClick={e => embedVideo()}>Video</li>
+                    </ul>
+                </button>
+            </div>
+            <div class="tooltip container">
+                <span class="tooltiptext">Header</span>
+                <button class={"bar"} onClick={e => setHeader()}>
+                    <TextFieldsIcon />
+                </button>
+            </div>
+            <div class="tooltip container">
+                <span class="tooltiptext">Code Block</span>
+                <button class={"bar"} onClick={e => openMenu("dropdown")}>
+                    <CodeIcon />
+                    <ul id="dropdown">
+                        <li onClick={e => addCodeBlock("ace/mode/javascript")} >Javascript</li>
+                        <li onClick={e => addCodeBlock("ace/mode/java")}>Java</li>
+                        <li onClick={e => addCodeBlock("ace/mode/python")}>Python</li>
+                        <li onClick={e => addCodeBlock("ace/mode/c_cpp")}>C++</li>
+                    </ul>
+                </button>
+            </div>
+            <div class="tooltip container">
+                <span class="tooltiptext">Equation</span>
+                <button class={"bar"} onClick={e => addEquation()}>
+                    <FunctionsIcon />
+                </button>
+            </div>
+            <div class="tooltip container">
+                <span class="tooltiptext">Save</span>
+                <button class={"bar"} onClick={e => handleSave()}>
+                    <SaveAltIcon />
+                </button>
+            </div>
+            
+            
+        </div>
+
+*/
+
+/*  MY VERSION
+
+<div className={classes.toolbar}>
+            <div class="tooltip container">
+                <span class="tooltiptext">Bold</span>
+                <button className={classes.bar} onClick={e => format('bold')}>
+                    <FormatBoldIcon />
+                </button>
+            </div>
+            <div class="tooltip container">
+                <span class="tooltiptext">Italicize</span>
+                <button className={classes.bar} onClick={e => format('italic')}>
+                    <FormatItalicIcon />
+                </button>
+            </div>
+            <div class="tooltip container">
+                <span class="tooltiptext">List</span>
+                <button className={classes.bar} onClick={e => bulletPoint()}>
+                    <FormatListBulletedIcon />
+                </button>
+            </div>
+            <div className="tooltip container">
+                <span class="tooltiptext">Font Style and Size</span>
+                <select onChange={changeFont}>
+                    <option value="Arial">Arial</option>
+                    <option value="Calibri">Calibri</option>
+                    <option value="Comic Sans MS">Comic Sans MS</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Roboto">Roboto</option>
+                    <option value="Roboto Mono">Roboto Mono</option>
+                </select>
+                <select onChange={changeFSize}>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                </select>
+            </div>
+            <div class="tooltip">
+            <span class="tooltiptext">Highlight Text Color</span>
+                <span className={classes.HLightText}>Highlight</span>
+                <select onChange={highlightText}>
+                    <option value ="#ffffff">None</option>
+                    <option value ="Black">Black</option>
+                    <option value="#99c2ff">Blue</option>
+                    <option value="Orange">Orange</option>
+                    <option value="#ff9999">Red</option>
+                    <option value="Yellow">Yellow</option>
+
+                </select>
+            </div>
+            <div class="tooltip">
+            <span class="tooltiptext">Text Color</span>
+            <span className={classes.HLightText}>Text Color</span>
+                <select onChange={changeFColor}>
+                    <option value ="Black">Black</option>
+                    <option value ="#ffffff">White</option>
+                    <option value="Blue">Blue</option>
+                    <option value="Orange">Orange</option>
+                    <option value="Red">Red</option>
+                    <option value="#b3b300">Yellow</option>
+                </select>
+            </div>
+            <div className={classes.container}>
+                <div class="tooltip">
+                    <span class="tooltiptext">Align Left</span>
+                    <button className={classes.bar} onClick={e => document.execCommand('justifyLeft', false)}>
+                        <FormatAlignLeftIcon />
+                    </button>
+                </div>
+
+                <div class="tooltip">
+                    <span class="tooltiptext">Align Center</span>
+                    <button className={classes.bar} onClick={e => document.execCommand('justifyCenter', false)}>
+                        <FormatAlignCenterIcon />
+                    </button>
+                </div>
+
+                <div class="tooltip">
+                    <span class="tooltiptext">Align Right</span>
+                    <button className={classes.bar} onClick={e => document.execCommand('justifyRight', false)}>
+                        <FormatAlignRightIcon />
+                    </button>
+                </div>
+
+                <div class="tooltip ">
+                    <span class="tooltiptext">Justify Full</span>
+                    <button className={classes.bar} onClick={e => document.execCommand('justifyFull', false)}>
+                        <FormatAlignJustifyIcon />
+                    </button>
+
+                </div>
+            </div>
+            <div class="tooltip">
+                <span class="tooltiptext">Insert link</span>
+                <button className={classes.bar} onClick={e => addLink()}>
+                    <InsertLinkIcon />
+                </button>
+            </div>
+
+            <div id='url-input' className='hidden container'>
+                <input id='textFormatUrl' placeholder='url' />
+                <button className={classes.bar} onClick={e => openMenu("dropdown_links")}>
+                    <CheckIcon />
+                    <ul id="dropdown_links">
+                        <li onClick={e => setUrl()} >Link</li>
+                        <li onClick={e => insertImage()} >Image</li>
+                        <li onClick={e => embedVideo()}>Video</li>
+                    </ul>
+                </button>
+            </div>
+            <div class="tooltip container">
+                <span class="tooltiptext">Header</span>
+                <button className={classes.bar} onClick={e => setHeader()}>
+                    <TextFieldsIcon />
+                </button>
+            </div>
+            <div class="tooltip container">
+                <span class="tooltiptext">Code Block</span>
+                <button className={classes.bar} onClick={e => openMenu("dropdown")}>
+                    <CodeIcon />
+                    <ul id="dropdown">
+                        <li onClick={e => addCodeBlock("ace/mode/javascript")} >Javascript</li>
+                        <li onClick={e => addCodeBlock("ace/mode/java")}>Java</li>
+                        <li onClick={e => addCodeBlock("ace/mode/python")}>Python</li>
+                        <li onClick={e => addCodeBlock("ace/mode/c_cpp")}>C++</li>
+                    </ul>
+                </button>
+            </div>
+            <div class="tooltip container">
+                <span class="tooltiptext">Equation</span>
+                <button className={classes.bar} onClick={e => addEquation()}>
+                    <FunctionsIcon />
+                </button>
+            </div>
+            <div class="tooltip container">
+                <span class="tooltiptext">Save</span>
+                <button className={classes.bar} onClick={e => handleSave()}>
+                    <SaveAltIcon />
+                </button>
+            </div>
+            
+            
+        </div>
+
+        */
+
+
+
+        /*
+        <TextField
+                    id="dropdownMenu"
+                    className={classes.linkSelector}
+                    select
+                    label="Type"
+                    value={linkType}
+                    onChange={handleSelectChange}
+                    variant="outlined"
+                    >
+                    {linkSelections.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                        </MenuItem>
+                    ))}
+                </TextField>
+
+        */

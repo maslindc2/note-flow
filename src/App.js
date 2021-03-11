@@ -10,7 +10,11 @@ import PasswordPage from './components/passwordpage'
 import AccountPage from './components/Account/accountpage'
 import UserFiles from './components/UserFiles/userFiles'
 import WelcomePage from './components/WelcomePage/welcomePage'
+import { MuiThemeProvider } from '@material-ui/core/styles';
+
 import { withAuthentication } from './components/Session';
+
+
 /*
 Implementation of our main App component
 The swith tags tell React what compoenets

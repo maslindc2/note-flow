@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 //Import Material UI
 import { makeStyles } from '@material-ui/core/styles';
@@ -20,64 +20,70 @@ import accountCardImage from '../Images/MyAccount.jpg'
 //Import Navigation
 import { NavLink } from 'react-router-dom'
 
-//Import CSS
-import './Homepage.css'
+//Import Theme
+import { useTheme } from '@material-ui/core/styles';
+import ThemeContext from '../Theme/ThemeContext';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     flex: 1,
   },
 
-  firstCard: {
-      minWidth: 300,
-    flex: 1,
-    marginLeft: 20,
-    marginRight: 10,
-  },
-
   card: {
-      minWidth: 300,
+    minWidth: 300,
     flex: 1,
     marginLeft: 20,
     marginRight: 10,
   },
 
-  modeLD: {
-      flex: 1,
-      marginLeft: 20,
+  cardActionButton: {
+    color: theme.palette.tertiary,
   },
 
-  media: {
-    height: 150,
+  content: {
+    flex: '1 0 auto',
+  },
+
+  contentContainer: {
+    display: 'flex',
+    width: '80%',
+    margin: 15,
+    paddingLeft: 20,
+    paddingRight: 20,
+    justifyContent: 'center',
+  },
+
+  cover: {
+    width: 151,
   },
 
   details: {
     display: 'flex',
     flexDirection: 'column',
   },
-  content: {
-    flex: '1 0 auto',
-  },
-  cover: {
-    width: 151,
-  },
-  
-  contentContainer: {
-    
-      display: 'flex',
-      width: '80%',
-      margin: 15,
-      paddingLeft: 20,
-      paddingRight: 20,
-      justifyContent: 'center',
-  },
-  
-});
 
+  firstCard: {
+    minWidth: 300,
+    flex: 1,
+    marginLeft: 20,
+    marginRight: 10,
+  },
+
+  media: {
+    height: 150,
+  },
+
+  modeLD: {
+    flex: 1,
+    marginLeft: 20,
+  },
+  
+}));
 
 
 export default function HomeContent() {
-  const classes = useStyles();
+  const { theme } = useContext(ThemeContext);
+  const classes = useStyles(theme);
 
   const [state, setState] = React.useState({
     checkedA: true,
@@ -93,7 +99,7 @@ export default function HomeContent() {
 
         <div float={'left'}>
             <Card className={classes.firstCard}>
-            <NavLink  activeClassName="active" to="/accountpage">
+            <NavLink  activeClassName="active" to="/accountpage" style={{ textDecoration: 'none' }}>
               <CardActionArea>
               <CardMedia
               className={classes.media}
@@ -111,10 +117,10 @@ export default function HomeContent() {
               </CardActionArea>
             </NavLink>
             <CardActions>
-            <Button size="small" color="primary">
+            <Button className={classes.cardActionButton} size="small">
                 Important
             </Button>
-            <Button size="small" color="primary">
+            <Button className={classes.cardActionButton} size="small">
                 Learn More
             </Button>
             </CardActions>
@@ -123,7 +129,7 @@ export default function HomeContent() {
 
         <div float={'left'}>
             <Card className={classes.card}>
-            <NavLink activeClassName="active" to="/userFiles">
+            <NavLink activeClassName="active" to="/userFiles" style={{ textDecoration: 'none' }}>
               <CardActionArea>
                   <CardMedia
                   className={classes.media}
@@ -141,10 +147,10 @@ export default function HomeContent() {
               </CardActionArea>
             </NavLink>
             <CardActions>
-                <Button size="small" color="primary">
+                <Button className={classes.cardActionButton} size="small">
                 Important
                 </Button>
-                <Button size="small" color="primary">
+                <Button className={classes.cardActionButton} size="small">
                 Learn More
                 </Button>
             </CardActions>

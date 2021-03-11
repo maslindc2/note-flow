@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ToolbarInner from '../toolbar/Toolbar'
 import './Editor.css';
 import AppBarDrawer from "../Navigation/AppBarDrawer";
 import userInner from "../UserInfo/userInfo"
+import ThemeContext from '../Theme/ThemeContext';
 
 //Editor function
 export default function Editor() {
-
+    const { theme } = useContext(ThemeContext);
     function paste(e) {
         e.preventDefault();
         const open = new RegExp('<', 'gi');
