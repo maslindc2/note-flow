@@ -49,6 +49,9 @@ html{
     font-size: 70px;
 
 }
+#welPageArrow:hover{
+    opacity: 0.5;
+}
 
 #logo {
     
@@ -59,7 +62,6 @@ html{
     align-self: center;
     min-height: 50px;
     width: 300px;
-    position: sticky;
     top: 0;
     right: 55%;
     left: 40%;
@@ -72,8 +74,6 @@ html{
     align-self: center;
     min-height: 50px;
     width: 300px;
-    
-    position: sticky;
     top: 0;
 
 }
@@ -102,6 +102,6 @@ html{
 .introFlexWrap {
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: space-around;
 }
