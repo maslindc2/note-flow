@@ -37,6 +37,10 @@
     top: 100px;
 
 }
+/*Used for smooth pageArrow scroll*/
+html{
+    scroll-behavior: smooth;
+}
 
 #welPageArrow {
     margin-top: 30px;

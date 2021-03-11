@@ -120,7 +120,7 @@ export default function WelcomePage() {
         <div className={classes.root}>
             <div id="logoContainer"><img src={NoteFlowLogo} id="logo" /></div>
             <div class="background" />
-            <ArrowDownwardIcon id="welPageArrow" />
+            <a href="#welIntro" ><ArrowDownwardIcon href="#welIntro" id="welPageArrow" /></a>
             <div class="introFlexWrap">
                 <div id="welIntro">
                     <h2>Taking Notes isn't Always Easy</h2>
