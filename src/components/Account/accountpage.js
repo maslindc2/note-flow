@@ -3,7 +3,7 @@ import React from 'react'
 import firebase from 'firebase'
 import PasswordChangeForm from '../PasswordChange';
 import { withAuthorization } from '../Session';
-
+import { DeleteAccountLink } from '../DeleteAccount';
 //Administrative features for signed in users - right now only functionality is changning password
 
 class AccountPage extends React.Component {
@@ -33,6 +33,7 @@ if (user != null) {
             <p>{email}</p>
             <h1>Change password</h1>
             <PasswordChangeForm />
+            <DeleteAccountLink/>
         </div>
 
       </div>
