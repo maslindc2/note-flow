@@ -18,6 +18,7 @@ import welcomeTopImg from './welcomeTopImg.png';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import NoteFlowLogo from './NoteFlowLogo.png'
 import Typography from '@material-ui/core/Typography';
+import { Hidden } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     paperRoot: {
@@ -25,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
         '& > *': {
 
 
-            width: 500,
-            minwidth: '100%',
+            width: 'auto',
+            minWidth: '100%',
             minHeight: 250,
             height: 'fit-content',
             padding: 20,
@@ -41,8 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
     root: {
 
-        minHeight: '100%',
-        minwidth: '100%',
+        minHeight: '90%',
         height: 'auto',
         background: 'radial-gradient(white 10%, #FBE8A6, #F4976C 80%)',
         //background: 'linear-gradient(to bottom right, #F4976C 10%, transparent 30% 70%, #FBE8A6 90%)',
@@ -55,7 +55,8 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         paddingLeft: '10%',
         paddingRight: '10%',
-        paddingBottom: '20%',
+        paddingBottom: '15%',
+        overflow: 'hidden',
     },
 
 
@@ -85,6 +86,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        alignItems: 'center',
 
     },
 
@@ -120,7 +122,7 @@ export default function WelcomePage() {
         <div className={classes.root}>
             <div id="logoContainer"><img src={NoteFlowLogo} id="logo" /></div>
             <div class="background" />
-            <ArrowDownwardIcon id="welPageArrow" />
+            <a href="#welIntro" ><ArrowDownwardIcon href="#welIntro" id="welPageArrow" /></a>
             <div class="introFlexWrap">
                 <div id="welIntro">
                     <h2>Taking Notes isn't Always Easy</h2>
@@ -159,6 +161,7 @@ export default function WelcomePage() {
                             </div>
 
                         </div>
+
                     </Paper>
                 </div>
             </div>

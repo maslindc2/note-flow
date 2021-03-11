@@ -37,6 +37,10 @@
     top: 100px;
 
 }
+/*Used for smooth pageArrow scroll*/
+html{
+    scroll-behavior: smooth;
+}
 
 #welPageArrow {
     margin-top: 30px;
@@ -44,6 +48,9 @@
     color: #212121;
     font-size: 70px;
 
+}
+#welPageArrow:hover{
+    opacity: 0.5;
 }
 
 #logo {
@@ -55,7 +62,6 @@
     align-self: center;
     min-height: 50px;
     width: 300px;
-    position: sticky;
     top: 0;
     right: 55%;
     left: 40%;
@@ -68,8 +74,6 @@
     align-self: center;
     min-height: 50px;
     width: 300px;
-    
-    position: sticky;
     top: 0;
 
 }
@@ -98,6 +102,6 @@
 .introFlexWrap {
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: space-around;
 }
