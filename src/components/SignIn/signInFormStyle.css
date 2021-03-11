@@ -1,3 +1,11 @@
+.signInFormWrapper{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    height: 100%;
+    width: 230px;
+}
 #submitButton:enabled {
     color: #1B98E0;
     border-color: #1B98E0;   
@@ -14,4 +22,13 @@
 }
 .errorMessage{
     margin: 1%;
+}
+
+#signInButton{
+    margin-top: 6px;
+    margin-left: 5px;
+}
+#signInButton:enabled {
+    color: #1B98E0;
+    border-color: #1B98E0;   
 }
