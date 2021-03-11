@@ -11,6 +11,7 @@ import AccountPage from './components/Account/accountpage'
 import UserFiles from './components/UserFiles/userFiles'
 import WelcomePage from './components/WelcomePage/welcomePage'
 import { withAuthentication } from './components/Session';
+import DeleteAccount from './components/deleteaccountpage'
 /*
 Implementation of our main App component
 The swith tags tell React what compoenets
@@ -30,6 +31,7 @@ const App = () => (
                     <Route path="/passwordpage" component={PasswordPage} />
                     <Route path="/accountpage" component={AccountPage} />
                     <Route path="/userfiles" component={UserFiles} />
+                    <Route path="/deleteaccount" component={DeleteAccount} />
                     <Route component={Notfound} />
                 </Switch>
          </div>
