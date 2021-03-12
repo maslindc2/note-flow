@@ -14,9 +14,9 @@ import { ThemeProvider, MuiThemeProvider } from '@material-ui/core/styles';
 
 class HomePage extends React.Component {
   render() {
-    const theme = lightTheme;
+    //const theme = lightTheme;
     return (
-      <ThemeProvider theme={theme}>
+      
         <div style={{ justifyContent: 'center',
                       width: '100%',
                       textAlign: 'center',
@@ -34,7 +34,6 @@ class HomePage extends React.Component {
           </Typography>
           <HomeContent />
         </div>
-      </ThemeProvider>
     )
   }
 }

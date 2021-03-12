@@ -29,7 +29,7 @@ export const lightTheme = createMuiTheme({
         },
 
         basic: {
-            main: grey[300],
+            main: grey[700],
         }
     }
 

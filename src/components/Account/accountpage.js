@@ -25,7 +25,7 @@ if (user != null) {
 
 
     return (
-      <ThemeProvider theme={theme}>
+      
       <div>
         <h1 id={"title"}>Account Page</h1>
 
@@ -38,7 +38,7 @@ if (user != null) {
         </div>
 
       </div>
-      </ThemeProvider>
+      
     )
   }
 }

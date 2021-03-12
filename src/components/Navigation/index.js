@@ -14,7 +14,7 @@ import ThemeContext from '../Theme/ThemeContext';
 import Layout from "../Theme/Layout";
 import { dark, light } from '@material-ui/core/styles/createPalette'
 
-const theme = lightTheme
+
 
 
 const Navigation = ({ authUser }) => (
@@ -41,9 +41,8 @@ const NavigationAuth = () => {
 
   return (
       //Needs App bar and additional functionality
-      <ThemeProvider theme={theme}>
+      
         <AppBarDrawer />
-      </ThemeProvider>
   );
 };
 

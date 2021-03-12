@@ -17,13 +17,13 @@ export const darkTheme = createMuiTheme({
         },
         secondary: {
             light: deepOrange[200],
-            main: green[500],
+            main: cyan[500],
             dark: cyan[700],
         },
         tertiary: {
-            light: yellow[200],
-            main: yellow[500],
-            dark: yellow[800],
+            light: green[200],
+            main: green[500],
+            dark: green[800],
         },
         basic: {
             main: grey[900],

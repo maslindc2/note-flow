@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function HomeContent() {
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useTheme();
   const classes = useStyles(theme);
 
   const [state, setState] = React.useState({

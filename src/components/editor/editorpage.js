@@ -10,16 +10,16 @@ import darkTheme from '../Theme/darkTheme';
 //top level of editor functionality
 
 
+
 class EditorPage extends React.Component {
   render() {
-    const theme = lightTheme;
+    
     return (
-      <ThemeProvider theme={theme}>
+      
         <div class={"editorPageWrapper"}>
           <ToolbarInner/>
           <Editor/>
         </div>
-        </ThemeProvider>
     )
   }
 }
