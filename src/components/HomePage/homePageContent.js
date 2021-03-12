@@ -29,22 +29,22 @@ const useStyles = makeStyles({
   },
 
   firstCard: {
-      minWidth: 300,
+    minWidth: 300,
     flex: 1,
     marginLeft: 20,
     marginRight: 10,
   },
 
   card: {
-      minWidth: 300,
+    minWidth: 300,
     flex: 1,
     marginLeft: 20,
     marginRight: 10,
   },
 
   modeLD: {
-      flex: 1,
-      marginLeft: 20,
+    flex: 1,
+    marginLeft: 20,
   },
 
   media: {
@@ -61,17 +61,17 @@ const useStyles = makeStyles({
   cover: {
     width: 151,
   },
-  
+
   contentContainer: {
-    
-      display: 'flex',
-      width: '80%',
-      margin: 15,
-      paddingLeft: 20,
-      paddingRight: 20,
-      justifyContent: 'center',
+
+    display: 'flex',
+    width: '80%',
+    margin: 15,
+    paddingLeft: 20,
+    paddingRight: 20,
+    justifyContent: 'center',
   },
-  
+
 });
 
 
@@ -89,89 +89,88 @@ export default function HomeContent() {
   };
 
   return (
-      <div className={classes.contentContainer}>
+    <div className={classes.contentContainer}>
 
-        <div float={'left'}>
-            <Card className={classes.firstCard}>
-            <NavLink  activeClassName="active" to="/accountpage">
-              <CardActionArea>
+      <div float={'left'}>
+        <Card className={classes.firstCard}>
+          <NavLink id="buttonLinks" activeClassName="active" to="/accountpage">
+            <CardActionArea>
               <CardMedia
-              className={classes.media}
-                  image={accountCardImage}
-                  title="My Account"
+                className={classes.media}
+                image={accountCardImage}
+                title="My Account"
               />
               <CardContent>
-                  <Typography gutterBottom variant="h5" color="textPrimary" component="h2">
+                <Typography gutterBottom variant="h5" color="textPrimary" component="h2">
                   My Account
                   </Typography>
-                  <Typography variant="body2" color="textSecondary" component="p">
+                <Typography variant="body2" color="textSecondary" component="p">
                   User Account, Settings, and More
                   </Typography>
               </CardContent>
-              </CardActionArea>
-            </NavLink>
-            <CardActions>
+            </CardActionArea>
+          </NavLink>
+          <CardActions>
             <Button size="small" color="primary">
-                Important
+              Important
             </Button>
             <Button size="small" color="primary">
-                Learn More
+              Learn More
             </Button>
-            </CardActions>
-            </Card>
-        </div>
+          </CardActions>
+        </Card>
+      </div>
 
-        <div float={'left'}>
-            <Card className={classes.card}>
-            <NavLink activeClassName="active" to="/userFiles">
-              <CardActionArea>
-                  <CardMedia
-                  className={classes.media}
-                  image={fileCardImage}
-                  title="Note Library"
-                  />
-                  <CardContent>
-                  <Typography gutterBottom variant="h5" color="textPrimary" component="h2">
-                      My Notes
+      <div float={'left'}>
+        <Card className={classes.card}>
+          <NavLink id="buttonLinks" activeClassName="active" to="/userFiles">
+            <CardActionArea>
+              <CardMedia
+                className={classes.media}
+                image={fileCardImage}
+                title="Note Library"
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" color="textPrimary" component="h2">
+                  My Notes
                   </Typography>
-                  <Typography variant="body2" color="textSecondary" component="p">
-                      Library of all saved notes.
+                <Typography variant="body2" color="textSecondary" component="p">
+                  Library of all saved notes.
                   </Typography>
-                  </CardContent>
-              </CardActionArea>
-            </NavLink>
-            <CardActions>
-                <Button size="small" color="primary">
-                Important
+              </CardContent>
+            </CardActionArea>
+          </NavLink>
+          <CardActions>
+            <Button size="small" color="primary">
+              Important
                 </Button>
-                <Button size="small" color="primary">
-                Learn More
+            <Button size="small" color="primary">
+              Learn More
                 </Button>
-            </CardActions>
-            </Card>
-        </div>
+          </CardActions>
+        </Card>
+      </div>
 
-        <div float={'left'}>
-            <Card className={classes.modeLD}>
-                <div className={classes.details}>
-                <CardContent className={classes.content}>
-                <Typography component="h5" variant="h5">
-                    Theme
+      <div float={'left'}>
+        <Card className={classes.modeLD}>
+          <div className={classes.details}>
+            <CardContent className={classes.content}>
+              <Typography component="h5" variant="h5">
+                Theme
                 </Typography>
-                <Typography variant="subtitle1" color="textSecondary">
-                    Set your visibility preference
+              <Typography variant="subtitle1" color="textSecondary">
+                Set your visibility preference
                 </Typography>
-                </CardContent>
-                <div className={classes.modeSwitch}>
-                <FormControlLabel
+            </CardContent>
+            <div className={classes.modeSwitch}>
+              <FormControlLabel
                 control={<Switch checked={state.checkedA} onChange={handleChange} name="checkedA" />}
                 label="Dark Mode"
-                />
-                </div>
+              />
             </div>
-            </Card>
-        </div>
-        
+          </div>
+        </Card>
+      </div>
     </div>
   );
 }

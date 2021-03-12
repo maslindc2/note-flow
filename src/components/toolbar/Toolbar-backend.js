@@ -47,8 +47,8 @@ import ReactPlayer from 'react-player';
 
 //Text Style Imports
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Roboto&family=Roboto+Mono&display=swap');
-</style> 
+    @import url('https://fonts.googleapis.com/css2?family=Bungee&family=Roboto&family=Roboto+Mono&display=swap');
+</style>
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -59,14 +59,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ToolbarBackend() {
-    
+
 
     function format(com, val) {
         document.getElementById('editor').focus();
         document.execCommand(com, false, val);
     }
 
-    
+
 
     ////////////////////////////////////////
     //Vito is working on this
@@ -77,36 +77,36 @@ export default function ToolbarBackend() {
     }
 
     //Main function to create new code block
-    function addCodeBlock(lang,id) {
+    function addCodeBlock(lang, id) {
         //creating new filled div
-        if(id==null){
-        var next_line = document.getElementById('editor');
-        
-        //alert(" Language chosen for codeblock is: "+lang);
-        format(
-            'insertParagraph',
-            `<pre class='editor' id='${next_line}'</pre>`
-        );
-        const codeBlock = document.createElement('pre');
-        const target = document.getSelection();
-        /*
-        if (
-            target.focusNode.nodeName.includes('#text') ||
-            target.focusNode.classList.contains('title') ||
-            target.focusNode.className.includes('codeBlock')
-        ) {
-            return
+        if (id == null) {
+            var next_line = document.getElementById('editor');
+
+            //alert(" Language chosen for codeblock is: "+lang);
+            format(
+                'insertParagraph',
+                `<pre class='editor' id='${next_line}'</pre>`
+            );
+            const codeBlock = document.createElement('pre');
+            const target = document.getSelection();
+            /*
+            if (
+                target.focusNode.nodeName.includes('#text') ||
+                target.focusNode.classList.contains('title') ||
+                target.focusNode.className.includes('codeBlock')
+            ) {
+                return
+            }
+            */
+            id = `codeBlock-${document.getElementsByClassName('codeBlock').length + 1}`;
+            codeBlock.classList.add('codeBlock');
+
+            var new_block = format(
+                'insertHTML',
+                `<pre class='codeBlock' id='${id}'>${target}</pre>`
+            );
         }
-        */
-         id = `codeBlock-${document.getElementsByClassName('codeBlock').length + 1}`;
-        codeBlock.classList.add('codeBlock');
-        
-        var new_block = format(
-            'insertHTML',
-            `<pre class='codeBlock' id='${id}'>${target}</pre>`
-        );
-        }
-        
+
         //Embedding Ace editor
         var mode_name = lang;
         ace.require("ace/ext/language_tools");
@@ -116,7 +116,7 @@ export default function ToolbarBackend() {
             minLines: 2,
             maxLines: 30,
             wrap: true,
-            autoScrollEditorIntoView: true,    
+            autoScrollEditorIntoView: true,
         });
 
         code_editor.setOptions({
@@ -125,34 +125,34 @@ export default function ToolbarBackend() {
             enableSnippets: true,
             enableLiveAutocompletion: true
         });
-        
+
         addLineAfterBlock(id);
         return code_editor;
     }
     //function to save code
-    function Code_save(){
+    function Code_save() {
         const length = document.getElementsByClassName("codeBlock").length;
         var i;
         var user = userInner()[0];
-        const arr_Values=[];
-        const arr_DOMs=[];
-        const arr_Langs=[];
+        const arr_Values = [];
+        const arr_DOMs = [];
+        const arr_Langs = [];
         //const arr_Langs=[];
-        for( i=0;i<length;i++){
-            var id ="codeBlock-"+(i+1);
+        for (i = 0; i < length; i++) {
+            var id = "codeBlock-" + (i + 1);
             var editor = ace.edit(id);
             arr_Values.push(editor.getValue());
             //editor.destroy();
             arr_DOMs.push(id);
             arr_Langs.push(editor.getOptions().mode);
-            
-            
+
+
         }
-        user.arr_Values=arr_Values;
-        user.arr_Langs=arr_Langs;
-        user.arr_DOMs=arr_DOMs;
-        
-        
+        user.arr_Values = arr_Values;
+        user.arr_Langs = arr_Langs;
+        user.arr_DOMs = arr_DOMs;
+
+
         //loading part
         /*
         for( i=0;i<arr_DOMs.length;i++){
@@ -161,54 +161,54 @@ export default function ToolbarBackend() {
 
         }
         */
-        
+
     }
     //
-    function code_load(){
+    function code_load() {
         var i;
         var user = userInner()[0];
-        var arr_DOMs=user.arr_DOMs;
-        var arr_Langs=user.arr_Langs;
-        var arr_Values=user.arr_Values;
+        var arr_DOMs = user.arr_DOMs;
+        var arr_Langs = user.arr_Langs;
+        var arr_Values = user.arr_Values;
         //destroy the old editor
-        for( i=0;i<arr_DOMs.length;i++){
+        for (i = 0; i < arr_DOMs.length; i++) {
             var old_editor = ace.edit(arr_DOMs[i]);
             old_editor.destroy();
-           
+
         }
         //recreate a new one
-        for( i=0;i<arr_DOMs.length;i++){
-            var new_editor= addCodeBlock(arr_Langs[i],arr_DOMs[i]);
+        for (i = 0; i < arr_DOMs.length; i++) {
+            var new_editor = addCodeBlock(arr_Langs[i], arr_DOMs[i]);
             new_editor.setValue(arr_Values[i]);
         }
-        
+
     }
 
-    
-    
 
-    
-    
 
-    
+
+
+
+
+
     //experimenting to fix a dumb bug when trying to delete the code block
-   /* function deleteBlock(){
-        const codeBlock = document.getElementsByTagName("pre");
-        const target = document.getSelection();
-        
-        
-        const id='';
-        $(document).ready(function(){
-            $(document).click(function(){
-            
-            });
-        });
-        
-        const code_editor=ace.edit(id);
-        code_editor.destroy();
-        code_editor.container.remove();
-    }*/
-    
+    /* function deleteBlock(){
+         const codeBlock = document.getElementsByTagName("pre");
+         const target = document.getSelection();
+         
+         
+         const id='';
+         $(document).ready(function(){
+             $(document).click(function(){
+             
+             });
+         });
+         
+         const code_editor=ace.edit(id);
+         code_editor.destroy();
+         code_editor.container.remove();
+     }*/
+
     function addLineAfterBlock(id) {
         const block = document.getElementById(`${id}`);
         const div = document.createElement('div');
@@ -290,8 +290,8 @@ export default function ToolbarBackend() {
         mathBlock.addEventListener('input', (ev) => {
             mathBlock.setValue(ev.target.value);
         })
-        
-        
+
+
 
         //Target is where selection/cursor is
         const target = document.getSelection();
@@ -308,58 +308,58 @@ export default function ToolbarBackend() {
         range = target.getRangeAt(0);
         range.deleteContents();
         range.insertNode(block);
-        
+
     }
 
     //handling save
-    
 
-    function check_doc(id){
+
+    function check_doc(id) {
         const user = userInner()[0];
-        const docRef=firebase.firestore().collection("users").doc(user.email).collection("Editors").doc(id);
-        
-        
-        docRef.get()
-        .then((docSnapshot) => {
-            if (docSnapshot.exists) {
-            alert("This file already exist. Saving...")
-            handleSave(id);
-            } else {
+        const docRef = firebase.firestore().collection("users").doc(user.email).collection("Editors").doc(id);
 
-            // Create the new document
-            docRef.set({
-                text_HTML:'Creating a new document'
-            }); 
-            handleSave(id);
-            }
-        
-        });
-        
+
+        docRef.get()
+            .then((docSnapshot) => {
+                if (docSnapshot.exists) {
+                    alert("Note has been saved")
+                    handleSave(id);
+                } else {
+
+                    // Create the new document
+                    docRef.set({
+                        text_HTML: 'Creating a new document'
+                    });
+                    handleSave(id);
+                }
+
+            });
+
     }
-    
+
     //save math content
-    function math_save(){
-        
+    function math_save() {
+
         var i;
         var user = userInner()[0];
-        var arr_math_Values=[]
-        for( i=0; i< document.getElementsByClassName("mathBlock").length;i++){
-            var id='mathBlock-'+(i+1);
-            var mathBlock= document.getElementById(id);
+        var arr_math_Values = []
+        for (i = 0; i < document.getElementsByClassName("mathBlock").length; i++) {
+            var id = 'mathBlock-' + (i + 1);
+            var mathBlock = document.getElementById(id);
             arr_math_Values.push(mathBlock.getValue());
             //console.log(mathBlock.getValue());
-            
+
         }
-        user.arr_math_Values=arr_math_Values;
-        
+        user.arr_math_Values = arr_math_Values;
+
     }
     //load math content
-    function math_load(){
+    function math_load() {
         var i;
         var user = userInner()[0];
-        for( i=0; i< document.getElementsByClassName("mathBlock").length;i++){
-            var id='mathBlock-'+(i+1);
-            var mathBlock= document.getElementById(id);
+        for (i = 0; i < document.getElementsByClassName("mathBlock").length; i++) {
+            var id = 'mathBlock-' + (i + 1);
+            var mathBlock = document.getElementById(id);
             //console.log(user.arr_math_Values[i]);
             mathBlock.setValue(user.arr_math_Values[i]);
             //console.log(mathBlock.getValue());
@@ -371,75 +371,75 @@ export default function ToolbarBackend() {
         //update userinfo and current file
         userInner()[2]();
         userInner()[5](id);
-        
-        
-      console.log("from handlesave "+id);
-      var content = document.getElementById('editor').innerHTML;
-      var title =document.getElementById('title').innerHTML;
-      
-      
-      //Save to Default editor for now.
-      console.log("in handling save"+ userInner()[1]);
-      Code_save();
-      math_save();
-      var user = userInner()[0];
-      const userRef =firebase.firestore().collection("users").doc(user.email);
-      
-      const docRef=firebase.firestore().collection("users").doc(user.email).collection("Editors").doc(id);
 
-        if(user.arr_Langs !=null){
-        
 
-        //Save Code Editors
-        
+        console.log("from handlesave " + id);
+        var content = document.getElementById('editor').innerHTML;
+        var title = document.getElementById('title').innerHTML;
+
+
+        //Save to Default editor for now.
+        console.log("in handling save" + userInner()[1]);
+        Code_save();
+        math_save();
+        var user = userInner()[0];
+        const userRef = firebase.firestore().collection("users").doc(user.email);
+
+        const docRef = firebase.firestore().collection("users").doc(user.email).collection("Editors").doc(id);
+
+        if (user.arr_Langs != null) {
+
+
+            //Save Code Editors
+
+            docRef.update({
+
+                'arr_Values': user.arr_Values,
+                'arr_DOMs': user.arr_DOMs,
+                'arr_Langs': user.arr_Langs,
+
+            })
+        }
+        if (user.arr_math_Values != null) {
+            //Save Math Block content
+            docRef.update({
+                'arr_math_Values': user.arr_math_Values
+            })
+        }
+        //saving HTML content and title
         docRef.update({
-            
-            'arr_Values': user.arr_Values,
-            'arr_DOMs': user.arr_DOMs,
-            'arr_Langs':user.arr_Langs,
-            
+            'title_HTML': title,
+            'text_HTML': content,
         })
-    }
-    if(user.arr_math_Values!=null){
-        //Save Math Block content
-        docRef.update({
-            'arr_math_Values': user.arr_math_Values
-        })
-    }
-    //saving HTML content and title
-    docRef.update({
-        'title_HTML': title,
-        'text_HTML': content,
-    })
-    update_current_page(id);           
+        update_current_page(id);
     }
 
-    
-    function update_current_page(id){
+
+    function update_current_page(id) {
         let user = userInner()[0];
-        const userRef =firebase.firestore().collection("users").doc(user.email);
-        
+        const userRef = firebase.firestore().collection("users").doc(user.email);
+
         userRef.update({
-          'active_page': id
-      });
-      console.log("updated current page to the database");
+            'active_page': id
+        });
+        console.log("updated current page to the database");
     }
-    
 
-    
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    
 
-    return [code_load,math_load,check_doc,handleSave,(
+
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+
+
+    return [code_load, math_load, check_doc, handleSave, (
         <div className='toolbar'>
-            
+
             <div class="tooltip container">
                 <span class="tooltiptext">Code Block</span>
                 <button class={"bar"} onClick={e => openMenu("dropdown")}>
@@ -458,9 +458,9 @@ export default function ToolbarBackend() {
                     <FunctionsIcon />
                 </button>
             </div>
-            
-            
-            
+
+
+
         </div>
     )
     ]

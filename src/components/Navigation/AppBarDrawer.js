@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
     drawerButton: {
         color: 'white',
-        
+
     },
 
     appBar: {
@@ -131,6 +131,9 @@ const useStyles = makeStyles((theme) => ({
 
     headerCloseDrawer: {
         justifySelf: "flex-end",
+    },
+    link: {
+        textDecoration: "none",
     }
 
 }));
@@ -159,11 +162,11 @@ export default function AppBarDrawer() {
     if (user != null) {
         name = user.displayName;
         email = user.email;
-               
-  }
+
+    }
     userInner()[2]();
     return (
-         
+
         <div className={classes.root}>
             <CssBaseline />
             <AppBar
@@ -174,7 +177,7 @@ export default function AppBarDrawer() {
             >
 
                 <Toolbar>
-                
+
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
@@ -188,9 +191,9 @@ export default function AppBarDrawer() {
                         Note Flow
                     </Typography>
 
-                    
+
                 </Toolbar>
-            
+
             </AppBar>
             <Drawer
                 className={classes.drawer}
@@ -215,42 +218,37 @@ export default function AppBarDrawer() {
                         <ListItemIcon > <SignOutButton style="color:#FBE8A6;" /></ListItemIcon>
                     </ListItem>
 
-                    <NavLink activeClassName="active" to="/accountpage">
+                    <NavLink className={classes.link} activeClassName="active" to="/accountpage">
                         <ListItem className={classes.drawerButton} button key={'Account'}>
                             <ListItemIcon className={classes.drawerButton}> <AccountCircleIcon /></ListItemIcon>
                             <ListItemText primary={'Account'} />
                         </ListItem>
                     </NavLink>
 
-                    <NavLink exact activeClassName="active" to="/homepage">
+                    <NavLink exact className={classes.link} activeClassName="active" to="/homepage">
                         <ListItem className={classes.drawerButton} button={true} key={'Home'}>
                             <ListItemIcon className={classes.drawerButton}> <HomeIcon /></ListItemIcon>
                             <ListItemText primary={'Home'} />
                         </ListItem>
                     </NavLink>
 
-                    <NavLink activeClassName="active" to="/editor" onClick={e => userInner()[4]()}>
+                    <NavLink className={classes.link} activeClassName="active" to="/editor" onClick={e => userInner()[4]()}>
                         <ListItem className={classes.drawerButton} button key={'Editor'}>
                             <ListItemIcon className={classes.drawerButton}> <EditIcon /> </ListItemIcon>
                             <ListItemText primary={'Editor'} />
                         </ListItem>
                     </NavLink>
-
-                    <ListItem className={classes.drawerButton} button key={'BarChartIcon'}>
-                        <ListItemIcon className={classes.drawerButton} > <BarChartIcon /> </ListItemIcon>
-                        <ListItemText primary={'Diagrams'} />
-                    </ListItem>
                 </List>
                 <Divider color={"white"} />
                 <List className={classes.drawerPaper}>
-                    <NavLink activeClassName="active" to="/userFiles">
+                    <NavLink className={classes.link} activeClassName="active" to="/userFiles">
                         <ListItem className={classes.drawerButton} button key={'All Files'} >
                             <ListItemIcon className={classes.drawerButton}> <FolderIcon /> </ListItemIcon>
                             <ListItemText primary={'All Files'} />
                         </ListItem>
                     </NavLink>
 
-                    
+
 
                 </List>
                 <div className={classes.drawerHeader}>

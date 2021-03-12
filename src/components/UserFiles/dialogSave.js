@@ -11,24 +11,24 @@ import userInner from '../UserInfo/userInfo';
 
 
 export default function DialogSave(props) {
-  const {open,handleClickOpen,handleClose}= props;
-  function handling_manual_saving(){
-        handleClose();
-        const doc_id=document.getElementById("file_name").value;
-        console.log(userInner()[0]);
-        
-        ToolbarBackend()[2](doc_id);
-        
-        
-    }  
+  const { open, handleClickOpen, handleClose } = props;
+  function handling_manual_saving() {
+    handleClose();
+    const doc_id = document.getElementById("file_name").value;
+    console.log(userInner()[0]);
+
+    ToolbarBackend()[2](doc_id);
+
+
+  }
   return (
     <div>
-      
+
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">File Saving</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Please name your file :D
+            Please name your file
           </DialogContentText>
           <TextField
             autoFocus
