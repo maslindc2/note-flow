@@ -16,6 +16,7 @@ import { withAuthentication } from './components/Session';
 
 import lightTheme from './components/Theme/lightTheme';
 import darkTheme from './components/Theme/darkTheme';
+import themeInfo from './components/Theme/themeInfo';
 
 //const themeLight = lightTheme;
 //const themeDark = darkTheme;
@@ -26,7 +27,12 @@ The swith tags tell React what compoenets
 to render based on what the current URL path 
 is 
 */
-const theme = lightTheme;
+var theme;
+if(themeInfo.mode=="light"){
+theme = lightTheme;
+}else if(themeInfo.mode=="dark"){
+    theme= darkTheme;
+}
 
 const App = () => (
     <MuiThemeProvider theme={theme}>
@@ -46,4 +52,10 @@ const App = () => (
     </Router>
     </MuiThemeProvider>
 );
+function reloadApp(){
+    console.log("reloading the app.js");
+    window.location.reload();
+}
+
 export default withAuthentication(App);
+export {reloadApp}

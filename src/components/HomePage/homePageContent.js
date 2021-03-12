@@ -23,6 +23,9 @@ import { NavLink } from 'react-router-dom'
 //Import Theme
 import { useTheme } from '@material-ui/core/styles';
 import ThemeContext from '../Theme/ThemeContext';
+import themeInfo from '../Theme/themeInfo';
+import reloadApp from '../../App'
+import { withHandlers } from 'recompose';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -85,13 +88,23 @@ export default function HomeContent() {
   const { theme } = useTheme();
   const classes = useStyles(theme);
 
-  const [state, setState] = React.useState({
-    checkedA: true,
-    checkedB: true,
-  });
+  const [state, setState] = React.useState(true);
 
   const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+    setState(!state);
+    if(state){
+      console.log("checkedA 's up");
+      themeInfo.mode ="dark";
+      console.log(themeInfo.mode);
+    }
+    if(!state){
+      console.log("checkedB 's up");
+      themeInfo.mode ="light";
+      console.log(themeInfo.mode);
+    }
+    reloadApp();
+    window.location.reload();
+    console.load(themeInfo.mode);
   };
 
   return (
