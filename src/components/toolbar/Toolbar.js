@@ -91,6 +91,7 @@ export default function ToolbarInner() {
         const cColor = Color.target.value;
         document.execCommand("foreColor", false, cColor);
     }
+    
     //Sets the url input box to shown or hidden
     function addLink() {
         const show = document.getElementById('url-input');
@@ -145,27 +146,27 @@ export default function ToolbarInner() {
         //hides the input tag again 
         show.classList.add('hidden');
     }
-
-
-    function insertImage() {
-        //Stores the input from the url box into inputVal
-        var inputVal = document.getElementById('textFormatUrl').value;
-        //used for showing url input box
-        const show = document.getElementById('url-input');
-        //Fixes problem with a leading space in the url when copying and pasting
-        if (inputVal.substr(0, 1) === " ") {
-            inputVal = inputVal.substr(1);
+    function ResizeImage(img){
+    var slider = "<input type='range' min='1' max='img.width' value='50' class='slider' id='myRange'>";
+    format("insertHTML",slider);
         }
-        //Insert image
-        format(
-            'insertHTML', `<img src='${inputVal}'>`
-        );
+    function insertHTML(){
+        var img = document.getElementById('textFormatUrl').value;
+        var id =   "rand" + Math.random();
+        var doc = document.getElementById("editor").focus;
+        const show = document.getElementById('url-input');
+        if (img.substr(0, 1) === " ") {
+            img = img.substr(1);
+        }
+        img = "<img src='" + img + "' id=" + id + ">";
+        document.execCommand("insertHTML", false, img);
+        document.getElementById(id).onclick = function() {ResizeImage(document.getElementById(id))}
         //This makes the url input tag blank again. I could use "" or '' but JS thinks strings are the same as null
-        document.getElementById('textFormatUrl').value = " ";
-
+         document.getElementById('textFormatUrl').value = " ";
         //hides the input tag again 
         show.classList.add('hidden');
-    }
+    }   
+
 
     function embedVideo() {
         //getting youtube video id
@@ -522,7 +523,7 @@ export default function ToolbarInner() {
                     <CheckIcon />
                     <ul id="dropdown_links">
                         <li onClick={e => setUrl()} >Link</li>
-                        <li onClick={e => insertImage()} >Image</li>
+                        <li onClick={e => insertHTML()} >Image</li>
                         <li onClick={e => embedVideo()}>Video</li>
                     </ul>
                 </button>
