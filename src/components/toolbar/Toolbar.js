@@ -157,8 +157,9 @@ export default function ToolbarInner() {
             inputVal = inputVal.substr(1);
         }
         //Insert image
+        const id = `image-${document.getElementsByClassName('imageClass').length + 1}`;
         format(
-            'insertHTML', `<img src='${inputVal}'>`
+            'insertHTML', `<img class='imageClass' id='${id}' src='${inputVal}'>`
         );
         //This makes the url input tag blank again. I could use "" or '' but JS thinks strings are the same as null
         document.getElementById('textFormatUrl').value = " ";

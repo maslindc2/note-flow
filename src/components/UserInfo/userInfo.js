@@ -44,7 +44,16 @@ export default function userInner(){
         //update file name
         usersRef.collection('Editors').get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
+            var i;
+            var overlap=false;
+            for(i=0;i<user.docs_ids.length;i++){
+                if(doc.id ==user.docs_ids[i]){
+                    overlap= true;
+                }
+            }
+            if(!overlap){
             user.docs_ids.push(doc.id);
+            }
         });
         //update current page
         usersRef.get().then(documentSnapshot => {
