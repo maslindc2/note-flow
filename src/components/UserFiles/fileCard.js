@@ -20,23 +20,24 @@ import userInner from '../UserInfo/userInfo';
 
 const useStyles = makeStyles({
     root: {
-      flex: 1,
+        flex: 1,
     },
-  
+
     firstCard: {
         minWidth: 190,
         flex: 1,
         marginLeft: 10,
     },
-  
+
     card: {
-        minWidth: 190,
+        minWidth: '190px',
         minHeight: 250,
         textAlign: 'left',
         flex: 1,
         marginLeft: 15,
+        width: '40px',
     },
-  
+
     media: {
         height: 210,
         marginLeft: 2,
@@ -44,9 +45,9 @@ const useStyles = makeStyles({
         paddingLeft: 2,
         maxHeight: '100%',
         maxWidth: '95%',
-        
+
     },
-  
+
     details: {
         display: 'flex',
         flexDirection: 'column',
@@ -58,10 +59,10 @@ const useStyles = makeStyles({
         width: 151,
     },
     modeSwitch: {
-      display: 'flex',
-      alignItems: 'center',
-      padding: 7,
-      paddingLeft: 15,
+        display: 'flex',
+        alignItems: 'center',
+        padding: 7,
+        paddingLeft: 15,
     },
     contentContainer: {
         display: 'flex',
@@ -71,46 +72,45 @@ const useStyles = makeStyles({
         paddingRight: 20,
         justifyContent: 'center',
     },
-    
-  });
+
+});
 
 
-  export default function FileCard(props) {
+export default function FileCard(props) {
     const classes = useStyles();
     const id = props.id;
-    
-    
+
+
     return (
         <div className={classes.contentContainer} id={"file-"}>
-  
-          <div float={'left'}>
-              <Card className={classes.card}>
-              <NavLink activeClassName="active" to="/editor" onClick={e => userInner()[3](id)} >
-              <CardActionArea>
-              <CardMedia
-              className={classes.media}
-                  image={FileImage}
-                  title="File View Template"
-              />
-              <CardContent>
-                  <Typography gutterBottom variant="h6" component="h2">
-                  {id}
+
+            <div float={'left'}>
+                <Card className={classes.card}>
+                    <NavLink id="buttonLinks" activeClassName="active" to="/editor" onClick={e => userInner()[3](id)} >
+                        <CardActionArea>
+                            <CardMedia
+                                className={classes.media}
+                                image={FileImage}
+                                title="File View Template"
+                            />
+                            <CardContent>
+                                <Typography gutterBottom variant="h6" component="h2">
+                                    {id}
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary" component="p">
+                                    Date saved:
                   </Typography>
-                  <Typography variant="body2" color="textSecondary" component="p">
-                    Date saved: 
-                  </Typography>
-              </CardContent>
-              </CardActionArea>
-              </NavLink>
-              <CardActions>
-              <Button size="small" color="primary">
-                  Options
+                            </CardContent>
+                        </CardActionArea>
+                    </NavLink>
+                    <CardActions>
+                        <Button size="small" color="primary">
+                            Options
               </Button>
-              </CardActions>
-              </Card>
-          </div>
+                    </CardActions>
+                </Card>
+            </div>
 
         </div>
-  );
+    );
 }
-  
