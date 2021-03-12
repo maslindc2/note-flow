@@ -10,7 +10,7 @@ export const lightTheme = createMuiTheme({
     palette: {
         type: 'light',
         primary: {
-            light: green[200],
+            light: lightBlue[200],
             //mainRadialGradient: 'radial-gradient(#fdfdff 10%, #FBE8A6, #F4976C 80%)',
             //lightLinearGradient: 'linear-gradient(45deg, #66bb6a 30%, #00bcd4 90%)',
             //mainLinearGradient: 'linear-gradient(45deg, #47824a 30%, #008394 90%)',

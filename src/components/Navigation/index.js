@@ -12,9 +12,9 @@ import { useState } from 'react';
 import { setState } from 'react';
 import ThemeContext from '../Theme/ThemeContext';
 import Layout from "../Theme/Layout";
+import { dark, light } from '@material-ui/core/styles/createPalette'
 
-const light = createMuiTheme(lightTheme);
-const dark = createMuiTheme(darkTheme);
+const theme = lightTheme
 
 
 const Navigation = ({ authUser }) => (
@@ -32,8 +32,8 @@ const Navigation = ({ authUser }) => (
 //What  user sees if they are authenticated by our authentification API 
 const NavigationAuth = () => {
   //Needs App bar and additional functionality
-  const [theme, setTheme] = useState(light)
-  const value = { theme, setTheme}
+  //const [theme, setTheme] = useState(light)
+  //const value = { theme, setTheme }
 
   //const handleThemeChange = (themeState) => {
   // setTheme(themeState ? dark : light)
@@ -41,9 +41,9 @@ const NavigationAuth = () => {
 
   return (
       //Needs App bar and additional functionality
-      <ThemeContext.Provider value={value} >
+      <ThemeProvider theme={theme}>
         <AppBarDrawer />
-      </ThemeContext.Provider> 
+      </ThemeProvider>
   );
 };
 

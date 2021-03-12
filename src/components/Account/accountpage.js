@@ -3,12 +3,13 @@ import React from 'react'
 import firebase from 'firebase'
 import PasswordChangeForm from '../PasswordChange';
 import { withAuthorization } from '../Session';
-
+import { ThemeProvider, createMuiTheme, useTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import lightTheme from '../Theme/lightTheme';
 //Administrative features for signed in users - right now only functionality is changning password
 
 class AccountPage extends React.Component {
   render() {
-
+    const theme = lightTheme;
     var user = firebase.auth().currentUser;
     var name, email, photoUrl, uid, emailVerified;
 
@@ -24,6 +25,7 @@ if (user != null) {
 
 
     return (
+      <ThemeProvider theme={theme}>
       <div>
         <h1 id={"title"}>Account Page</h1>
 
@@ -36,6 +38,7 @@ if (user != null) {
         </div>
 
       </div>
+      </ThemeProvider>
     )
   }
 }

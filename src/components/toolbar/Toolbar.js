@@ -76,6 +76,7 @@ const useStyles = makeStyles((theme) => ({
 
     /* Gets rid of the border for the buttons so its just icons only*/
     //Bar class also addresses hover properties
+    //CHECK WITH MASLIN BEFORE PUSH
     bar: {
         '&:hover': {
             //backgroundColor: fade('#1b94da', theme.palette.action.hoverOpacity),
@@ -253,7 +254,7 @@ const linkSelections = [
   ////
 
 export default function ToolbarInner() {
-    const { theme } = useContext(ThemeContext)
+    const theme = useTheme();
     //const theme = useTheme();
     const classes = useStyles(theme);
 

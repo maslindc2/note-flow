@@ -49,6 +49,9 @@ import Switch from "@material-ui/core/Switch";
 import { dark, light } from '@material-ui/core/styles/createPalette';
 import ThemeContext from "../Theme/ThemeContext";
 import ThemeSwitcher from "../Theme/ThemeSwitcher";
+import lightTheme from "../Theme/lightTheme";
+import darkTheme from "../Theme/darkTheme";
+
 
 const drawerWidth = 240;
 
@@ -150,7 +153,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function AppBarDrawer() {
-    const { theme } = useContext(ThemeContext);
+    const theme = useTheme();
     const classes = useStyles(theme);
 
     const [open, setOpen] = React.useState(false);
@@ -197,7 +200,7 @@ export default function AppBarDrawer() {
                     <Typography variant="h6" noWrap>
                         Note Flow
                     </Typography>
-                    <ThemeSwitcher/>
+                    
                 </Toolbar>
             </AppBar>
             <Drawer
