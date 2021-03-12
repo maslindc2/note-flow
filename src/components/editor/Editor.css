@@ -133,10 +133,6 @@ body{
   padding: 8px;
 }
 
-
-.MuiCardContent-root{
-  width:40px
-}
 #editorPageWrapper {
   position: absolute;
   top: 0px;
